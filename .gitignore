@@ -1,0 +1,14 @@
+﻿[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+[Xx]64/
+[Xx]86/
+src/[Bb]uild/
+bld/
+[Bb]in/
+[Oo]bj/
+.vs/
+.vscode/
+debug.log
+.vs/
