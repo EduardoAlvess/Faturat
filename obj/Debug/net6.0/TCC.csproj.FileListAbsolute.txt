@@ -1,5 +1,3 @@
-C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\appsettings.json
 C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\TCC.staticwebassets.runtime.json
 C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\TCC.exe
 C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\TCC.deps.json
@@ -33,3 +31,5 @@ C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.d
 C:\Users\Eduardo\Desktop\TCC\obj\Debug\net6.0\TCC.csproj.CopyComplete
 C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\Humanizer.dll
 C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\AppSettings.Development.json
+C:\Users\Eduardo\Desktop\TCC\bin\Debug\net6.0\AppSettings.json

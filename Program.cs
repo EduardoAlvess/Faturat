@@ -1,16 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using TCC;
 using TCC.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Startup.CreateServices(args);
+
+var a = builder.Services;
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddDbContext<IDatabaseContext, DatabaseContext>(
-    dbContextOptions => dbContextOptions.UseMySql("server=mysql670.umbler.com; port=41890;User Id=eduardotcc; database=eduardotcc; password=bolt12345", new MySqlServerVersion(new Version(5, 6, 0)))
-                                        .EnableSensitiveDataLogging()
-                                        .EnableDetailedErrors());
 
 var app = builder.Build();
 
