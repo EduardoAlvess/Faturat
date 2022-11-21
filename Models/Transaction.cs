@@ -13,5 +13,6 @@ namespace TCC.Models
         public string Description { get; set; }
         public bool isDeleted { get; set; }
         public DateTime CreationDate { get; set; }
+        public DateTime TransactionDate { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace TCC.Db
         DbSet<Category> Categories { get; set; }
         DbSet<Account> Accounts { get; set; }
         DbSet<Icon> Icons { get; set; }
+        void SaveChanges(Transaction transaction, string state);
     }
 }

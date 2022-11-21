@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TCC.Models;
 
-namespace TCC.Controllers;
-
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

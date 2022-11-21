@@ -2,15 +2,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using TCC;
 using TCC.Db;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-Startup.CreateServices(args);
+Startup.CreateServices(builder);
 
 var a = builder.Services;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 var app = builder.Build();
 

@@ -1,0 +1,19 @@
+﻿@model List<TCC.Models.Income>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var income in Model)
+{
+    <p>@income.Id</p>
+    <p>@income.UserId</p>
+    <p>@income.CategoryId</p>
+    <p>@income.AccountId</p>
+    <p>@income.Value</p>
+    <p>@income.Description</p>
+    <p>@income.isDeleted</p>
+    <p>@income.CreationDate</p>
+    <p>@income.Description</p>
+}
+

@@ -1,0 +1,54 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using TCC.Db;
+using TCC.Models;
+
+namespace TCC.Controllers
+{
+    public class ExpensesController : Controller
+    {
+        private readonly IDatabaseContext _databaseContext;
+
+        public ExpensesController(IDatabaseContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var list = _databaseContext.Transactions.OfType<Expense>().Where(x => x.isDeleted != true).ToList();
+            return View("Index", list);
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] Expense expense)
+        {
+            _databaseContext.Transactions.Add(expense);
+            _databaseContext.SaveChanges(expense, "Added");
+            return Json("Teste");
+        }
+
+        [HttpPost]
+        public ActionResult Edit([FromBody] Expense expense)
+        {
+            var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == expense.Id);
+            expenseToEdit.TransactionDate = expense.TransactionDate;
+            expenseToEdit.Description = expense.Description;
+            expenseToEdit.CategoryId = expense.CategoryId;
+            expenseToEdit.AccountId = expense.AccountId;
+            expenseToEdit.isPaid = expense.isPaid;
+            expenseToEdit.Value = expense.Value;
+            _databaseContext.SaveChanges(expenseToEdit, "Modified");
+            return Json("Teste");
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var expense = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id);
+            expense.isDeleted = true;
+            _databaseContext.SaveChanges(expense, "Modified");
+            return Json("Teste");
+        }
+    }
+}

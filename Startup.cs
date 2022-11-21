@@ -16,32 +16,29 @@ namespace TCC
             Configuration = configuration;
         }
 
-        public static void CreateServices(string[] args)
+        public static void CreateServices(WebApplicationBuilder builder)
         {
-            ServiceCollection serviceCollection = new ServiceCollection();
-           
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
                     ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
 
-            Configuration = new ConfigurationBuilder().AddJsonFile("AppSettings.json", false, true)
-                                                      .AddJsonFile($"AppSettings.{env}.json", true, false)
-                                                      .Build();
+            Configuration = builder.Configuration.AddJsonFile("AppSettings.json", false, true)
+                                   .AddJsonFile($"AppSettings.{env}.json", true, false)
+                                   .Build();
 
-            ConfigureServices(serviceCollection, env == "DEVELOPMENT");
-
+            ConfigureServices(builder, env == "DEVELOPMENT");
         }
 
-        private static void ConfigureServices(IServiceCollection services, bool isDevelopment)
+        private static void ConfigureServices(WebApplicationBuilder builder, bool isDevelopment)
         {
-            services.AddSingleton(Configuration);
+            builder.Services.AddSingleton(Configuration);
             //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             var connectionString = Configuration.GetConnectionString("Default");
 
-            services.AddDbContext<IDatabaseContext, DatabaseContext>(dbContextOptions => 
+            builder.Services.AddDbContext<IDatabaseContext, DatabaseContext>(dbContextOptions => 
             dbContextOptions.UseMySql(connectionString, new MySqlServerVersion(new Version(5, 6, 0)))
-                                        .EnableSensitiveDataLogging()
-                                        .EnableDetailedErrors());
+                            .EnableSensitiveDataLogging()
+                            .EnableDetailedErrors());
         }
     }
 }

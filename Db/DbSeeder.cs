@@ -121,7 +121,8 @@ namespace TCC.Db
                     Description = "Mercado",
                     isPaid = true,
                     isDeleted = false,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    TransactionDate = DateTime.Now
                 },
                 new Expense
                 {
@@ -133,7 +134,8 @@ namespace TCC.Db
                     Description = "Alaminuta",
                     isPaid = false,
                     isDeleted = false,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    TransactionDate = DateTime.Now
                 });
             builder.Entity<Income>().HasData(
                 new Income
@@ -146,7 +148,8 @@ namespace TCC.Db
                     Description = "Salário",
                     isReceived = true,
                     isDeleted = false,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    TransactionDate = DateTime.Now
                 },
                 new Income
                 {
@@ -158,7 +161,8 @@ namespace TCC.Db
                     Description = "Premio",
                     isReceived = false,
                     isDeleted = false,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    TransactionDate = DateTime.Now
                 });
         }
 
