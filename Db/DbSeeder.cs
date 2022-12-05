@@ -79,135 +79,135 @@ namespace TCC.Db
             builder.Entity<ExpenseCategory>().HasData(
                 new ExpenseCategory
                 {
-                    Id = 0,
-                    IconId = 0,
+                    Id = 1,
+                    IconId = 1,
                     Description = "Gym",
                     CreationDate = DateTime.Now
                 },
                 new ExpenseCategory
                 {
-                    Id = 1,
-                    IconId = 1,
-                    Description = "Clothing",
-                    CreationDate = DateTime.Now
-                },
-                new IncomeCategory
-                {
                     Id = 2,
                     IconId = 2,
-                    Description = "Education",
+                    Description = "Clothing",
                     CreationDate = DateTime.Now
                 },
                 new IncomeCategory
                 {
                     Id = 3,
                     IconId = 3,
-                    Description = "Pet",
+                    Description = "Education",
                     CreationDate = DateTime.Now
                 },
                 new IncomeCategory
                 {
                     Id = 4,
                     IconId = 4,
-                    Description = "Electronics",
+                    Description = "Pet",
                     CreationDate = DateTime.Now
-                }, 
+                },
                 new IncomeCategory
                 {
                     Id = 5,
                     IconId = 5,
-                    Description = "Health",
+                    Description = "Electronics",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 6,
                     IconId = 6,
-                    Description = "Home",
+                    Description = "Health",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 7,
                     IconId = 7,
-                    Description = "Taxes",
+                    Description = "Home",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 8,
                     IconId = 8,
-                    Description = "Leisure",
+                    Description = "Taxes",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 9,
                     IconId = 9,
-                    Description = "Others",
+                    Description = "Leisure",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 10,
                     IconId = 10,
-                    Description = "Restaurant",
+                    Description = "Others",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 11,
                     IconId = 11,
-                    Description = "Services",
+                    Description = "Restaurant",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 12,
                     IconId = 12,
-                    Description = "Supermarket",
+                    Description = "Services",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 13,
                     IconId = 13,
-                    Description = "Transportation",
+                    Description = "Supermarket",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 14,
                     IconId = 14,
+                    Description = "Transportation",
+                    CreationDate = DateTime.Now
+                }, 
+                new IncomeCategory
+                {
+                    Id = 15,
+                    IconId = 15,
                     Description = "Travel",
                     CreationDate = DateTime.Now
                 }); 
             builder.Entity<IncomeCategory>().HasData(
                 new IncomeCategory
                 {
-                    Id = 15,
-                    IconId = 15,
-                    Description = "Awards",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
-                {
                     Id = 16,
                     IconId = 16,
-                    Description = "Gift",
+                    Description = "Awards",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 17,
                     IconId = 17,
-                    Description = "Investments",
+                    Description = "Gift",
                     CreationDate = DateTime.Now
                 }, 
                 new IncomeCategory
                 {
                     Id = 18,
                     IconId = 18,
+                    Description = "Investments",
+                    CreationDate = DateTime.Now
+                }, 
+                new IncomeCategory
+                {
+                    Id = 19,
+                    IconId = 19,
                     Description = "Salary",
                     CreationDate = DateTime.Now
                 });
@@ -227,7 +227,8 @@ namespace TCC.Db
                     isPaid = true,
                     isDeleted = false,
                     CreationDate = DateTime.Now,
-                    TransactionDate = DateTime.Now
+                    TransactionDate = DateTime.Now,
+                    Category = CategoryType.Supermarket
                 },
                 new Expense
                 {
@@ -240,7 +241,8 @@ namespace TCC.Db
                     isPaid = false,
                     isDeleted = false,
                     CreationDate = DateTime.Now,
-                    TransactionDate = DateTime.Now
+                    TransactionDate = DateTime.Now,
+                    Category = CategoryType.Restaurant
                 });
             builder.Entity<Income>().HasData(
                 new Income
@@ -254,7 +256,8 @@ namespace TCC.Db
                     isReceived = true,
                     isDeleted = false,
                     CreationDate = DateTime.Now,
-                    TransactionDate = DateTime.Now
+                    TransactionDate = DateTime.Now,
+                    Category = CategoryType.Salary
                 },
                 new Income
                 {
@@ -267,7 +270,8 @@ namespace TCC.Db
                     isReceived = false,
                     isDeleted = false,
                     CreationDate = DateTime.Now,
-                    TransactionDate = DateTime.Now
+                    TransactionDate = DateTime.Now,
+                    Category = CategoryType.Awards
                 });
         }
 
