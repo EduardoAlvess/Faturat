@@ -6,13 +6,17 @@
 
 @foreach (var expense in Model)
 {
-    <p>@expense.Id</p>
-    <p>@expense.UserId</p>
-    <p>@expense.CategoryId</p>
-    <p>@expense.AccountId</p>
-    <p>@expense.Value</p>
-    <p>@expense.Description</p>
-    <p>@expense.isDeleted</p>
-    <p>@expense.CreationDate</p>
+    <p>Id: @expense.Id</p>
+    <p>UserId: @expense.UserId</p>
+    <p>CategoryId: @expense.CategoryId</p>
+    <p>Category: @expense.Category</p>
+    <p>AccountId: @expense.AccountId</p>
+    <p>Value: @expense.Value</p>
+    <p>Description: @expense.Description</p>
+    <p>isDeleted: @expense.isDeleted</p>
+    <p>CreationDate: @expense.CreationDate</p>
+    <p>TransactionDate: @expense.TransactionDate</p>
+    <p>isPaid: @expense.isPaid</p>
+    <p>------------------------------------------------</p>
 }
 
