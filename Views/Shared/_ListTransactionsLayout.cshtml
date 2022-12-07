@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="~/css/Incomes.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/selectize.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.8/js/tether.min.js"></script>
+        <script src="//design.umbler.com//assets/dist/js/bootstrap.min.js"></script>
+        <script src="//design.umbler.com//themes/umbler-app/dist/js/theme.min.js"></script>
+        <script src="//design.umbler.com//assets/dist/js/docs.min.js"></script>
+
+        <link href="//design.umbler.com//themes/umbler-app/dist/css/theme.min.css?v=3" rel="stylesheet">
+    </head>
+
+    <body class="strong-dark">
+        <div style="text-align: center; display: flex;">
+            <nav>
+                <div id="divnav1">
+                    <div class="card card-inverse text-xs-center" style="background-color: rgb(44, 44, 46);;">
+                        <div class="card-block">
+                            <ul class="list-group">
+                                <li class="list-group-item">Dashboard</li> 
+                                <li class="list-group-item">Transactions</li> 
+                                <li class="list-group-item">Accounts</li>
+                                <li class="list-group-item">Reports</li>
+                                <li class="list-group-item">Goals</li>
+                              </ul>
+    
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <main>
+                @RenderBody()
+            </main>
+        </div>
+    </body>
+
+</html>
