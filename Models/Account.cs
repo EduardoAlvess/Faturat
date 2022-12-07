@@ -11,5 +11,6 @@ namespace TCC.Models
         public string Name { get; set; }
         public double Balance { get; set; }
         public DateTime CreationDate { get; set; }
+        public bool isDeleted { get; set; }
     }
 }
