@@ -32,14 +32,20 @@ namespace TCC.Controllers
         public ActionResult Edit([FromBody] Income income)
         {
             var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id);
-            incomeToEdit.TransactionDate = income.TransactionDate;
-            incomeToEdit.Description = income.Description;
-            incomeToEdit.CategoryId = income.CategoryId;
-            incomeToEdit.isReceived = income.isReceived;
-            incomeToEdit.AccountId = income.AccountId;
-            incomeToEdit.Value = income.Value;
-            _databaseContext.SaveChanges(incomeToEdit, "Modified");
-            return Json("Teste");
+
+            if (income != null)
+            {
+                incomeToEdit.TransactionDate = income.TransactionDate;
+                incomeToEdit.Description = income.Description;
+                incomeToEdit.CategoryId = income.CategoryId;
+                incomeToEdit.isReceived = income.isReceived;
+                incomeToEdit.AccountId = income.AccountId;
+                incomeToEdit.Category = income.Category;
+                incomeToEdit.Value = income.Value;
+                _databaseContext.SaveChanges(incomeToEdit, "Modified");
+                return Json("Atualizado");
+            }
+            return Json("Erro");
         }
 
         [HttpGet]

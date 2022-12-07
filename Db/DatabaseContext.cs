@@ -31,7 +31,7 @@ namespace TCC.Db
             builder.Entity<IncomeCategory>(entity => { entity.HasBaseType<Category>(); });
             builder.Entity<ExpenseCategory>(entity => { entity.HasBaseType<Category>(); });
 
-            DbSeeder.SeedTables(builder);
+            //DbSeeder.SeedTables(builder);
         }
 
         public void SaveChanges(Transaction transaction, string state)
