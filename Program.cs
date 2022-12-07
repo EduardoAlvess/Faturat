@@ -17,6 +17,7 @@ var a = builder.Services;
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
