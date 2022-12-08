@@ -286,10 +286,11 @@ namespace TCC.Db
                     UserId = 1,
                     IconId = 1,
                     Name = "Viagem",
-                    FinalAmount = 2000,
-                    CurrentAmount = 400,
+                    FinalBalance = 2000,
+                    CurrentBalance = 400,
                     FinalDate = new DateTime(2023, 01, 15),
                     CreationDate = DateTime.Now,
+                    IsCompleted = false,
                     IsDeleted = false
                 },
                 new Goal
@@ -298,10 +299,11 @@ namespace TCC.Db
                     UserId = 2,
                     IconId = 2,
                     Name = "Carro",
-                    FinalAmount = 35000.72,
-                    CurrentAmount = 12000.32,
+                    FinalBalance = 35000.72,
+                    CurrentBalance = 12000.32,
                     FinalDate = new DateTime(2023, 02, 15),
                     CreationDate = DateTime.Now,
+                    IsCompleted = false,
                     IsDeleted = false
                 });
         }
