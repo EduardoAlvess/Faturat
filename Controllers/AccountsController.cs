@@ -53,5 +53,27 @@ namespace TCC.Controllers
             _databaseContext.SaveChanges(account, "Modified");
             return Json("Teste");
         }
+
+        [HttpPost]
+        public ActionResult AddBalance(int id, [FromBody] double value)
+        {
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+
+            account.Balance += value;
+            _databaseContext.SaveChanges(account, "Modified");
+
+            return Json("Teste");
+        }
+
+        [HttpPost]
+        public ActionResult RemoveBalance(int id, [FromBody] double value)
+        {
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+
+            account.Balance -= value;
+            _databaseContext.SaveChanges(account, "Modified");
+
+            return Json("Teste");
+        }
     }
 }
