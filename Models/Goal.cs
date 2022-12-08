@@ -13,5 +13,6 @@ namespace TCC.Models
         public double FinalAmount { get; set; }
         public DateTime FinalDate { get; set; }
         public DateTime CreationDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

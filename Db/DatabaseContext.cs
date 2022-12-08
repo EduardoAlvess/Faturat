@@ -34,12 +34,12 @@ namespace TCC.Db
             //DbSeeder.SeedTables(builder);
         }
 
-        public void SaveChanges(Transaction transaction, string state)
+        public void SaveChanges(Object item, string state)
         {
             if (state.Equals("Added"))
-                Entry(transaction).State = EntityState.Added;
+                Entry(item).State = EntityState.Added;
             if (state.Equals("Modified"))
-                Entry(transaction).State = EntityState.Modified;
+                Entry(item).State = EntityState.Modified;
 
             SaveChanges();
         }

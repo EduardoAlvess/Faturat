@@ -61,7 +61,8 @@ namespace TCC.Db
                     IconId = 1,
                     Name = "Conta corrente",
                     Balance = 2000,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    isDeleted = false
                 },
                 new Account
                 {
@@ -70,7 +71,8 @@ namespace TCC.Db
                     IconId = 2,
                     Name = "Conta PJ",
                     Balance = 233.33,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    isDeleted = false
                 });
         }
 
@@ -287,7 +289,8 @@ namespace TCC.Db
                     FinalAmount = 2000,
                     CurrentAmount = 400,
                     FinalDate = new DateTime(2023, 01, 15),
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    IsDeleted = false
                 },
                 new Goal
                 {
@@ -298,7 +301,8 @@ namespace TCC.Db
                     FinalAmount = 35000.72,
                     CurrentAmount = 12000.32,
                     FinalDate = new DateTime(2023, 02, 15),
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    IsDeleted = false
                 });
         }
     }
