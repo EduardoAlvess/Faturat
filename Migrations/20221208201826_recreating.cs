@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TCC.Migrations
 {
-    public partial class fixAccounts2 : Migration
+    public partial class recreating : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,8 @@ namespace TCC.Migrations
                 columns: new[] { "Id", "Balance", "CreationDate", "IconId", "Name", "UserId", "isDeleted" },
                 values: new object[,]
                 {
-                    { 1, 2000.0, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4548), 1, "Conta corrente", 1, false },
-                    { 2, 233.33000000000001, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4551), 2, "Conta PJ", 2, false }
+                    { 1, 2000.0, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1228), 1, "Conta corrente", 1, false },
+                    { 2, 233.33000000000001, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1229), 2, "Conta PJ", 2, false }
                 });
 
             migrationBuilder.InsertData(
@@ -23,34 +23,34 @@ namespace TCC.Migrations
                 columns: new[] { "Id", "CreationDate", "Description", "IconId", "Type" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4562), "Gym", 1, "ExpenseCategory" },
-                    { 2, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4564), "Clothing", 2, "ExpenseCategory" },
-                    { 3, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4565), "Education", 3, "ExpenseCategory" },
-                    { 4, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4566), "Pet", 4, "ExpenseCategory" },
-                    { 5, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4566), "Electronics", 5, "ExpenseCategory" },
-                    { 6, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4567), "Health", 6, "ExpenseCategory" },
-                    { 7, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4568), "Home", 7, "ExpenseCategory" },
-                    { 8, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4568), "Taxes", 8, "ExpenseCategory" },
-                    { 9, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4569), "Leisure", 9, "ExpenseCategory" },
-                    { 10, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4570), "Others", 10, "ExpenseCategory" },
-                    { 11, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4570), "Restaurant", 11, "ExpenseCategory" },
-                    { 12, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4572), "Services", 12, "ExpenseCategory" },
-                    { 13, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4572), "Supermarket", 13, "ExpenseCategory" },
-                    { 14, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4573), "Transportation", 14, "ExpenseCategory" },
-                    { 15, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4574), "Travel", 15, "ExpenseCategory" },
-                    { 16, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4593), "Awards", 16, "IncomeCategory" },
-                    { 17, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4593), "Gift", 17, "IncomeCategory" },
-                    { 18, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4594), "Investments", 18, "IncomeCategory" },
-                    { 19, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4595), "Salary", 19, "IncomeCategory" }
+                    { 1, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1242), "Gym", 1, "ExpenseCategory" },
+                    { 2, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1243), "Clothing", 2, "ExpenseCategory" },
+                    { 3, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1244), "Education", 3, "ExpenseCategory" },
+                    { 4, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1244), "Pet", 4, "ExpenseCategory" },
+                    { 5, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1245), "Electronics", 5, "ExpenseCategory" },
+                    { 6, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1246), "Health", 6, "ExpenseCategory" },
+                    { 7, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1246), "Home", 7, "ExpenseCategory" },
+                    { 8, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1247), "Taxes", 8, "ExpenseCategory" },
+                    { 9, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1248), "Leisure", 9, "ExpenseCategory" },
+                    { 10, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1249), "Others", 10, "ExpenseCategory" },
+                    { 11, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1249), "Restaurant", 11, "ExpenseCategory" },
+                    { 12, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1250), "Services", 12, "ExpenseCategory" },
+                    { 13, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1251), "Supermarket", 13, "ExpenseCategory" },
+                    { 14, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1252), "Transportation", 14, "ExpenseCategory" },
+                    { 15, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1253), "Travel", 15, "ExpenseCategory" },
+                    { 16, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1275), "Awards", 16, "IncomeCategory" },
+                    { 17, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1276), "Gift", 17, "IncomeCategory" },
+                    { 18, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1277), "Investments", 18, "IncomeCategory" },
+                    { 19, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1278), "Salary", 19, "IncomeCategory" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Goals",
-                columns: new[] { "Id", "CreationDate", "CurrentBalance", "FinalBalance", "FinalDate", "IconId", "IsDeleted", "Name", "UserId" },
+                columns: new[] { "Id", "CreationDate", "CurrentBalance", "FinalBalance", "FinalDate", "IconId", "IsCompleted", "IsDeleted", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4638), 400.0, 2000.0, new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, "Viagem", 1 },
-                    { 2, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4640), 12000.32, 35000.720000000001, new DateTime(2023, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, "Carro", 2 }
+                    { 1, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1324), 400.0, 2000.0, new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, false, "Viagem", 1 },
+                    { 2, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1326), 12000.32, 35000.720000000001, new DateTime(2023, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, false, false, "Carro", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -67,8 +67,8 @@ namespace TCC.Migrations
                 columns: new[] { "Id", "AccountId", "Category", "CategoryId", "CreationDate", "Description", "TransactionDate", "Type", "UserId", "Value", "isDeleted", "isPaid" },
                 values: new object[,]
                 {
-                    { 1, 1, 13, 1, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4610), "Mercado", new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4611), "Expense", 1, 250.0, false, true },
-                    { 2, 2, 11, 2, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4612), "Alaminuta", new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4613), "Expense", 2, 172.34999999999999, false, false }
+                    { 1, 1, 13, 1, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1292), "Mercado", new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1292), "Expense", 1, 250.0, false, true },
+                    { 2, 2, 11, 2, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1294), "Alaminuta", new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1294), "Expense", 2, 172.34999999999999, false, false }
                 });
 
             migrationBuilder.InsertData(
@@ -76,8 +76,8 @@ namespace TCC.Migrations
                 columns: new[] { "Id", "AccountId", "Category", "CategoryId", "CreationDate", "Description", "TransactionDate", "Type", "UserId", "Value", "isDeleted", "isReceived" },
                 values: new object[,]
                 {
-                    { 3, 1, 19, 3, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4623), "Salário", new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4623), "Income", 1, 2000.0, false, true },
-                    { 4, 2, 16, 4, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4625), "Premio", new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4625), "Income", 2, 13.75, false, false }
+                    { 3, 1, 19, 3, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1308), "Salário", new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1308), "Income", 1, 2000.0, false, true },
+                    { 4, 2, 16, 4, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1309), "Premio", new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1309), "Income", 2, 13.75, false, false }
                 });
 
             migrationBuilder.InsertData(
@@ -85,8 +85,8 @@ namespace TCC.Migrations
                 columns: new[] { "Id", "CreationDate", "Name", "Password", "isDeleted" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4412), "Eduardo", "12345", false },
-                    { 2, new DateTime(2022, 12, 7, 20, 13, 50, 731, DateTimeKind.Local).AddTicks(4424), "Paulo", "54321", false }
+                    { 1, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1022), "Eduardo", "12345", false },
+                    { 2, new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1038), "Paulo", "54321", false }
                 });
         }
 

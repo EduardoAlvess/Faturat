@@ -22,10 +22,10 @@ namespace TCC.Migrations
             migrationBuilder.RenameColumn(
                 name: "Amount",
                 table: "Goals",
-                newName: "FinalAmount");
+                newName: "FinalBalance");
 
             migrationBuilder.AddColumn<double>(
-                name: "CurrentAmount",
+                name: "CurrentBalance",
                 table: "Goals",
                 type: "double",
                 nullable: false,
@@ -53,7 +53,7 @@ namespace TCC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Goals",
-                columns: new[] { "Id", "CreationDate", "CurrentAmount", "FinalAmount", "FinalDate", "IconId", "Name", "UserId" },
+                columns: new[] { "Id", "CreationDate", "CurrentBalance", "FinalBalance", "FinalDate", "IconId", "Name", "UserId" },
                 values: new object[,]
                 {
                     { 1, new DateTime(2022, 10, 5, 21, 17, 23, 432, DateTimeKind.Local).AddTicks(6430), 400.0, 2000.0, new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Viagem", 1 },
@@ -180,7 +180,7 @@ namespace TCC.Migrations
                 keyValue: 2);
 
             migrationBuilder.DropColumn(
-                name: "CurrentAmount",
+                name: "CurrentBalance",
                 table: "Goals");
 
             migrationBuilder.RenameColumn(
@@ -194,7 +194,7 @@ namespace TCC.Migrations
                 newName: "Image");
 
             migrationBuilder.RenameColumn(
-                name: "FinalAmount",
+                name: "FinalBalance",
                 table: "Goals",
                 newName: "Amount");
         }

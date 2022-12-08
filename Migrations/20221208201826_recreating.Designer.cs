@@ -11,8 +11,8 @@ using TCC.Db;
 namespace TCC.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221109014136_TransactionDate")]
-    partial class TransactionDate
+    [Migration("20221208201826_recreating")]
+    partial class recreating
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,9 @@ namespace TCC.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
@@ -52,19 +55,21 @@ namespace TCC.Migrations
                         {
                             Id = 1,
                             Balance = 2000.0,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1170),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1228),
                             IconId = 1,
                             Name = "Conta corrente",
-                            UserId = 1
+                            UserId = 1,
+                            isDeleted = false
                         },
                         new
                         {
                             Id = 2,
                             Balance = 233.33000000000001,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1171),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1229),
                             IconId = 2,
                             Name = "Conta PJ",
-                            UserId = 2
+                            UserId = 2,
+                            isDeleted = false
                         });
                 });
 
@@ -116,6 +121,12 @@ namespace TCC.Migrations
                     b.Property<int>("IconId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -131,22 +142,26 @@ namespace TCC.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1236),
-                            CurrentAmount = 400.0,
-                            FinalAmount = 2000.0,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1324),
+                            CurrentBalance = 400.0,
+                            FinalBalance = 2000.0,
                             FinalDate = new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconId = 1,
+                            IsCompleted = false,
+                            IsDeleted = false,
                             Name = "Viagem",
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1238),
-                            CurrentAmount = 12000.32,
-                            FinalAmount = 35000.720000000001,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1326),
+                            CurrentBalance = 12000.32,
+                            FinalBalance = 35000.720000000001,
                             FinalDate = new DateTime(2023, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IconId = 2,
+                            IsCompleted = false,
+                            IsDeleted = false,
                             Name = "Carro",
                             UserId = 2
                         });
@@ -186,6 +201,9 @@ namespace TCC.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Category")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
@@ -249,7 +267,7 @@ namespace TCC.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1041),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1022),
                             Name = "Eduardo",
                             Password = "12345",
                             isDeleted = false
@@ -257,7 +275,7 @@ namespace TCC.Migrations
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1050),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1038),
                             Name = "Paulo",
                             Password = "54321",
                             isDeleted = false
@@ -278,10 +296,11 @@ namespace TCC.Migrations
                         {
                             Id = 1,
                             AccountId = 1,
+                            Category = 13,
                             CategoryId = 1,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1208),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1292),
                             Description = "Mercado",
-                            TransactionDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1208),
+                            TransactionDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1292),
                             UserId = 1,
                             Value = 250.0,
                             isDeleted = false,
@@ -291,10 +310,11 @@ namespace TCC.Migrations
                         {
                             Id = 2,
                             AccountId = 2,
+                            Category = 11,
                             CategoryId = 2,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1210),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1294),
                             Description = "Alaminuta",
-                            TransactionDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1210),
+                            TransactionDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1294),
                             UserId = 2,
                             Value = 172.34999999999999,
                             isDeleted = false,
@@ -312,16 +332,107 @@ namespace TCC.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1186),
-                            Description = "Supermarket",
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1242),
+                            Description = "Gym",
                             IconId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1187),
-                            Description = "Restaurant",
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1243),
+                            Description = "Clothing",
                             IconId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1244),
+                            Description = "Education",
+                            IconId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1244),
+                            Description = "Pet",
+                            IconId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1245),
+                            Description = "Electronics",
+                            IconId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1246),
+                            Description = "Health",
+                            IconId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1246),
+                            Description = "Home",
+                            IconId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1247),
+                            Description = "Taxes",
+                            IconId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1248),
+                            Description = "Leisure",
+                            IconId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1249),
+                            Description = "Others",
+                            IconId = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1249),
+                            Description = "Restaurant",
+                            IconId = 11
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1250),
+                            Description = "Services",
+                            IconId = 12
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1251),
+                            Description = "Supermarket",
+                            IconId = 13
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1252),
+                            Description = "Transportation",
+                            IconId = 14
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1253),
+                            Description = "Travel",
+                            IconId = 15
                         });
                 });
 
@@ -339,10 +450,11 @@ namespace TCC.Migrations
                         {
                             Id = 3,
                             AccountId = 1,
+                            Category = 19,
                             CategoryId = 3,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1221),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1308),
                             Description = "Salário",
-                            TransactionDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1221),
+                            TransactionDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1308),
                             UserId = 1,
                             Value = 2000.0,
                             isDeleted = false,
@@ -352,10 +464,11 @@ namespace TCC.Migrations
                         {
                             Id = 4,
                             AccountId = 2,
+                            Category = 16,
                             CategoryId = 4,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1222),
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1309),
                             Description = "Premio",
-                            TransactionDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1223),
+                            TransactionDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1309),
                             UserId = 2,
                             Value = 13.75,
                             isDeleted = false,
@@ -372,17 +485,31 @@ namespace TCC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1195),
-                            Description = "Salary",
-                            IconId = 1
+                            Id = 16,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1275),
+                            Description = "Awards",
+                            IconId = 16
                         },
                         new
                         {
-                            Id = 4,
-                            CreationDate = new DateTime(2022, 11, 8, 22, 41, 36, 142, DateTimeKind.Local).AddTicks(1196),
-                            Description = "Award",
-                            IconId = 2
+                            Id = 17,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1276),
+                            Description = "Gift",
+                            IconId = 17
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1277),
+                            Description = "Investments",
+                            IconId = 18
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreationDate = new DateTime(2022, 12, 8, 17, 18, 25, 964, DateTimeKind.Local).AddTicks(1278),
+                            Description = "Salary",
+                            IconId = 19
                         });
                 });
 #pragma warning restore 612, 618

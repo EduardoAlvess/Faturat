@@ -104,10 +104,10 @@ namespace TCC.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime");
 
-                    b.Property<double>("CurrentAmount")
+                    b.Property<double>("CurrentBalance")
                         .HasColumnType("double");
 
-                    b.Property<double>("FinalAmount")
+                    b.Property<double>("FinalBalance")
                         .HasColumnType("double");
 
                     b.Property<DateTime>("FinalDate")
