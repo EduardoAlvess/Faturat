@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TCC.Db;
+using TCC.Areas.Identity.Data;
 
 namespace TCC
 {
@@ -39,6 +40,14 @@ namespace TCC
             dbContextOptions.UseMySql(connectionString, new MySqlServerVersion(new Version(5, 6, 0)))
                             .EnableSensitiveDataLogging()
                             .EnableDetailedErrors());
+
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddEntityFrameworkStores<DatabaseContext>();
+
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllers().AddNewtonsoftJson();
+            builder.Services.AddRazorPages();
+            builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
         }
     }
 }

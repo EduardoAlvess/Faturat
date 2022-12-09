@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
-namespace TCC.Models
+namespace TCC.Areas.Identity.Data
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }

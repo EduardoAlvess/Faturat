@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TCC.Areas.Identity.Data;
 using TCC.Models;
 
 namespace TCC.Db

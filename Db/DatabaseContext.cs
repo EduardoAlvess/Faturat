@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using TCC.Areas.Identity.Data;
 using TCC.Models;
 
 namespace TCC.Db
