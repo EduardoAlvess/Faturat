@@ -9,15 +9,15 @@ namespace TCC.Controllers
     {
         private readonly IDatabaseContext _databaseContext;
 
-        public TransactionsController(IDatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        public TransactionsController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
 
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.Where(x => x.isDeleted != true).ToList();
+            var list = _databaseContext.Transactions.Where(x => x.isDeleted != true && x.UserId == GetUserId()).ToList();
             return View("Index", list);
         }
+
+        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
+
     }
 }

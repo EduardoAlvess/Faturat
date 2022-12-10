@@ -10,15 +10,12 @@ namespace TCC.Controllers
     {
         private readonly IDatabaseContext _databaseContext;
 
-        public IncomesController(IDatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        public IncomesController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
 
         [HttpGet]
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.OfType<Income>().Where(x => x.isDeleted != true).ToList();
+            var list = _databaseContext.Transactions.OfType<Income>().Where(x => x.isDeleted != true && x.UserId == GetUserId()).ToList();
             return View("Index", list);
         }
 
@@ -33,7 +30,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Income income)
         {
-            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id);
+            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id && x.UserId == GetUserId());
 
             if (income != null)
             {
@@ -53,46 +50,12 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id);
+            var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
             income.isDeleted = true;
             _databaseContext.SaveChanges(income, "Modified");
             return Json("Teste");
         }
 
-        // POST: TransactionsController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        // GET: TransactionsController/Edit/5
-
-        // POST: TransactionsController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        // GET: TransactionsController/Delete/5
-
-        // POST: TransactionsController/Delete/5
+        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
     }
 }

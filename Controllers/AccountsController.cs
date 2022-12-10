@@ -11,14 +11,11 @@ namespace TCC.Controllers
     {
         private readonly IDatabaseContext _databaseContext;
 
-        public AccountsController(IDatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
-        
+        public AccountsController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
+
         public ActionResult Index()
         {
-            var list = _databaseContext.Accounts.Where(x => x.isDeleted != true).ToList();
+            var list = _databaseContext.Accounts.Where(x => x.isDeleted != true && x.UserId == GetUserId()).ToList();
             return View(list);
         }
 
@@ -34,7 +31,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Account account)
         {
-            var accountToEdit = _databaseContext.Accounts.FirstOrDefault(x => x.Id == account.Id);
+            var accountToEdit = _databaseContext.Accounts.FirstOrDefault(x => x.Id == account.Id && x.UserId == GetUserId());
 
             if(account != null)
             {
@@ -50,7 +47,7 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
             account.isDeleted = true;
             _databaseContext.SaveChanges(account, "Modified");
             return Json("Teste");
@@ -59,7 +56,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult AddBalance(int id, [FromBody] double value)
         {
-            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
 
             account.Balance += value;
             _databaseContext.SaveChanges(account, "Modified");
@@ -70,12 +67,14 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult RemoveBalance(int id, [FromBody] double value)
         {
-            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
 
             account.Balance -= value;
             _databaseContext.SaveChanges(account, "Modified");
 
             return Json("Teste");
         }
+
+        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
     }
 }

@@ -10,15 +10,12 @@ namespace TCC.Controllers
     {
         private readonly IDatabaseContext _databaseContext;
 
-        public ExpensesController(IDatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        public ExpensesController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
 
         [HttpGet]
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.OfType<Expense>().Where(x => x.isDeleted != true).ToList();
+            var list = _databaseContext.Transactions.OfType<Expense>().Where(x => x.isDeleted != true && x.UserId == GetUserId()).ToList();
             return View("Index", list);
         }
 
@@ -33,7 +30,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Expense expense)
         {
-            var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == expense.Id);
+            var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == expense.Id && x.UserId == GetUserId());
 
             if (expense != null)
             {
@@ -53,10 +50,12 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var expense = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id);
+            var expense = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
             expense.isDeleted = true;
             _databaseContext.SaveChanges(expense, "Modified");
             return Json("Teste");
         }
+
+        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
     }
 }

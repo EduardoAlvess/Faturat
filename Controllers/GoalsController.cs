@@ -10,14 +10,11 @@ namespace TCC.Controllers
     {
         private readonly IDatabaseContext _databaseContext;
 
-        public GoalsController(IDatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        public GoalsController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
 
         public IActionResult Index()
         {
-            var list = _databaseContext.Goals.Where(x => x.IsDeleted != true).ToList();
+            var list = _databaseContext.Goals.Where(x => x.IsDeleted != true && x.UserId == GetUserId()).ToList();
             return View(list);
         }
 
@@ -32,7 +29,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Goal goal)
         {
-            var goalToEdit = _databaseContext.Goals.FirstOrDefault(x => x.Id == goal.Id);
+            var goalToEdit = _databaseContext.Goals.FirstOrDefault(x => x.Id == goal.Id && x.UserId == GetUserId());
 
             if (goal != null)
             {
@@ -50,7 +47,7 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id);
+            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
             goal.IsDeleted = true;
             _databaseContext.SaveChanges(goal, "Modified");
             return Json("Teste");
@@ -59,7 +56,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult AddBalance(int id, [FromBody] double value)
         {
-            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id);
+            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
 
             goal.CurrentBalance += value;
 
@@ -73,7 +70,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult RemoveBalance(int id, [FromBody] double value)
         {
-            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id);
+            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
 
             goal.CurrentBalance -= value;
 
@@ -91,5 +88,7 @@ namespace TCC.Controllers
             else
                 goal.IsCompleted = false;
         }
+
+        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
     }
 }
