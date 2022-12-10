@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TCC.Models;
 using TCC.Db;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TCC.Controllers
 {
+    [Authorize]
     public class IncomesController : Controller
     {
         private readonly IDatabaseContext _databaseContext;

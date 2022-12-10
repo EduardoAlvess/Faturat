@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TCC.Db;
 using TCC.Models;
 
 namespace TCC.Controllers
 {
+    [Authorize]
     public class AccountsController : Controller
     {
         private readonly IDatabaseContext _databaseContext;

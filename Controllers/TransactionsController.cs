@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TCC.Db;
 
 namespace TCC.Controllers
 {
+    [Authorize]
     public class TransactionsController : Controller
     {
         private readonly IDatabaseContext _databaseContext;
