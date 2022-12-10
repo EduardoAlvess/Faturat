@@ -41,8 +41,13 @@ namespace TCC
                             .EnableSensitiveDataLogging()
                             .EnableDetailedErrors());
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
-                            .AddEntityFrameworkStores<DatabaseContext>();
+            builder.Services.AddDefaultIdentity<User>(options => 
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+            }).AddEntityFrameworkStores<DatabaseContext>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllers().AddNewtonsoftJson();

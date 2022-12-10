@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace TCC.Areas.Identity.Data
 {
@@ -8,11 +7,7 @@ namespace TCC.Areas.Identity.Data
     {
         [Key]
         public int Id { get; set; }
-        //[Required]
-        //public string UserName { get; set; }
-        //[Required]
-        //public string Password { get; set; }
-        public bool isDeleted { get; set; }
-        public DateTime CreationDate { get; set; }
+        public bool isDeleted { get; set; } = false;
+        public DateTime CreationDate { get; set; } = DateTime.Now;
     }
 }
