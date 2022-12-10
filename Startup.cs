@@ -41,13 +41,13 @@ namespace TCC
                             .EnableSensitiveDataLogging()
                             .EnableDetailedErrors());
 
-            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<DatabaseContext>();
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+                            .AddEntityFrameworkStores<DatabaseContext>();
 
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddControllers().AddNewtonsoftJson();
-            builder.Services.AddRazorPages();
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+            builder.Services.AddControllers().AddNewtonsoftJson();
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
         }
     }
 }

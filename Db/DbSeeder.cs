@@ -22,16 +22,16 @@ namespace TCC.Db
                 new User
                 {
                     Id = 1,
-                    Name = "Eduardo",
-                    Password = "12345",
+                    UserName = "Eduardo",
+                    Email = "eduardo@eduardo.com",
                     isDeleted = false,
                     CreationDate = DateTime.Now
                 },
                 new User
                 {
                     Id = 2,
-                    Name = "Paulo",
-                    Password = "54321",
+                    UserName = "Paulo",
+                    Email = "paulo@paulo.com",
                     isDeleted = false,
                     CreationDate = DateTime.Now
                 });
