@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCC.Areas.Identity.Data;
 using TCC.Models;
+using BCrypt.Net;
 
 namespace TCC.Db
 {
@@ -22,16 +23,18 @@ namespace TCC.Db
                 new User
                 {
                     Id = 1,
-                    UserName = "Eduardo",
+                    UserName = "eduardo@eduardo.com",
                     Email = "eduardo@eduardo.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("eduardo123"),
                     isDeleted = false,
                     CreationDate = DateTime.Now
                 },
                 new User
                 {
                     Id = 2,
-                    UserName = "Paulo",
+                    UserName = "paulo@paulo.com",
                     Email = "paulo@paulo.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("paulo123"),
                     isDeleted = false,
                     CreationDate = DateTime.Now
                 });
