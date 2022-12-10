@@ -1,22 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TCC.Db;
+using TCC.Providers;
 using TCC.Models;
+using TCC.Db;
 
 namespace TCC.Controllers
 {
+    [Authorize]
     public class AccountsController : Controller
     {
         private readonly IDatabaseContext _databaseContext;
+        private readonly IUserProvider _userProvider;
 
-        public AccountsController(IDatabaseContext databaseContext)
+        public AccountsController(IDatabaseContext databaseContext, IUserProvider userProvider)
         {
             _databaseContext = databaseContext;
+            _userProvider = userProvider;
         }
-        
+
         public ActionResult Index()
         {
-            var list = _databaseContext.Accounts.Where(x => x.isDeleted != true).ToList();
+            var list = _databaseContext.Accounts.Where(x => x.isDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
             return View(list);
         }
 
@@ -32,7 +36,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Account account)
         {
-            var accountToEdit = _databaseContext.Accounts.FirstOrDefault(x => x.Id == account.Id);
+            var accountToEdit = _databaseContext.Accounts.FirstOrDefault(x => x.Id == account.Id && x.UserId == _userProvider.GetUserId());
 
             if(account != null)
             {
@@ -48,7 +52,7 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             account.isDeleted = true;
             _databaseContext.SaveChanges(account, "Modified");
             return Json("Teste");
@@ -57,7 +61,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult AddBalance(int id, [FromBody] double value)
         {
-            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
             account.Balance += value;
             _databaseContext.SaveChanges(account, "Modified");
@@ -68,7 +72,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult RemoveBalance(int id, [FromBody] double value)
         {
-            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id);
+            var account = _databaseContext.Accounts.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
             account.Balance -= value;
             _databaseContext.SaveChanges(account, "Modified");
