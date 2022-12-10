@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TCC.Providers;
 using TCC.Models;
 using TCC.Db;
-using Microsoft.AspNetCore.Authorization;
 
 namespace TCC.Controllers
 {
@@ -9,13 +10,18 @@ namespace TCC.Controllers
     public class IncomesController : Controller
     {
         private readonly IDatabaseContext _databaseContext;
+        private readonly IUserProvider _userProvider;
 
-        public IncomesController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
+        public IncomesController(IDatabaseContext databaseContext, IUserProvider userProvider)
+        {
+            _databaseContext = databaseContext;
+            _userProvider = userProvider;
+        }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.OfType<Income>().Where(x => x.isDeleted != true && x.UserId == GetUserId()).ToList();
+            var list = _databaseContext.Transactions.OfType<Income>().Where(x => x.isDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
             return View("Index", list);
         }
 
@@ -30,7 +36,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Income income)
         {
-            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id && x.UserId == GetUserId());
+            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id && x.UserId == _userProvider.GetUserId());
 
             if (income != null)
             {
@@ -50,12 +56,10 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
+            var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             income.isDeleted = true;
             _databaseContext.SaveChanges(income, "Modified");
             return Json("Teste");
         }
-
-        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
     }
 }

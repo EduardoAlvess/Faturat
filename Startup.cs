@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TCC.Db;
 using TCC.Areas.Identity.Data;
+using TCC.Providers;
 
 namespace TCC
 {
@@ -49,9 +50,12 @@ namespace TCC
                 options.Password.RequiredLength = 6;
             }).AddEntityFrameworkStores<DatabaseContext>();
 
+            builder.Services.AddTransient<IUserProvider, UserProvider>();
+
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllers().AddNewtonsoftJson();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddRazorPages();
         }
     }

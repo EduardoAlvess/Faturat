@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TCC.Db;
+using TCC.Providers;
 using TCC.Models;
+using TCC.Db;
 
 namespace TCC.Controllers
 {
@@ -9,12 +10,17 @@ namespace TCC.Controllers
     public class GoalsController : Controller
     {
         private readonly IDatabaseContext _databaseContext;
+        private readonly IUserProvider _userProvider;
 
-        public GoalsController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
+        public GoalsController(IDatabaseContext databaseContext, IUserProvider userProvider)
+        {
+            _databaseContext = databaseContext;
+            _userProvider = userProvider;
+        }
 
         public IActionResult Index()
         {
-            var list = _databaseContext.Goals.Where(x => x.IsDeleted != true && x.UserId == GetUserId()).ToList();
+            var list = _databaseContext.Goals.Where(x => x.IsDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
             return View(list);
         }
 
@@ -29,7 +35,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Goal goal)
         {
-            var goalToEdit = _databaseContext.Goals.FirstOrDefault(x => x.Id == goal.Id && x.UserId == GetUserId());
+            var goalToEdit = _databaseContext.Goals.FirstOrDefault(x => x.Id == goal.Id && x.UserId == _userProvider.GetUserId());
 
             if (goal != null)
             {
@@ -47,7 +53,7 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
+            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             goal.IsDeleted = true;
             _databaseContext.SaveChanges(goal, "Modified");
             return Json("Teste");
@@ -56,7 +62,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult AddBalance(int id, [FromBody] double value)
         {
-            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
+            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
             goal.CurrentBalance += value;
 
@@ -70,7 +76,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult RemoveBalance(int id, [FromBody] double value)
         {
-            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
+            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
             goal.CurrentBalance -= value;
 
@@ -88,7 +94,5 @@ namespace TCC.Controllers
             else
                 goal.IsCompleted = false;
         }
-
-        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
     }
 }

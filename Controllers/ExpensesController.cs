@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TCC.Db;
+using TCC.Providers;
 using TCC.Models;
+using TCC.Db;
 
 namespace TCC.Controllers
 {
@@ -9,13 +10,18 @@ namespace TCC.Controllers
     public class ExpensesController : Controller
     {
         private readonly IDatabaseContext _databaseContext;
+        private readonly IUserProvider _userProvider;
 
-        public ExpensesController(IDatabaseContext databaseContext) => _databaseContext = databaseContext;
+        public ExpensesController(IDatabaseContext databaseContext, IUserProvider userProvider)
+        {
+            _databaseContext = databaseContext;
+            _userProvider = userProvider;
+        }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.OfType<Expense>().Where(x => x.isDeleted != true && x.UserId == GetUserId()).ToList();
+            var list = _databaseContext.Transactions.OfType<Expense>().Where(x => x.isDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
             return View("Index", list);
         }
 
@@ -30,7 +36,7 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Expense expense)
         {
-            var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == expense.Id && x.UserId == GetUserId());
+            var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == expense.Id && x.UserId == _userProvider.GetUserId());
 
             if (expense != null)
             {
@@ -50,12 +56,10 @@ namespace TCC.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var expense = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id && x.UserId == GetUserId());
+            var expense = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             expense.isDeleted = true;
             _databaseContext.SaveChanges(expense, "Modified");
             return Json("Teste");
         }
-
-        public int GetUserId() => _databaseContext.Users.First(x => x.UserName == User.Identity.Name).Id;
     }
 }
