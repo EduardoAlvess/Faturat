@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Reflection.Emit;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using TCC.Areas.Identity.Data;
 using TCC.Models;
 
 namespace TCC.Db
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
+        public DbSet<IdentityUserClaim<string>> IdentityUserClaim { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Account> Accounts { get; set; }
@@ -31,15 +35,17 @@ namespace TCC.Db
             builder.Entity<IncomeCategory>(entity => { entity.HasBaseType<Category>(); });
             builder.Entity<ExpenseCategory>(entity => { entity.HasBaseType<Category>(); });
 
+            builder.Entity<IdentityUserClaim<string>>().HasKey(p => new { p.Id });
+
             DbSeeder.SeedTables(builder);
         }
 
-        public void SaveChanges(Transaction transaction, string state)
+        public void SaveChanges(Object item, string state)
         {
             if (state.Equals("Added"))
-                Entry(transaction).State = EntityState.Added;
+                Entry(item).State = EntityState.Added;
             if (state.Equals("Modified"))
-                Entry(transaction).State = EntityState.Modified;
+                Entry(item).State = EntityState.Modified;
 
             SaveChanges();
         }

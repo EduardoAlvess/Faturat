@@ -1,0 +1,20 @@
+﻿@model List<TCC.Models.Goal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var goal in Model)
+{
+    <p>Id: @goal.Id</p>
+    <p>UserId: @goal.UserId</p>
+    <p>IconId: @goal.IconId</p>
+    <p>Name: @goal.Name</p>
+    <p>CurrentAmount: @goal.CurrentBalance</p>
+    <p>FinalAmount: @goal.FinalBalance</p>
+    <p>FinalDate: @goal.FinalDate</p>
+    <p>FinalDate: @goal.IsCompleted</p>
+    <p>CreationDate: @goal.CreationDate</p>
+    <p>------------------------------------------------</p>
+}
+

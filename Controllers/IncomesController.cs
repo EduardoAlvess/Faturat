@@ -1,22 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TCC.Providers;
 using TCC.Models;
 using TCC.Db;
 
 namespace TCC.Controllers
 {
+    [Authorize]
     public class IncomesController : Controller
     {
         private readonly IDatabaseContext _databaseContext;
+        private readonly IUserProvider _userProvider;
 
-        public IncomesController(IDatabaseContext databaseContext)
+        public IncomesController(IDatabaseContext databaseContext, IUserProvider userProvider)
         {
             _databaseContext = databaseContext;
+            _userProvider = userProvider;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.OfType<Income>().Where(x => x.isDeleted != true).ToList();
+            var list = _databaseContext.Transactions.OfType<Income>().Where(x => x.isDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
             return View("Index", list);
         }
 
@@ -31,60 +36,30 @@ namespace TCC.Controllers
         [HttpPost]
         public ActionResult Edit([FromBody] Income income)
         {
-            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id);
-            incomeToEdit.TransactionDate = income.TransactionDate;
-            incomeToEdit.Description = income.Description;
-            incomeToEdit.CategoryId = income.CategoryId;
-            incomeToEdit.isReceived = income.isReceived;
-            incomeToEdit.AccountId = income.AccountId;
-            incomeToEdit.Value = income.Value;
-            _databaseContext.SaveChanges(incomeToEdit, "Modified");
-            return Json("Teste");
+            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id && x.UserId == _userProvider.GetUserId());
+
+            if (income != null)
+            {
+                incomeToEdit.TransactionDate = income.TransactionDate;
+                incomeToEdit.Description = income.Description;
+                incomeToEdit.CategoryId = income.CategoryId;
+                incomeToEdit.isReceived = income.isReceived;
+                incomeToEdit.AccountId = income.AccountId;
+                incomeToEdit.Category = income.Category;
+                incomeToEdit.Value = income.Value;
+                _databaseContext.SaveChanges(incomeToEdit, "Modified");
+                return Json("Atualizado");
+            }
+            return Json("Erro");
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id);
+            var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             income.isDeleted = true;
             _databaseContext.SaveChanges(income, "Modified");
             return Json("Teste");
         }
-
-        // POST: TransactionsController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        // GET: TransactionsController/Edit/5
-
-        // POST: TransactionsController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        // GET: TransactionsController/Delete/5
-
-        // POST: TransactionsController/Delete/5
     }
 }

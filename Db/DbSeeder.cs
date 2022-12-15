@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TCC.Areas.Identity.Data;
 using TCC.Models;
+using BCrypt.Net;
 
 namespace TCC.Db
 {
@@ -21,16 +23,18 @@ namespace TCC.Db
                 new User
                 {
                     Id = 1,
-                    Name = "Eduardo",
-                    Password = "12345",
+                    UserName = "eduardo@eduardo.com",
+                    Email = "eduardo@eduardo.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("eduardo123"),
                     isDeleted = false,
                     CreationDate = DateTime.Now
                 },
                 new User
                 {
                     Id = 2,
-                    Name = "Paulo",
-                    Password = "54321",
+                    UserName = "paulo@paulo.com",
+                    Email = "paulo@paulo.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("paulo123"),
                     isDeleted = false,
                     CreationDate = DateTime.Now
                 });
@@ -61,7 +65,8 @@ namespace TCC.Db
                     IconId = 1,
                     Name = "Conta corrente",
                     Balance = 2000,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    isDeleted = false
                 },
                 new Account
                 {
@@ -70,7 +75,8 @@ namespace TCC.Db
                     IconId = 2,
                     Name = "Conta PJ",
                     Balance = 233.33,
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    isDeleted = false
                 });
         }
 
@@ -284,10 +290,12 @@ namespace TCC.Db
                     UserId = 1,
                     IconId = 1,
                     Name = "Viagem",
-                    FinalAmount = 2000,
-                    CurrentAmount = 400,
+                    FinalBalance = 2000,
+                    CurrentBalance = 400,
                     FinalDate = new DateTime(2023, 01, 15),
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    IsCompleted = false,
+                    IsDeleted = false
                 },
                 new Goal
                 {
@@ -295,10 +303,12 @@ namespace TCC.Db
                     UserId = 2,
                     IconId = 2,
                     Name = "Carro",
-                    FinalAmount = 35000.72,
-                    CurrentAmount = 12000.32,
+                    FinalBalance = 35000.72,
+                    CurrentBalance = 12000.32,
                     FinalDate = new DateTime(2023, 02, 15),
-                    CreationDate = DateTime.Now
+                    CreationDate = DateTime.Now,
+                    IsCompleted = false,
+                    IsDeleted = false
                 });
         }
     }
