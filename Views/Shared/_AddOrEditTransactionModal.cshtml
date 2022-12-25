@@ -1,35 +1,38 @@
-﻿@model string
+﻿@using TCC.Controllers
+@model string
 
 @{
-    var transactionType = "";
+    var transactionType = "expense";
+    bool isIncome = false;
 
-    if(Model.ToLower().Contains("income"))
+    if (Model.ToLower().Contains("income"))
     {
-        transactionType = Model.ToLower();
+        transactionType = "income";
+        isIncome = true;
     }
 }
 
 <div class="modal-dialog" role="document">
-    <div class="modal-content" style="background-color: #2C2C2E;">
+    <div class="modal-content bg-dark">
         <div class="modal-header">
             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                 <span class="icon icon-close icon-2x"></span>
                 <span class="btn-close-label hidden-sm-down">esc</span>
             </button>
-            <h4 class="modal-title" id="incomeModalLabel" style="color: white;">New income</h4>
+            <h4 class="modal-title text-white" id="@(transactionType)ModalLabel">New @transactionType</h4>
         </div>
         <div class="modal-body">
             <form>
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1" style="background-color: #2C2C2E;">$</span>
-                    <input type="text" class="form-control" placeholder="R$ 0.00" style="background-color: #2C2C2E; color: white;">
+                    <span class="input-group-addon bg-dark text-white" id="basic-addon1">$</span>
+                    <input type="text" class="form-control bg-dark text-white" placeholder="R$ 0.00">
                 </div>
                 <br>
                 <div class="form-check">
                     <input id="checkbox1" class="form-check-input" type="checkbox" checked>
                     <label class="form-check-label" for="checkbox1">
                         @{
-                            if(transactionType.Contains("income"))
+                            if (isIncome)
                             {
                                 @:Recived
                             }
@@ -37,36 +40,33 @@
                             {
                                 @:Paid
                             }
-                        }
-                    </label>
+                                        }
+                                    </label>
                 </div>
-
                 <div class="form-group row">
-                    <label for="example-date-input" class="col-xs-2 col-form-label" style="color: white;">Date:</label>
+                    <label for="example-date-input" class="col-xs-2 col-form-label text-white">Date:</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="date" value="2011-08-19" id="example-date-input" style="background-color: #2C2C2E; color: white;">
+                        <input class="form-control bg-dark text-white" type="date" value="2011-08-19" id="example-date-input">
                     </div>
                 </div>
-
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1" style="background-color: #2C2C2E;"><span class="icon icon-file-new"></span></span>
-                    <span class="input-group-addon" id="basic-addon1" style="background-color: #2C2C2E;"></span>
-                    <input type="text" class="form-control" placeholder="Description" style="background-color: #2C2C2E; color: white;">
+                    <span class="input-group-addon bg-dark text-white" id="basic-addon1"><span class="icon icon-file-new"></span></span>
+                    <span class="input-group-addon bg-dark text-white" id="basic-addon1"></span>
+                    <input type="text" class="form-control bg-dark text-white" placeholder="Description">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label style="color: white;">Category</label>
-                    <select class="form-control" style="background-color: #2C2C2E; color: white;">
+                    <label class="text-white">Category</label>
+                    <select class="form-control bg-dark text-white">
                         <option>Award</option>
                         <option>Gift</option>
                         <option>Salary</option>
                         <option>Investments</option>
                     </select>
                 </div>
-
                 <div class="form-group">
-                    <label style="color: white;">Account</label>
-                    <select class="form-control" style="background-color: #2C2C2E; color: white;">
+                    <label class="text-white">Account</label>
+                    <select class="form-control bg-dark text-white">
                         <option>Corrente</option>
                         <option>PJ</option>
                     </select>

@@ -6,7 +6,7 @@ using TCC.Db;
 
 namespace TCC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class IncomesController : Controller
     {
         private readonly IDatabaseContext _databaseContext;

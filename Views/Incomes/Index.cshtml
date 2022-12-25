@@ -7,56 +7,55 @@
 
 <div id="main-content">
     <div class="container-fluid">
-        <br>
-        <button class="btn btn-secondary btn-lg text-success" id="btn-new-income" data-toggle="modal" data-target="#addOrEditTransactionModal" type="button"><span class="icon icon-add"></span>   NEW INCOME</button>
-        <a class="btn btn-secondary btn-lg" id="current-balance">R$ 2,775.00<span class="icon icon-up"></span></a>
-        <a class="btn btn-{accent|primary|secondary} btn-fab btn-outline-secondary btn-lg" data-toggle="modal" data-target="#filterTransactionsModal" id="btn-filter" href="#" role="button">
-            <span class="icon icon-content-filter"></span>
-        </a>
-        <br>
-        <br>
+        <div class="actions-container" style="display: flex; padding: 10px; justify-content: space-between; align-items: center;">
+            <button class="btn btn-fab btn-secondary btn-lg text-success" id="btn-new-income" data-toggle="modal" data-target="#addOrEditTransactionModal" type="button"><span class="icon icon-add"></span></button>
+            <span class="current-balance tag tag-simple" style="border: 1px solid; width: 150px; padding: 20px; font-size: 17px" id="current-balance"><a class="text-success">R$ 2,775.00</a></span>
+            <button class="btn btn-fab btn-outline-secondary btn-lg" data-toggle="modal" data-target="#filterTransactionsModal" id="btn-filter" type="button">
+                <span class="icon icon-content-filter"></span>
+            </button>
+        </div>
 
-        <!--New and edit modal-->
-        <div class="modal fade" id="addOrEditTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addOrEditModalLabel" aria-hidden="true">
+        <!-- New and edit modal -->
+        <div class="modal fade" id="addOrEditTransactionModal" aria-labelledby="addOrEditModalLabel" aria-hidden="true">
             @Html.Partial("_AddOrEditTransactionModal", "income")
         </div>
 
-        <!--filter modal-->
-        <div class="modal fade" id="filterTransactionsModal" tabindex="-1" role="dialog" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
+        <!-- Filter modal -->
+        <div class="modal fade" id="filterTransactionsModal" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
             @Html.Partial("_FilterTransactionsModal")
         </div>
 
         <div class="card card-block" style="background-color: #2C2C2E;">
-            <table class="table text-size-sm" style="color: white;">
+            <table class="transactions-table table text-size-sm" style="color: white;">
                 <div id="btn-change-month-div">
                     <button class="btn btn-outline-success" id="btn-change-month" type="button" data-toggle="collapse" data-target="#change-month-list" aria-expanded="false" aria-controls="collapseExample">
                         July 2022
                     </button>
                 </div>
                 <br>
-                @Html.Partial("_FilterTransactionsByMonthModal")
+                @Html.Partial("_FilterTransactionsByMonthModal", "income")
 
                 <thead>
-                    <tr class="">
-                        <th style="color: white;">Date</th>
-                        <th style="width: 200px; color: white;">Description</th>
-                        <th style="color: white;">Category</th>
-                        <th style="color: white;">Amount</th>
-                        <th style="width: 200px; color: white;">Actions</th>
+                    <tr>
+                        <th style="width: 22%; color: white;">Date</th>
+                        <th style="width: 22%; color: white;">Description</th>
+                        <th style="width: 22%; color: white;">Category</th>
+                        <th style="width: 22%; color: white;">Amount</th>
+                        <th style="width: 22%; color: white;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var income in Model)
                     {
                         <tr>
-                            <td>@income.TransactionDate.ToString("dd/MM/yyyy")</td>
-                            <td>@income.Description</td>
-                            <td>@income.Category</td>
-                            <td class="text-success">R$ @income.Value</td>
-                            <td>
+                            <td style="text-align: left">@income.TransactionDate.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align: left">@income.Description</td>
+                            <td style="text-align: left">@income.Category</td>
+                            <td style="text-align: left" class="text-success">R$ @income.Value</td>
+                            <td style="text-align: left">
                                 <div class="btn-group" role="group" aria-label="Actions">
-                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addOrEditTransactionModal" style="background-color: #2C2C2E; color: white;" title="Editar"><span class="icon icon-pencil"></span></button>
-                                    <button type="button" class="btn btn-secondary" style="background-color: #2C2C2E; color: white;" title="Deletar"><span class="icon icon-remove"></span></button>
+                                    <button type="button" class="btn btn-secondary edit-btn" data-toggle="modal" data-target="#addOrEditTransactionModal" style="background-color: #2C2C2E; color: white;" title="Editar"><span class="icon icon-pencil"></span></button>
+                                    <button type="button" class="btn btn-secondary delete-btn" style="background-color: #2C2C2E; color: white;" title="Deletar"><span class="icon icon-remove"></span></button>
                                 </div>
                             </td>
                         </tr>
@@ -66,6 +65,3 @@
         </div>
     </div>
 </div>
-
-
-                                
