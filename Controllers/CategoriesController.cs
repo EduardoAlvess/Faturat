@@ -14,9 +14,18 @@ namespace TCC.Controllers
             _databaseContext = databaseContext;
         }
 
+        [HttpGet]
         public ActionResult<List<ExpenseCategory>> GetExpenseCategories()
         {
             var categories = _databaseContext.Categories.OfType<ExpenseCategory>();
+
+            return Ok(categories);
+        }
+
+        [HttpGet]
+        public ActionResult<List<IncomeCategory>> GetIncomeCategories()
+        {
+            var categories = _databaseContext.Categories.OfType<IncomeCategory>();
 
             return Ok(categories);
         }

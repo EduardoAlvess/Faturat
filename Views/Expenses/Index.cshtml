@@ -1,4 +1,6 @@
-﻿@model List<TCC.Models.Expense>
+﻿@using System.Web.Mvc;
+@using TCC.Views.Shared.Components
+@model List<TCC.Models.Expense>
 
 @{
     ViewData["Title"] = "Expenses";
@@ -22,7 +24,7 @@
 
         <!-- Filter modal -->
         <div class="modal fade" id="filterTransactionsModal" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
-            @Html.Partial("_FilterTransactionsModal")
+            @Html.Partial("_FilterTransactionsModal", "expense")
         </div>
 
         <div class="card card-block" style="background-color: #2C2C2E;">
@@ -37,11 +39,12 @@
 
                 <thead>
                     <tr>
-                        <th style="width: 22%; color: white;">Date</th>
-                        <th style="width: 22%; color: white;">Description</th>
-                        <th style="width: 22%; color: white;">Category</th>
-                        <th style="width: 22%; color: white;">Amount</th>
-                        <th style="width: 22%; color: white;">Actions</th>
+                        <th style="width: 17.2%; color: white;">Date</th>
+                        <th style="width: 17.2%; color: white;">Description</th>
+                        <th style="width: 17.2%; color: white;">Category</th>
+                        <th style="width: 17.2%; color: white;">Account</th>
+                        <th style="width: 17.2%; color: white;">Amount</th>
+                        <th style="width: 17.2%; color: white;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,6 +54,7 @@
                             <td style="text-align: left">@expense.TransactionDate.ToString("dd/MM/yyyy")</td>
                             <td style="text-align: left">@expense.Description</td>
                             <td style="text-align: left">@expense.Category</td>
+                            <td style="text-align: left">@await Component.InvokeAsync(nameof(AccountName), expense.AccountId)</td>
                             <td style="text-align: left" class="text-danger">R$ @expense.Value</td>
                             <td style="text-align: left">
                                 <div class="btn-group" role="group" aria-label="Actions">

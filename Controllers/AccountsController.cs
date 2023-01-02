@@ -79,5 +79,12 @@ namespace TCC.Controllers
 
             return Json("Teste");
         }
+
+        public ActionResult<List<Account>> GetAccounts()
+        {
+            var accounts = _databaseContext.Accounts.Where(x => x.UserId == _userProvider.GetUserId()).ToList();
+
+            return Ok(accounts);
+        }
     }
 }

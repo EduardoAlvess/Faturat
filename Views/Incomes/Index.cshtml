@@ -1,4 +1,6 @@
-﻿@model List<TCC.Models.Income>
+﻿@using TCC.Views.Shared.Components
+
+@model List<TCC.Models.Income>
 
 @{
     ViewData["Title"] = "Incomes";
@@ -22,7 +24,7 @@
 
         <!-- Filter modal -->
         <div class="modal fade" id="filterTransactionsModal" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
-            @Html.Partial("_FilterTransactionsModal")
+            @Html.Partial("_FilterTransactionsModal", "income")
         </div>
 
         <div class="card card-block" style="background-color: #2C2C2E;">
@@ -37,11 +39,12 @@
 
                 <thead>
                     <tr>
-                        <th style="width: 22%; color: white;">Date</th>
-                        <th style="width: 22%; color: white;">Description</th>
-                        <th style="width: 22%; color: white;">Category</th>
-                        <th style="width: 22%; color: white;">Amount</th>
-                        <th style="width: 22%; color: white;">Actions</th>
+                        <th style="width: 17.2%; color: white;">Date</th>
+                        <th style="width: 17.2%; color: white;">Description</th>
+                        <th style="width: 17.2%; color: white;">Category</th>
+                        <th style="width: 17.2%; color: white;">Account</th>
+                        <th style="width: 17.2%; color: white;">Amount</th>
+                        <th style="width: 17.2%; color: white;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,6 +54,7 @@
                             <td style="text-align: left">@income.TransactionDate.ToString("dd/MM/yyyy")</td>
                             <td style="text-align: left">@income.Description</td>
                             <td style="text-align: left">@income.Category</td>
+                            <td style="text-align: left">@await Component.InvokeAsync(nameof(AccountName), income.AccountId)</td>
                             <td style="text-align: left" class="text-success">R$ @income.Value</td>
                             <td style="text-align: left">
                                 <div class="btn-group" role="group" aria-label="Actions">
@@ -65,3 +69,22 @@
         </div>
     </div>
 </div>
+
+<script type="text/jscript">
+    function getAccount(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/accounts/getaccountname?id=" + id, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                document.getElementById(id).innerHTML = xhr.responseText;
+            }
+        }
+        xhr.send();
+    }
+
+    var tds = document.querySelectorAll(".accountId");
+
+    tds.forEach(function (td) {
+        getAccount(td.id);
+    });
+</script>

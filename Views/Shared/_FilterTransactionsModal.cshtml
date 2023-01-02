@@ -1,4 +1,18 @@
-﻿<div class="modal-dialog" role="document">
+﻿@using TCC.Controllers
+@model string
+
+@{
+    var transactionType = "Expense";
+    bool isIncome = false;
+
+    if (Model.ToLower().Contains("income"))
+    {
+        transactionType = "Income";
+        isIncome = true;
+    }
+}
+
+<div class="modal-dialog" role="document">
     <div class="modal-content bg-dark text-white">
         <div class="modal-header">
             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
@@ -11,38 +25,42 @@
             <form>
                 <div class="form-group">
                     <label class="text-white">Category</label>
-                    <select class="form-control bg-dark text-white">
+                    <select class="form-control bg-dark text-white categorySelect">
                         <option>All categories</option>
-                        <option>Award</option>
-                        <option>Gift</option>
-                        <option>Salary</option>
-                        <option>Investments</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="text-white">Account</label>
-                    <select class="form-control bg-dark text-white">
+                    <select class="form-control bg-dark text-white accountSelect">
                         <option>All accounts</option>
-                        <option>Corrente</option>
-                        <option>PJ</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="text-white">Situation</label>
                     <select class="form-control bg-dark text-white">
                         <option>All situations</option>
-                        <option>Recived</option>
-                        <option>Not Recived</option>
+                        @{
+                            if (isIncome)
+                            {
+                                <option>Recived</option>
+                                <option>Not received</option>
+                            }
+                            else
+                            {
+                                <option>Paid</option>
+                                <option>Not paid</option>
+                            }
+                        }
                     </select>
                 </div>
                 <div class="form-group row">
                     <label for="example-date-input" class="col-xs-2 col-form-label text-white">From:</label>
                     <div class="col-xs-10">
-                        <input class="form-control text-white" style="background-color: #2C2C2E;" type="date" value="2011-08-19" id="example-date-input">
+                        <input class="form-control text-white datetime" style="background-color: #2C2C2E;" type="date" value=" " id="example-date-input">
                     </div>
                     <label for="example-date-input2" style="margin-top: 10px;" class="col-xs-2 col-form-label text-white">Until:</label>
                     <div class="col-xs-10">
-                        <input class="form-control text-white" style="margin-top: 10px; background-color: #2C2C2E;" type="date" value="2011-08-19" id="example-date-input2">
+                        <input class="form-control text-white datetime" style="margin-top: 10px; background-color: #2C2C2E;" type="date" value=" " id="example-date-input2">
                     </div>
                 </div>
             </form>

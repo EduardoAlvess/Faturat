@@ -1,15 +1,72 @@
-﻿@model List<TCC.Models.Transaction>
+﻿@using TCC.Views.Shared.Components
+
+@model List<TCC.Models.Transaction>
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_ListTransactionsLayout";
 }
 
-@foreach (var transaction in Model)
-{
-    <p>@transaction.Description</p>
-    <p>@transaction.Value</p>
-    <p>@transaction.Category</p>
-    <p>@transaction.CreationDate</p>
-    <p>------------------------------------</p>
-}
+<div id="main-content">
+    <div class="container-fluid">
+        <div class="actions-container" style="display: flex; padding: 10px; justify-content: space-between; align-items: center;">
+            <button class="btn btn-fab btn-secondary btn-lg text-white" id="btn-new-expense" data-toggle="modal" data-target="#addOrEditTransactionModal" type="button"><span class="icon icon-add"></span></button>
+            <span class="current-balance tag tag-simple" style="border: 1px solid; width: 150px; padding: 20px; font-size: 17px" id="current-balance"><a>R$ 2,775.00</a></span>
+            <button class="btn btn-fab btn-outline-secondary btn-lg" data-toggle="modal" data-target="#filterTransactionsModal" id="btn-filter" type="button">
+                <span class="icon icon-content-filter"></span>
+            </button>
+        </div>
+
+        <!-- New and edit modal -->
+        <div class="modal fade" id="addOrEditTransactionModal" aria-labelledby="addOrEditModalLabel" aria-hidden="true">
+            @Html.Partial("_AddOrEditTransactionModal", "expense")
+        </div>
+
+        <!-- Filter modal -->
+        <div class="modal fade" id="filterTransactionsModal" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
+            @Html.Partial("_FilterTransactionsModal", "expense")
+        </div>
+
+        <div class="card card-block" style="background-color: #2C2C2E;">
+            <table class="transactions-table table text-size-sm" style="color: white;">
+                <div id="btn-change-month-div">
+                    <button class="btn btn-outline" id="btn-change-month" type="button" data-toggle="collapse" data-target="#change-month-list" aria-expanded="false" aria-controls="collapseExample">
+                        July 2022
+                    </button>
+                </div>
+                <br>
+                @Html.Partial("_FilterTransactionsByMonthModal", "expense")
+
+                <thead>
+                    <tr>
+                        <th style="width: 17.2%; color: white;">Date</th>
+                        <th style="width: 17.2%; color: white;">Description</th>
+                        <th style="width: 17.2%; color: white;">Category</th>
+                        <th style="width: 17.2%; color: white;">Account</th>
+                        <th style="width: 17.2%; color: white;">Amount</th>
+                        <th style="width: 17.2%; color: white;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var transaction in Model)
+                    {
+                        <tr>
+                            <td style="text-align: left">@transaction.TransactionDate.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align: left">@transaction.Description</td>
+                            <td style="text-align: left">@transaction.Category</td>
+                            <td style="text-align: left">@await Component.InvokeAsync(nameof(AccountName), transaction.AccountId)</td>
+                            <td style="text-align: left" class="@(transaction.GetType().Name.Equals("Income") ? "text-success" : "text-danger")">R$ @transaction.Value</td>
+                            <td style="text-align: left">
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <button type="button" class="btn btn-secondary edit-btn" data-toggle="modal" data-target="#addOrEditTransactionModal" style="background-color: #2C2C2E; color: white;" title="Editar"><span class="icon icon-pencil"></span></button>
+                                    <button type="button" class="btn btn-secondary delete-btn" style="background-color: #2C2C2E; color: white;" title="Deletar"><span class="icon icon-remove"></span></button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 

@@ -2,12 +2,12 @@
 @model string
 
 @{
-    var transactionType = "expense";
+    var transactionType = "Expense";
     bool isIncome = false;
 
     if (Model.ToLower().Contains("income"))
     {
-        transactionType = "income";
+        transactionType = "Income";
         isIncome = true;
     }
 }
@@ -34,19 +34,19 @@
                         @{
                             if (isIncome)
                             {
-                                @:Recived
+                                @:Received
                             }
                             else
                             {
                                 @:Paid
                             }
-                                        }
-                                    </label>
+                         }
+                    </label>
                 </div>
                 <div class="form-group row">
                     <label for="example-date-input" class="col-xs-2 col-form-label text-white">Date:</label>
                     <div class="col-xs-10">
-                        <input class="form-control bg-dark text-white" type="date" value="2011-08-19" id="example-date-input">
+                        <input class="form-control bg-dark text-white" type="date" id="example-date-input">
                     </div>
                 </div>
                 <div class="input-group">
@@ -57,18 +57,14 @@
                 <br>
                 <div class="form-group">
                     <label class="text-white">Category</label>
-                    <select class="form-control bg-dark text-white">
-                        <option>Award</option>
-                        <option>Gift</option>
-                        <option>Salary</option>
-                        <option>Investments</option>
+                    <select class="form-control bg-dark text-white categorySelect">
+                        <option>All categories</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="text-white">Account</label>
-                    <select class="form-control bg-dark text-white">
-                        <option>Corrente</option>
-                        <option>PJ</option>
+                    <select class="form-control bg-dark text-white accountSelect">
+                        <option>All accounts</option>
                     </select>
                 </div>
             </form>
@@ -78,3 +74,31 @@
         </div>
     </div>
 </div>
+
+<script type="text/jscript">
+    $(document).ready(function () {
+        var url = "/Categories/Get@(transactionType)Categories";
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    $(".categorySelect").append("<option>" + item.description + "</option>");
+                });
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        var url = "/Accounts/GetAccounts";
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    $(".accountSelect").append("<option>" + item.name + "</option>");
+                });
+            }
+        });
+    });
+</script>
