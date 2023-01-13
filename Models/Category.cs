@@ -2,7 +2,7 @@
 
 namespace TCC.Models
 {
-    public enum CategoryType
+    public enum CategoryId
     {
         Gym = 1,
         Clothing = 2,
@@ -19,18 +19,24 @@ namespace TCC.Models
         Supermarket = 13,
         Transportation = 14,
         Travel  = 15,
-        Awards = 16,
-        Gift = 17,
-        Investments = 18,
-        Salary  = 19
+        Alimentation = 16,
+        Bills = 17,
+        Awards = 18,
+        Gift = 19,
+        Investments = 20,
+        Salary  = 21
     }
-    public abstract class Category
+
+    public enum CategoryType
+    {
+        Income = 0,
+        Expense = 1
+    }
+    public class Category
     {
         [Key]
-        public int Id { get; set; }
-        public int IconId { get; set; }
-        public string Description { get; set; }
-        //public CategoryType Type { get; set; }
-        public DateTime CreationDate { get; set; }
+        public CategoryId Id { get; set; }
+        public string Name { get; set; }
+        public CategoryType Type { get; set; }
     }
 }
