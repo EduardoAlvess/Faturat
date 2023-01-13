@@ -14,6 +14,9 @@ namespace TCC.Models
         public string Description { get; set; }
         public bool isDeleted { get; set; }
         public DateTime CreationDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime TransactionDate { get; set; }
     }
 }

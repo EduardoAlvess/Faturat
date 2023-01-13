@@ -10,16 +10,21 @@
 <div id="main-content">
     <div class="container-fluid">
         <div class="actions-container" style="display: flex; padding: 10px; justify-content: space-between; align-items: center;">
-            <button class="btn btn-fab btn-secondary btn-lg text-white" id="btn-new-expense" data-toggle="modal" data-target="#addOrEditTransactionModal" type="button"><span class="icon icon-add"></span></button>
+            <button class="btn btn-fab btn-secondary btn-lg text-white" id="btn-new-expense" data-toggle="modal" data-target="#addTransactionModal" type="button"><span class="icon icon-add"></span></button>
             <span class="current-balance tag tag-simple" style="border: 1px solid; width: 150px; padding: 20px; font-size: 17px" id="current-balance"><a>R$ 2,775.00</a></span>
             <button class="btn btn-fab btn-outline-secondary btn-lg" data-toggle="modal" data-target="#filterTransactionsModal" id="btn-filter" type="button">
                 <span class="icon icon-content-filter"></span>
             </button>
         </div>
 
-        <!-- New and edit modal -->
-        <div class="modal fade" id="addOrEditTransactionModal" aria-labelledby="addOrEditModalLabel" aria-hidden="true">
-            @Html.Partial("_AddOrEditTransactionModal", "expense")
+        <!-- New transaction modal -->
+        <div class="modal fade" id="addTransactionModal" aria-labelledby="addModalLabel" aria-hidden="true">
+            @*@Html.Partial("_AddTransactionModal", "expense")*@
+        </div>
+
+        <!-- Edit transaction modal -->
+        <div class="modal fade" id="editTransactionModal" aria-labelledby="editModalLabel" aria-hidden="true">
+
         </div>
 
         <!-- Filter modal -->
@@ -58,7 +63,9 @@
                             <td style="text-align: left" class="@(transaction.GetType().Name.Equals("Income") ? "text-success" : "text-danger")">R$ @transaction.Value</td>
                             <td style="text-align: left">
                                 <div class="btn-group" role="group" aria-label="Actions">
-                                    <button type="button" class="btn btn-secondary edit-btn" data-toggle="modal" data-target="#addOrEditTransactionModal" style="background-color: #2C2C2E; color: white;" title="Editar"><span class="icon icon-pencil"></span></button>
+                                    <button type="button" class="btn btn-secondary btn-edit-transaction" style="background-color: #2C2C2E; color: white;" title="Editar" onclick="edit('@transaction.GetType().Name', @transaction.Id);">
+                                        <span class="icon icon-pencil"></span>
+                                    </button>
                                     <button type="button" class="btn btn-secondary delete-btn" style="background-color: #2C2C2E; color: white;" title="Deletar"><span class="icon icon-remove"></span></button>
                                 </div>
                             </td>
@@ -69,4 +76,55 @@
         </div>
     </div>
 </div>
+
+<script>
+    function edit(type, id) {
+        $.ajax({
+            type: 'GET',
+            url: '/' + type + 's/Edit',
+            data: { id: id },
+            success: function (result) {
+                $("#editTransactionModal").html(result);
+                $("#editTransactionModal").modal();
+                setTimeout(() => { getExpenseCategories() }, 500)
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+
+        getAccounts();
+    }
+
+    function getExpenseCategories()
+    {
+        $.ajax({
+            type: "GET",
+            url: "/Categories/GetExpenseCategories",
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    $(".categorySelect").append("<option value='" + item.id + "'>" + item.description + "</option>");
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('erro');
+            }
+        });
+    }
+
+    function getAccounts()
+    {
+        var url = "/Accounts/GetAccounts";
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    $(".accountSelect").append("<option>" + item.name + "</option>");
+                });
+            }
+        });
+    }
+
+</script>
 

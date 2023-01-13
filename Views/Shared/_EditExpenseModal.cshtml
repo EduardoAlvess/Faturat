@@ -1,0 +1,61 @@
+﻿@using TCC.Controllers
+@model TCC.Models.Expense
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span class="icon icon-close icon-2x"></span>
+                <span class="btn-close-label hidden-sm-down">esc</span>
+            </button>
+            <h4 class="modal-title text-white" id="ExpenseModalLabel">Edit Expense</h4>
+        </div>
+            @using (Html.BeginForm("Edit", "Expenses", FormMethod.Post, new { id = Model.Id }))
+            {
+            <div class="modal-body form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon bg-dark text-white" id="basic-addon1">$</span>
+                        @*<input type="text" class="form-control bg-dark text-white" placeholder="R$ 0.00" value="@Model.Value">*@
+                        @Html.EditorFor(m => m.Value, new { htmlAttributes = new { @class = "form-control bg-dark text-white" } })
+                    </div>
+                    <br>
+                    <div class="form-check">
+                        @*<input id="checkbox@(Model.Id)" class="form-check-input" type="checkbox">*@
+                        @Html.EditorFor(m => m.isPaid, new { htmlAttributes = new { @class = "form-check-input", @id = "checkbox" + Model.Id } })
+                        <label class="form-check-label" for="checkbox@(Model.Id)">Paid</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-date-input" class="col-xs-2 col-form-label text-white">Date:</label>
+                        <div class="col-xs-10">
+                            @*<input class="form-control bg-dark text-white" type="date" id="expense-date" value="@Model.TransactionDate.ToString("yyyy-MM-dd")">*@
+                            @Html.EditorFor(m => m.TransactionDate, new { htmlAttributes = new { @class = "form-control bg-dark text-white", @id = "expense-date" } })
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon bg-dark text-white" id="basic-addon1"><span class="icon icon-file-new"></span></span>
+                        @*<span class="input-group-addon bg-dark text-white" id="basic-addon1"></span>*@
+                        @*<input type="text" class="form-control bg-dark text-white" placeholder="Description" value="@Model.Description">*@
+                        @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control bg-dark text-white", @placeholder = "Description" } } )
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="text-white">Category</label>
+                        <select class="form-control bg-dark text-white categorySelect">
+                            <option value="@(Model.CategoryId)">@Model.Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-white">Account</label>
+                        <select class="form-control bg-dark text-white accountSelect">
+                            <option>All accounts</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </div>
+            }
+            @*<form>*@
+            @*</form>*@
+    </div>
+</div>

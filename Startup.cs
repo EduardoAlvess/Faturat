@@ -58,6 +58,7 @@ namespace TCC
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddRazorPages();
+            builder.Services.AddMemoryCache();
         }
     }
 }
