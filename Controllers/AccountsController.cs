@@ -42,7 +42,6 @@ namespace TCC.Controllers
             {
                 accountToEdit.Balance = account.Balance;
                 accountToEdit.Name = account.Name;
-                accountToEdit.IconId = account.IconId;
                 _databaseContext.SaveChanges(accountToEdit, "Modified");
                 return Json("Atualizado");
             }

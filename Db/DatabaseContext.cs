@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection.Emit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,6 @@ namespace TCC.Db
         public DbSet<Account> Accounts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Goal> Goals { get; set; }
-        public DbSet<Icon> Icons { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
                 : base(options)
@@ -30,10 +30,6 @@ namespace TCC.Db
             builder.Entity<Transaction>().HasDiscriminator<string>("Type");
             builder.Entity<Income>(entity => { entity.HasBaseType<Transaction>(); });
             builder.Entity<Expense>(entity => { entity.HasBaseType<Transaction>(); });
-
-            builder.Entity<Category>().HasDiscriminator<string>("Type");
-            builder.Entity<IncomeCategory>(entity => { entity.HasBaseType<Category>(); });
-            builder.Entity<ExpenseCategory>(entity => { entity.HasBaseType<Category>(); });
 
             builder.Entity<IdentityUserClaim<string>>().HasKey(p => new { p.Id });
 
