@@ -43,9 +43,7 @@ namespace TCC.Controllers
                 incomeToEdit.TransactionDate = income.TransactionDate;
                 incomeToEdit.Description = income.Description;
                 incomeToEdit.CategoryId = income.CategoryId;
-                incomeToEdit.isReceived = income.isReceived;
                 incomeToEdit.AccountId = income.AccountId;
-                incomeToEdit.Category = income.Category;
                 incomeToEdit.Value = income.Value;
                 _databaseContext.SaveChanges(incomeToEdit, "Modified");
                 return Json("Atualizado");

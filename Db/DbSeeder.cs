@@ -10,7 +10,6 @@ namespace TCC.Db
         public static void SeedTables(ModelBuilder builder)
         {
             SeedUsers(builder);
-            SeedIcons(builder);
             SeedAccounts(builder);
             SeedCategories(builder);
             SeedTransactions(builder);
@@ -37,21 +36,24 @@ namespace TCC.Db
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("paulo123"),
                     isDeleted = false,
                     CreationDate = DateTime.Now
-                });
-        }
-
-        private static void SeedIcons(ModelBuilder builder)
-        {
-            builder.Entity<Icon>().HasData(
-                new Icon
-                {
-                    Id = 1,
-                    ImageName = "img1.jpg"
                 },
-                new Icon
+                new User
                 {
-                    Id = 2,
-                    ImageName = "img2.jpg"
+                    Id = 3,
+                    UserName = "marcos@marcos.com",
+                    Email = "marcos@marcos.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("marcos123"),
+                    isDeleted = false,
+                    CreationDate = DateTime.Now
+                },
+                new User
+                {
+                    Id = 4,
+                    UserName = "ronaldo@ronaldo.com",
+                    Email = "ronaldo@ronaldo.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("ronaldo123"),
+                    isDeleted = true,
+                    CreationDate = DateTime.Now
                 });
         }
 
@@ -62,160 +64,189 @@ namespace TCC.Db
                 {
                     Id = 1,
                     UserId = 1,
-                    IconId = 1,
                     Name = "Conta corrente",
-                    Balance = 2000,
+                    Balance = 200,
                     CreationDate = DateTime.Now,
                     isDeleted = false
                 },
                 new Account
                 {
                     Id = 2,
-                    UserId = 2,
-                    IconId = 2,
+                    UserId = 1,
                     Name = "Conta PJ",
-                    Balance = 233.33,
+                    Balance = 2000,
                     CreationDate = DateTime.Now,
                     isDeleted = false
+                },
+                new Account
+                {
+                    Id = 3,
+                    UserId = 1,
+                    Name = "Conta deletada",
+                    Balance = 2000,
+                    CreationDate = DateTime.Now,
+                    isDeleted = true
+                },
+                new Account
+                {
+                    Id = 4,
+                    UserId = 2,
+                    Name = "Conta corrente user 2",
+                    Balance = 200,
+                    CreationDate = DateTime.Now,
+                    isDeleted = false
+                },
+                new Account
+                {
+                    Id = 5,
+                    UserId = 2,
+                    Name = "Conta PJ user 2",
+                    Balance = 2000,
+                    CreationDate = DateTime.Now,
+                    isDeleted = false
+                },
+                new Account
+                {
+                    Id = 6,
+                    UserId = 2,
+                    Name = "Conta deletada user 2",
+                    Balance = 2000,
+                    CreationDate = DateTime.Now,
+                    isDeleted = true
+                },
+                new Account
+                {
+                    Id = 7,
+                    UserId = 3,
+                    Name = "Conta corrente user 3",
+                    Balance = 200,
+                    CreationDate = DateTime.Now,
+                    isDeleted = true
                 });
         }
 
         private static void SeedCategories(ModelBuilder builder)
         {
-            builder.Entity<ExpenseCategory>().HasData(
-                new ExpenseCategory
+            builder.Entity<Category>().HasData(
+                new Category
                 {
-                    Id = 1,
-                    IconId = 1,
-                    Description = "Gym",
-                    CreationDate = DateTime.Now
+                    Id = CategoryId.Gym,
+                    Name = CategoryId.Gym.ToString(),
+                    Type = CategoryType.Expense,
                 },
-                new ExpenseCategory
+                new Category
                 {
-                    Id = 2,
-                    IconId = 2,
-                    Description = "Clothing",
-                    CreationDate = DateTime.Now
+                    Id = CategoryId.Clothing,
+                    Name = CategoryId.Clothing.ToString(),
+                    Type = CategoryType.Expense,
                 },
-                new IncomeCategory
+                new Category
                 {
-                    Id = 3,
-                    IconId = 3,
-                    Description = "Education",
-                    CreationDate = DateTime.Now
+                    Id = CategoryId.Education,
+                    Name = CategoryId.Education.ToString(),
+                    Type = CategoryType.Expense,
                 },
-                new IncomeCategory
+                new Category
                 {
-                    Id = 4,
-                    IconId = 4,
-                    Description = "Pet",
-                    CreationDate = DateTime.Now
+                    Id = CategoryId.Pet,
+                    Name = CategoryId.Pet.ToString(),
+                    Type = CategoryType.Expense,
                 },
-                new IncomeCategory
+                new Category
                 {
-                    Id = 5,
-                    IconId = 5,
-                    Description = "Electronics",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Electronics,
+                    Name = CategoryId.Electronics.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 6,
-                    IconId = 6,
-                    Description = "Health",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Health,
+                    Name = CategoryId.Health.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 7,
-                    IconId = 7,
-                    Description = "Home",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Home,
+                    Name = CategoryId.Home.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 8,
-                    IconId = 8,
-                    Description = "Taxes",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Leisure,
+                    Name = CategoryId.Leisure.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 9,
-                    IconId = 9,
-                    Description = "Leisure",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Others,
+                    Name = CategoryId.Others.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 10,
-                    IconId = 10,
-                    Description = "Others",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Restaurant,
+                    Name = CategoryId.Restaurant.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 11,
-                    IconId = 11,
-                    Description = "Restaurant",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Services,
+                    Name = CategoryId.Services.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 12,
-                    IconId = 12,
-                    Description = "Services",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Supermarket,
+                    Name = CategoryId.Supermarket.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 13,
-                    IconId = 13,
-                    Description = "Supermarket",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Transportation,
+                    Name = CategoryId.Transportation.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 14,
-                    IconId = 14,
-                    Description = "Transportation",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Travel,
+                    Name = CategoryId.Travel.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 15,
-                    IconId = 15,
-                    Description = "Travel",
-                    CreationDate = DateTime.Now
-                }); 
-            builder.Entity<IncomeCategory>().HasData(
-                new IncomeCategory
+                    Id = CategoryId.Alimentation,
+                    Name = CategoryId.Alimentation.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 16,
-                    IconId = 16,
-                    Description = "Awards",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Bills,
+                    Name = CategoryId.Bills.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
                 {
-                    Id = 17,
-                    IconId = 17,
-                    Description = "Gift",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Awards,
+                    Name = CategoryId.Awards.ToString(),
+                    Type = CategoryType.Income,
+                },
+                new Category
                 {
-                    Id = 18,
-                    IconId = 18,
-                    Description = "Investments",
-                    CreationDate = DateTime.Now
-                }, 
-                new IncomeCategory
+                    Id = CategoryId.Gift,
+                    Name = CategoryId.Gift.ToString(),
+                    Type = CategoryType.Income,
+                },
+                new Category
                 {
-                    Id = 19,
-                    IconId = 19,
-                    Description = "Salary",
-                    CreationDate = DateTime.Now
+                    Id = CategoryId.Investments,
+                    Name = CategoryId.Investments.ToString(),
+                    Type = CategoryType.Income,
+                },
+                new Category
+                {
+                    Id = CategoryId.Salary,
+                    Name = CategoryId.Salary.ToString(),
+                    Type = CategoryType.Income,
                 });
         }
 
@@ -227,57 +258,73 @@ namespace TCC.Db
                     Id = 1,
                     UserId = 1,
                     AccountId = 1,
-                    CategoryId = 1,
-                    Value = 250,
-                    Description = "Mercado",
-                    isPaid = true,
+                    CategoryId = CategoryId.Gym,
+                    Value = 90,
+                    Description = "Academia",
                     isDeleted = false,
                     CreationDate = DateTime.Now,
                     TransactionDate = DateTime.Now,
-                    Category = CategoryType.Supermarket
                 },
                 new Expense
                 {
                     Id = 2,
-                    UserId = 2,
+                    UserId = 1,
                     AccountId = 2,
-                    CategoryId = 2,
-                    Value = 172.35,
-                    Description = "Alaminuta",
-                    isPaid = false,
+                    CategoryId = CategoryId.Taxes,
+                    Value = 100,
+                    Description = "Imposto",
                     isDeleted = false,
                     CreationDate = DateTime.Now,
                     TransactionDate = DateTime.Now,
-                    Category = CategoryType.Restaurant
+                },
+                new Expense
+                {
+                    Id = 3,
+                    UserId = 2,
+                    AccountId = 4,
+                    CategoryId = CategoryId.Restaurant,
+                    Value = 20,
+                    Description = "Hamburguer",
+                    isDeleted = false,
+                    CreationDate = DateTime.Now,
+                    TransactionDate = DateTime.Now,
+                },
+                new Expense
+                {
+                    Id = 4,
+                    UserId = 2,
+                    AccountId = 5,
+                    CategoryId = CategoryId.Taxes,
+                    Value = 100,
+                    Description = "Imposto",
+                    isDeleted = false,
+                    CreationDate = DateTime.Now,
+                    TransactionDate = DateTime.Now,
                 });
             builder.Entity<Income>().HasData(
                 new Income
                 {
-                    Id = 3,
+                    Id = 5,
                     UserId = 1,
                     AccountId = 1,
-                    CategoryId = 3,
-                    Value = 2000,
-                    Description = "Salário",
-                    isReceived = true,
+                    CategoryId = CategoryId.Awards,
+                    Value = 200,
+                    Description = "Premio",
                     isDeleted = false,
                     CreationDate = DateTime.Now,
                     TransactionDate = DateTime.Now,
-                    Category = CategoryType.Salary
                 },
                 new Income
                 {
-                    Id = 4,
+                    Id = 6,
                     UserId = 2,
-                    AccountId = 2,
-                    CategoryId = 4,
-                    Value = 13.75,
-                    Description = "Premio",
-                    isReceived = false,
+                    AccountId = 4,
+                    CategoryId = CategoryId.Gift,
+                    Value = 10,
+                    Description = "Presente",
                     isDeleted = false,
                     CreationDate = DateTime.Now,
                     TransactionDate = DateTime.Now,
-                    Category = CategoryType.Awards
                 });
         }
 
@@ -288,7 +335,6 @@ namespace TCC.Db
                 {
                     Id = 1,
                     UserId = 1,
-                    IconId = 1,
                     Name = "Viagem",
                     FinalBalance = 2000,
                     CurrentBalance = 400,
@@ -301,7 +347,6 @@ namespace TCC.Db
                 {
                     Id = 2,
                     UserId = 2,
-                    IconId = 2,
                     Name = "Carro",
                     FinalBalance = 35000.72,
                     CurrentBalance = 12000.32,

@@ -44,8 +44,6 @@ namespace TCC.Controllers
                 expenseToEdit.Description = expense.Description;
                 expenseToEdit.CategoryId = expense.CategoryId;
                 expenseToEdit.AccountId = expense.AccountId;
-                expenseToEdit.Category = expense.Category;
-                expenseToEdit.isPaid = expense.isPaid;
                 expenseToEdit.Value = expense.Value;
                 _databaseContext.SaveChanges(expenseToEdit, "Modified");
                 return Json("Atualizado");
