@@ -41,15 +41,14 @@ namespace TCC.Controllers
         }
 
         [HttpPost]
-        public void Edit(int id, double value, bool isPaid, string description, CategoryType category, int accountId, DateTime transactionDate)
+        public void Edit(int id, double value, bool isPaid, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
         {
             var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
             expenseToEdit.TransactionDate = transactionDate;
             expenseToEdit.Description = description;
             expenseToEdit.AccountId = accountId;
-            expenseToEdit.Category = category;
-            expenseToEdit.isPaid = isPaid;
+            expenseToEdit.CategoryId = categoryId;
             expenseToEdit.Value = value;
             _databaseContext.SaveChanges(expenseToEdit, "Modified");
             

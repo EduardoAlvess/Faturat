@@ -18,21 +18,21 @@ namespace TCC.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ExpenseCategory>> GetExpenseCategories()
+        public ActionResult<List<Category>> GetExpenseCategories()
         {
             var categories = _cache.GetOrCreate("ExpenseCategories", item =>
             {
                 item.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(86400);
-                return _databaseContext.Categories.OfType<ExpenseCategory>().ToList();
+                return _databaseContext.Categories.Where(x => x.Type == CategoryType.Expense).ToList();
             });
 
             return Ok(categories);
         }
 
         [HttpGet]
-        public ActionResult<List<IncomeCategory>> GetIncomeCategories()
+        public ActionResult<List<Category>> GetIncomeCategories()
         {
-            var categories = _databaseContext.Categories.OfType<IncomeCategory>();
+            var categories = _databaseContext.Categories.Where(x => x.Type == CategoryType.Income).ToList();
 
             return Ok(categories);
         }
