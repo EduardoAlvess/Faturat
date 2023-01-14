@@ -52,6 +52,7 @@ namespace TCC
 
             builder.Services.AddTransient<IUserProvider, UserProvider>();
             builder.Services.AddTransient<IAccountProvider, AccountProvider>();
+            builder.Services.AddTransient<ICategoryProvider, CategoryProvider>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllers().AddNewtonsoftJson();

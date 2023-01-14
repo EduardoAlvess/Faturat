@@ -19,8 +19,13 @@ namespace TCC.Controllers
 
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.Where(x => x.isDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
-            return View("Index", list);
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.isDeleted == false && x.UserId == userId ).ToList();
+
+            var transactions = _databaseContext.Transactions.Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId)).ToList();
+
+            return View("Index", transactions);
         }
     }
 }

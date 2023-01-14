@@ -11,11 +11,16 @@ namespace TCC.Controllers
     {
         private readonly IDatabaseContext _databaseContext;
         private readonly IUserProvider _userProvider;
+        private readonly IAccountProvider _accountProvider;
+        private readonly ICategoryProvider _categoriesProvider;
 
-        public ExpensesController(IDatabaseContext databaseContext, IUserProvider userProvider)
+        public ExpensesController(IDatabaseContext databaseContext, IUserProvider userProvider, IAccountProvider accountProvider, ICategoryProvider categoryProvider)
         {
             _databaseContext = databaseContext;
             _userProvider = userProvider;
+            _accountProvider = accountProvider;
+            _categoriesProvider = categoryProvider;
+
         }
 
         [HttpGet]
@@ -37,11 +42,27 @@ namespace TCC.Controllers
         public ActionResult Edit(int id)
         {
             var expense = GetById(id);
-            return PartialView("_EditExpenseModal", expense);
+
+            var editExpense = new EditExpense()
+            {
+                Id = expense.Id,
+                Value = expense.Value,
+                UserId = expense.UserId,
+                AccountId = expense.AccountId,
+                isDeleted = expense.isDeleted,
+                CategoryId = expense.CategoryId,
+                Description = expense.Description,
+                CreationDate = expense.CreationDate,
+                TransactionDate = expense.TransactionDate,
+                Categories = _categoriesProvider.GetExpenseCategories(),
+                Accounts = _accountProvider.GetAccountsByUserId(expense.UserId)
+            };
+
+            return PartialView("_EditExpenseModal", editExpense);
         }
 
         [HttpPost]
-        public void Edit(int id, double value, bool isPaid, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
+        public void Edit(int id, double value, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
         {
             var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
@@ -51,28 +72,7 @@ namespace TCC.Controllers
             expenseToEdit.CategoryId = categoryId;
             expenseToEdit.Value = value;
             _databaseContext.SaveChanges(expenseToEdit, "Modified");
-            
         }
-
-        //[HttpPost]
-        //public ActionResult Edit([FromBody] Expense expense)
-        //{
-        //    var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == expense.Id && x.UserId == _userProvider.GetUserId());
-
-        //    if (expense != null)
-        //    {
-        //        expenseToEdit.TransactionDate = expense.TransactionDate;
-        //        expenseToEdit.Description = expense.Description;
-        //        expenseToEdit.CategoryId = expense.CategoryId;
-        //        expenseToEdit.AccountId = expense.AccountId;
-        //        expenseToEdit.Category = expense.Category;
-        //        expenseToEdit.isPaid = expense.isPaid;
-        //        expenseToEdit.Value = expense.Value;
-        //        _databaseContext.SaveChanges(expenseToEdit, "Modified");
-        //        return Json("Atualizado");
-        //    }
-        //    return Json("Erro");
-        //}
 
         [HttpGet]
         public ActionResult Delete(int id)

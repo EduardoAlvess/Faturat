@@ -1,6 +1,6 @@
 ﻿namespace TCC.Models
 {
-    public class Expense : Transaction
+    public class EditIncome : Income
     {
     }
 }

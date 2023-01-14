@@ -172,6 +172,12 @@ namespace TCC.Db
                 },
                 new Category
                 {
+                    Id = CategoryId.Taxes,
+                    Name = CategoryId.Taxes.ToString(),
+                    Type = CategoryType.Expense,
+                },
+                new Category
+                {
                     Id = CategoryId.Leisure,
                     Name = CategoryId.Leisure.ToString(),
                     Type = CategoryType.Expense,

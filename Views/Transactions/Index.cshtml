@@ -19,12 +19,10 @@
 
         <!-- New transaction modal -->
         <div class="modal fade" id="addTransactionModal" aria-labelledby="addModalLabel" aria-hidden="true">
-            @*@Html.Partial("_AddTransactionModal", "expense")*@
         </div>
 
         <!-- Edit transaction modal -->
         <div class="modal fade" id="editTransactionModal" aria-labelledby="editModalLabel" aria-hidden="true">
-
         </div>
 
         <!-- Filter modal -->
@@ -86,45 +84,11 @@
             success: function (result) {
                 $("#editTransactionModal").html(result);
                 $("#editTransactionModal").modal();
-                setTimeout(() => { getExpenseCategories() }, 500)
             },
             error: function (xhr, status, error) {
                 console.log(error);
             }
         });
-
-        getAccounts();
     }
-
-    function getExpenseCategories()
-    {
-        $.ajax({
-            type: "GET",
-            url: "/Categories/GetExpenseCategories",
-            success: function (data) {
-                $.each(data, function (i, item) {
-                    $(".categorySelect").append("<option value='" + item.id + "'>" + item.description + "</option>");
-                });
-            },
-            error: function (xhr, status, error) {
-                console.log('erro');
-            }
-        });
-    }
-
-    function getAccounts()
-    {
-        var url = "/Accounts/GetAccounts";
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (data) {
-                $.each(data, function (i, item) {
-                    $(".accountSelect").append("<option>" + item.name + "</option>");
-                });
-            }
-        });
-    }
-
 </script>
 
