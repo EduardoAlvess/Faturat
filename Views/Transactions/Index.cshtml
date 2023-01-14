@@ -64,7 +64,7 @@
                                     <button type="button" class="btn btn-secondary btn-edit-transaction" style="background-color: #2C2C2E; color: white;" title="Editar" onclick="edit('@transaction.GetType().Name', @transaction.Id);">
                                         <span class="icon icon-pencil"></span>
                                     </button>
-                                    <button type="button" class="btn btn-secondary delete-btn" style="background-color: #2C2C2E; color: white;" title="Deletar"><span class="icon icon-remove"></span></button>
+                                    <button type="button" class="btn btn-secondary delete-btn" style="background-color: #2C2C2E; color: white;" title="Deletar" onclick="exclude(@transaction.Id);"><span class="icon icon-remove"></span></button>
                                 </div>
                             </td>
                         </tr>
@@ -84,6 +84,21 @@
             success: function (result) {
                 $("#editTransactionModal").html(result);
                 $("#editTransactionModal").modal();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+    function exclude(id) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/Transactions/Delete/',
+            data: { id: id },
+            success: function (result) {
+                location.reload();
             },
             error: function (xhr, status, error) {
                 console.log(error);

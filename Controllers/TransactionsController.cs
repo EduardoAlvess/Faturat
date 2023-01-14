@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TCC.Providers;
 using TCC.Db;
+using TCC.Models;
 
 namespace TCC.Controllers
 {
@@ -26,6 +27,14 @@ namespace TCC.Controllers
             var transactions = _databaseContext.Transactions.Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId)).ToList();
 
             return View("Index", transactions);
+        }
+
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            var transaction = _databaseContext.Transactions.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
+            transaction.isDeleted = true;
+            _databaseContext.SaveChanges(transaction, "Modified");
         }
     }
 }
