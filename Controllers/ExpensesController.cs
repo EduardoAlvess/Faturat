@@ -68,8 +68,8 @@ namespace TCC.Controllers
 
             expenseToEdit.TransactionDate = transactionDate;
             expenseToEdit.Description = description;
-            expenseToEdit.AccountId = accountId;
             expenseToEdit.CategoryId = categoryId;
+            expenseToEdit.AccountId = accountId;
             expenseToEdit.Value = value;
             _databaseContext.SaveChanges(expenseToEdit, "Modified");
         }

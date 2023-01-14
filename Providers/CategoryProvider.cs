@@ -6,6 +6,7 @@ namespace TCC.Providers
     public interface ICategoryProvider
     {
         List<Category> GetExpenseCategories();
+        List<Category> GetIncomeCategories();
     }
 
     public class CategoryProvider : ICategoryProvider
@@ -22,6 +23,11 @@ namespace TCC.Providers
         public List<Category> GetExpenseCategories()
         {
             return _databaseContext.Categories.Where(x => x.Type == CategoryType.Expense).ToList();
+        }
+
+        public List<Category> GetIncomeCategories()
+        {
+            return _databaseContext.Categories.Where(x => x.Type == CategoryType.Income).ToList();
         }
     }
 }

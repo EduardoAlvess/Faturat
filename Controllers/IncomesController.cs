@@ -11,11 +11,15 @@ namespace TCC.Controllers
     {
         private readonly IDatabaseContext _databaseContext;
         private readonly IUserProvider _userProvider;
+        private readonly IAccountProvider _accountProvider;
+        private readonly ICategoryProvider _categoriesProvider;
 
-        public IncomesController(IDatabaseContext databaseContext, IUserProvider userProvider)
+        public IncomesController(IDatabaseContext databaseContext, IUserProvider userProvider, IAccountProvider accountProvider, ICategoryProvider categoryProvider)
         {
             _databaseContext = databaseContext;
             _userProvider = userProvider;
+            _accountProvider = accountProvider;
+            _categoriesProvider = categoryProvider;
         }
 
         [HttpGet]
@@ -33,22 +37,40 @@ namespace TCC.Controllers
             return Json("Teste");
         }
 
-        [HttpPost]
-        public ActionResult Edit([FromBody] Income income)
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
-            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == income.Id && x.UserId == _userProvider.GetUserId());
+            var income = GetById(id);
 
-            if (income != null)
+            var editIncome = new EditIncome()
             {
-                incomeToEdit.TransactionDate = income.TransactionDate;
-                incomeToEdit.Description = income.Description;
-                incomeToEdit.CategoryId = income.CategoryId;
-                incomeToEdit.AccountId = income.AccountId;
-                incomeToEdit.Value = income.Value;
-                _databaseContext.SaveChanges(incomeToEdit, "Modified");
-                return Json("Atualizado");
-            }
-            return Json("Erro");
+                Id = income.Id,
+                Value = income.Value,
+                UserId = income.UserId,
+                AccountId = income.AccountId,
+                isDeleted = income.isDeleted,
+                CategoryId = income.CategoryId,
+                Description = income.Description,
+                CreationDate = income.CreationDate,
+                TransactionDate = income.TransactionDate,
+                Categories = _categoriesProvider.GetIncomeCategories(),
+                Accounts = _accountProvider.GetAccountsByUserId(income.UserId)
+            };
+
+            return PartialView("_EditIncomeModal", editIncome);
+        }
+
+        [HttpPost]
+        public void Edit(int id, double value, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
+        {
+            var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
+
+            incomeToEdit.TransactionDate = transactionDate;
+            incomeToEdit.Description = description;
+            incomeToEdit.CategoryId = categoryId;
+            incomeToEdit.AccountId = accountId;
+            incomeToEdit.Value = value;
+            _databaseContext.SaveChanges(incomeToEdit, "Modified");
         }
 
         [HttpGet]
@@ -58,6 +80,12 @@ namespace TCC.Controllers
             income.isDeleted = true;
             _databaseContext.SaveChanges(income, "Modified");
             return Json("Teste");
+        }
+
+        [HttpGet]
+        public Income GetById(int id)
+        {
+            return _databaseContext.Transactions.OfType<Income>().First(x => x.Id == id);
         }
     }
 }
