@@ -1,15 +1,9 @@
 ﻿@using TCC.Controllers
-@model string
+@model FilterTransactions
 
 @{
-    var transactionType = "Expense";
-    bool isIncome = false;
-
-    if (Model.ToLower().Contains("income"))
-    {
-        transactionType = "Income";
-        isIncome = true;
-    }
+    SelectList categorySelectList = new SelectList(Model.Categories, "Id", "Name");
+    SelectList accountSelectList = new SelectList(Model.Accounts, "Id", "Name");
 }
 
 <div class="modal-dialog" role="document">
@@ -19,54 +13,73 @@
                 <span class="icon icon-close icon-2x"></span>
                 <span class="btn-close-label hidden-sm-down">esc</span>
             </button>
-            <h4 class="modal-title text-white" id="incomeModalLabel">Transactions filter</h4>
+            <h4 class="modal-title text-white" id="filterModalLabel">Transactions filter</h4>
         </div>
         <div class="modal-body">
-            <form>
+            @using (Html.BeginForm("Filter", "Transactions", FormMethod.Post, new { id = "filterForm" }))
+            {
                 <div class="form-group">
                     <label class="text-white">Category</label>
-                    <select class="form-control bg-dark text-white categorySelect">
-                        <option>All categories</option>
-                    </select>
+                    <br>
+                    @Html.DropDownListFor(m => m.CategoriesIds, categorySelectList as SelectList, new { @class = "form-control bg-dark text-white filterSelect", @multiple = "multiple" })
                 </div>
                 <div class="form-group">
                     <label class="text-white">Account</label>
-                    <select class="form-control bg-dark text-white accountSelect">
-                        <option>All accounts</option>
-                    </select>
+                    <br>
+                    @Html.DropDownListFor(m => m.AccountsIds, accountSelectList as SelectList, new { @class = "form-control bg-dark text-white filterSelect", @multiple = "multiple" })
                 </div>
                 <div class="form-group">
-                    <label class="text-white">Situation</label>
-                    <select class="form-control bg-dark text-white">
-                        <option>All situations</option>
-                        @{
-                            if (isIncome)
-                            {
-                                <option>Recived</option>
-                                <option>Not received</option>
-                            }
-                            else
-                            {
-                                <option>Paid</option>
-                                <option>Not paid</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="form-group row">
                     <label for="example-date-input" class="col-xs-2 col-form-label text-white">From:</label>
-                    <div class="col-xs-10">
-                        <input class="form-control text-white datetime" style="background-color: #2C2C2E;" type="date" value=" " id="example-date-input">
-                    </div>
+                    @Html.EditorFor(m => m.InitialDate, new { htmlAttributes = new { @class = "form-control bg-dark text-white" } })
+
                     <label for="example-date-input2" style="margin-top: 10px;" class="col-xs-2 col-form-label text-white">Until:</label>
-                    <div class="col-xs-10">
-                        <input class="form-control text-white datetime" style="margin-top: 10px; background-color: #2C2C2E;" type="date" value=" " id="example-date-input2">
-                    </div>
+                    @Html.EditorFor(m => m.FinalDate, new { htmlAttributes = new { @class = "form-control bg-dark text-white" } })
                 </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-success">Apply</button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Apply</button>
+                </div>
+            }
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.filterSelect').multiselect({
+            display: 'static',
+            maxHeight: 200,
+            includeSelectAllOption: true,
+            enableHTML: false,
+            templates: {
+                ul: '<ul class="multiselect-container dropdown-menu bg-dark"></ul>',
+                div: '<div class="btn-group" style="width: 100%"></div>'
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#filterForm").submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Transactions/Filter",
+                data: formData,
+                success: function (result) {
+                    $("#transactionsGrid").html(result);
+                }
+            });
+        });
+    });
+</script>
+<style>
+    .multiselect-container li input[type=checkbox] {
+        display: none;
+    }
+
+    .multiselect-container a label.checkbox {
+        color: white;
+    }
+
+</style>

@@ -26,7 +26,7 @@ namespace TCC.Controllers
 
             var transactions = _databaseContext.Transactions.Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId)).ToList();
 
-            return View("Index", transactions);
+            return View(transactions);
         }
 
         [HttpDelete]
@@ -35,6 +35,44 @@ namespace TCC.Controllers
             var transaction = _databaseContext.Transactions.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             transaction.isDeleted = true;
             _databaseContext.SaveChanges(transaction, "Modified");
+        }
+
+        [HttpGet]
+        public ActionResult Filter()
+        {
+            var filterTransactions = new FilterTransactions
+            {
+                Categories = _databaseContext.Categories.ToList(),
+                Accounts = _databaseContext.Accounts.Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false).ToList(),
+                InitialDate = DateTime.Now,
+                FinalDate = DateTime.Now,
+            };
+
+            return PartialView("_FilterTransactionsModal", filterTransactions);
+        }
+
+        [HttpPost]
+        public IActionResult Filter(List<CategoryId> categoriesIds, List<int> accountsIds, DateTime initialDate, DateTime finalDate)
+        {
+            if(categoriesIds.Count() == 0)
+                categoriesIds.AddRange(_databaseContext.Categories.Select(x => x.Id).ToList());
+
+            if(accountsIds.Count() == 0)
+                accountsIds.AddRange(_databaseContext.Accounts
+                                                     .Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false)
+                                                     .Select(x => x.Id)
+                                                     .ToList());
+
+            var transactions = _databaseContext.Transactions
+                                               .Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false
+                                                                                                 && categoriesIds.Contains(x.CategoryId) 
+                                                                                                 && accountsIds.Contains(x.AccountId)
+                                                                                                 && x.TransactionDate >= initialDate
+                                                                                                 && x.TransactionDate <= finalDate)
+                                               .OrderByDescending(x => x.TransactionDate)
+                                               .ToList();
+
+            return PartialView("_Grid", transactions);
         }
     }
 }

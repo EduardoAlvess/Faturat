@@ -12,7 +12,7 @@
         <div class="actions-container" style="display: flex; padding: 10px; justify-content: space-between; align-items: center;">
             <button class="btn btn-fab btn-secondary btn-lg text-white" id="btn-new-expense" data-toggle="modal" data-target="#addTransactionModal" type="button"><span class="icon icon-add"></span></button>
             <span class="current-balance tag tag-simple" style="border: 1px solid; width: 150px; padding: 20px; font-size: 17px" id="current-balance"><a>R$ 2,775.00</a></span>
-            <button class="btn btn-fab btn-outline-secondary btn-lg" data-toggle="modal" data-target="#filterTransactionsModal" id="btn-filter" type="button">
+            <button class="btn btn-fab btn-outline-secondary btn-lg" data-toggle="modal" data-target="#filterTransactionsModal" id="btn-filter" type="button" onclick="filter()">
                 <span class="icon icon-content-filter"></span>
             </button>
         </div>
@@ -27,50 +27,10 @@
 
         <!-- Filter modal -->
         <div class="modal fade" id="filterTransactionsModal" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
-            @Html.Partial("_FilterTransactionsModal", "expense")
         </div>
 
-        <div class="card card-block" style="background-color: #2C2C2E;">
-            <table class="transactions-table table text-size-sm" style="color: white;">
-                <div id="btn-change-month-div">
-                    <button class="btn btn-outline" id="btn-change-month" type="button" data-toggle="collapse" data-target="#change-month-list" aria-expanded="false" aria-controls="collapseExample">
-                        July 2022
-                    </button>
-                </div>
-                <br>
-                @Html.Partial("_FilterTransactionsByMonthModal", "expense")
-
-                <thead>
-                    <tr>
-                        <th style="width: 17.2%; color: white;">Date</th>
-                        <th style="width: 17.2%; color: white;">Description</th>
-                        <th style="width: 17.2%; color: white;">Category</th>
-                        <th style="width: 17.2%; color: white;">Account</th>
-                        <th style="width: 17.2%; color: white;">Amount</th>
-                        <th style="width: 17.2%; color: white;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var transaction in Model)
-                    {
-                        <tr>
-                            <td style="text-align: left">@transaction.TransactionDate.ToString("dd/MM/yyyy")</td>
-                            <td style="text-align: left">@transaction.Description</td>
-                            <td style="text-align: left">@transaction.CategoryId</td>
-                            <td style="text-align: left">@await Component.InvokeAsync(nameof(AccountName), transaction.AccountId)</td>
-                            <td style="text-align: left" class="@(transaction.GetType().Name.Equals("Income") ? "text-success" : "text-danger")">R$ @transaction.Value</td>
-                            <td style="text-align: left">
-                                <div class="btn-group" role="group" aria-label="Actions">
-                                    <button type="button" class="btn btn-secondary btn-edit-transaction" style="background-color: #2C2C2E; color: white;" title="Editar" onclick="edit('@transaction.GetType().Name', @transaction.Id);">
-                                        <span class="icon icon-pencil"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-secondary delete-btn" style="background-color: #2C2C2E; color: white;" title="Deletar" onclick="exclude(@transaction.Id);"><span class="icon icon-remove"></span></button>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+        <div class="card card-block" style="background-color: #2C2C2E;" id="transactionsGrid">
+            @await Html.PartialAsync("_Grid.cshtml", Model)
         </div>
     </div>
 </div>
@@ -99,6 +59,21 @@
             data: { id: id },
             success: function (result) {
                 location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+    function filter() {
+        $.ajax({
+            type: 'GET',
+            url: '/Transactions/Filter',
+            success: function (result) {
+                $("#filterTransactionsModal").html(result);
+                $("#filterTransactionsModal").modal();
             },
             error: function (xhr, status, error) {
                 console.log(error);
