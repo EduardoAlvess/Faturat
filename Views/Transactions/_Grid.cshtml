@@ -2,23 +2,15 @@
 
 @model List<TCC.Models.Transaction>
 
-<table class="transactions-table table text-size-sm" style="color: white;">
-    <div id="btn-change-month-div">
-        <button class="btn btn-outline" id="btn-change-month" type="button" data-toggle="collapse" data-target="#change-month-list" aria-expanded="false" aria-controls="collapseExample">
-            July 2022
-        </button>
-    </div>
-    <br>
-    @Html.Partial("_FilterTransactionsByMonthModal", "expense")
-
+<table class="transactions-table table">
     <thead>
         <tr>
-            <th style="width: 17.2%; color: white;">Date</th>
-            <th style="width: 17.2%; color: white;">Description</th>
-            <th style="width: 17.2%; color: white;">Category</th>
-            <th style="width: 17.2%; color: white;">Account</th>
-            <th style="width: 17.2%; color: white;">Amount</th>
-            <th style="width: 17.2%; color: white;">Actions</th>
+            <th style="width: 17%;">Date</th>
+            <th style="width: 17%;">Description</th>
+            <th style="width: 17%;">Category</th>
+            <th style="width: 17%;">Account</th>
+            <th style="width: 17%;">Amount</th>
+            <th style="width: 17%;">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -32,10 +24,10 @@
                 <td style="text-align: left" class="@(transaction.GetType().Name.Equals("Income") ? "text-success" : "text-danger")">R$ @transaction.Value</td>
                 <td style="text-align: left">
                     <div class="btn-group" role="group" aria-label="Actions">
-                        <button type="button" class="btn btn-secondary btn-edit-transaction" style="background-color: #2C2C2E; color: white;" title="Editar" onclick="edit('@transaction.GetType().Name', @transaction.Id);">
+                        <button type="button" class="btn btn-secondary btn-edit-transaction" title="Editar" onclick="edit('@transaction.GetType().Name', @transaction.Id);">
                             <span class="icon icon-pencil"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary delete-btn" style="background-color: #2C2C2E; color: white;" title="Deletar" onclick="exclude(@transaction.Id);"><span class="icon icon-remove"></span></button>
+                        <button type="button" class="btn btn-secondary delete-btn" title="Deletar" onclick="exclude(@transaction.Id);"><span class="icon icon-remove"></span></button>
                     </div>
                 </td>
             </tr>

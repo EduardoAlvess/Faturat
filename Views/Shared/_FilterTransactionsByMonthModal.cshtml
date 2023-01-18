@@ -1,16 +1,7 @@
 ﻿@model string
 
 @{
-    var btnType = "";
-
-    if (Model.ToLower().Contains("income"))
-    {
-        btnType = "success";
-    }
-    else
-    {
-        btnType = "danger";
-    }
+    
 }
 
 <style>
@@ -20,19 +11,19 @@
     }
 </style>
 
-<div class="collapse" id="change-month-list">
+<div class="collapse monthButtons" id="change-month-list">
     <ul class="list-inline">
-        <button class="btn btn-outline-@btnType month-button" type="button">Jan</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Feb</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Mar</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Apr</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">May</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Jun</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Jul</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Aug</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Sep</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Oct</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Nov</button>
-        <button class="btn btn-outline-@btnType month-button" type="button">Dec</button>
+        <button class="btn btn-outline month-button" type="button">Jan</button>
+        <button class="btn btn-outline month-button" type="button">Feb</button>
+        <button class="btn btn-outline month-button" type="button">Mar</button>
+        <button class="btn btn-outline month-button" type="button">Apr</button>
+        <button class="btn btn-outline month-button" type="button">May</button>
+        <button class="btn btn-outline month-button" type="button">Jun</button>
+        <button class="btn btn-outline month-button" type="button">Jul</button>
+        <button class="btn btn-outline month-button" type="button">Aug</button>
+        <button class="btn btn-outline month-button" type="button">Sep</button>
+        <button class="btn btn-outline month-button" type="button">Oct</button>
+        <button class="btn btn-outline month-button" type="button">Nov</button>
+        <button class="btn btn-outline month-button" type="button">Dec</button>
     </ul>
 </div>
