@@ -24,7 +24,9 @@ namespace TCC.Controllers
 
             var accounts = _databaseContext.Accounts.Where(x => x.isDeleted == false && x.UserId == userId ).ToList();
 
-            var transactions = _databaseContext.Transactions.Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId)).ToList();
+            var transactions = _databaseContext.Transactions.Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId))
+                                                            .OrderByDescending(x => x.TransactionDate)
+                                                            .ToList();
 
             return View(transactions);
         }
