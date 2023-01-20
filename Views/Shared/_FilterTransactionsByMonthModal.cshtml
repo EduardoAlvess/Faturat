@@ -11,6 +11,11 @@
     }
 </style>
 
+<button class="btn btn-outline" id="btn-change-month" type="button" data-toggle="collapse" data-target="#change-month-list" aria-expanded="false" aria-controls="collapseExample">
+    @DateTime.Now.ToString("MMM")
+</button>
+<br>
+
 <div class="collapse monthButtons" id="change-month-list">
     <ul class="list-inline">
         <button class="btn btn-outline month-button" type="button">Jan</button>

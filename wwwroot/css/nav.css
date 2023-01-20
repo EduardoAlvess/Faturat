@@ -1,0 +1,6 @@
+﻿nav {
+    display: flex;
+    position: absolute;
+    background-color: blue;
+    height: 100vh;
+}

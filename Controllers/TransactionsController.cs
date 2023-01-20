@@ -28,7 +28,7 @@ namespace TCC.Controllers
                                                             .OrderByDescending(x => x.TransactionDate)
                                                             .ToList();
 
-            return View(transactions);
+            return View("_Grid", transactions);
         }
 
         [HttpDelete]

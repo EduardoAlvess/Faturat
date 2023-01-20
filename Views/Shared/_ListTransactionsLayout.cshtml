@@ -1,53 +1,83 @@
-﻿<!DOCTYPE html>
-<html lang="pt-br">
+﻿@using TCC.Views.Shared.Components
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        @*<link rel="stylesheet" href="~/css/Incomes.css">
-        <link rel="stylesheet" href="~/css/expenses.css">*@
-        <link rel="stylesheet" href="~/css/index.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutWithNav";
+}
 
-        <script src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.min.js"></script>
-        <script type="text/javascript" src="~/Scripts/selectize.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.8/js/tether.min.js"></script>
-        <script src="//design.umbler.com//assets/dist/js/bootstrap.min.js"></script>
-        <script src="//design.umbler.com//themes/umbler-app/dist/js/theme.min.js"></script>
-        <script src="//design.umbler.com//assets/dist/js/docs.min.js"></script>
+@section Transactions{
+    <link rel="stylesheet" href="~/css/transactions.css">
+    @RenderSection("Transactions", false)
+}
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js" type="text/javascript"></script>
-        <link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-        @*Cuidado*@
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<div id="listTransactions">
+    @Html.Partial("_TransactionsTools")
 
-        <link href="//design.umbler.com//themes/umbler-app/dist/css/theme.min.css?v=3" rel="stylesheet">
-    </head>
+    <!-- New transaction modal -->
+    <div class="modal fade" id="addTransactionModal" aria-labelledby="addModalLabel" aria-hidden="true">
+    </div>
 
-    <body class="bg-faded">
-        <div class="flex-container">
-            <nav>
-                <div id="divnav1">
-                    <div>
-                        <div>
-                            <ul>
-                                <li class="list-group-item">Dashboard</li> 
-                                <li class="list-group-item">Transactions</li> 
-                                <li class="list-group-item">Accounts</li>
-                                <li class="list-group-item">Reports</li>
-                                <li class="list-group-item">Goals</li>
-                            </ul>
-    
-                        </div>
-                    </div>
-                </div>
-            </nav>
+    <!-- Edit transaction modal -->
+    <div class="modal fade" id="editTransactionModal" aria-labelledby="editModalLabel" aria-hidden="true">
+    </div>
 
-            <main>
-                @RenderBody()
-            </main>
+    <!-- Filter modal -->
+    <div class="modal fade" id="filterTransactionsModal" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
+    </div>
+
+    <div class="transactionsGrid card card-block" id="transactionsGrid">
+        @Html.Partial("_FilterTransactionsByMonthModal", "expense")
+
+        <div class="table-responsive">
+            @RenderBody()
         </div>
-    </body>
+    </div>
+</div>
 
-</html>
+<script>
+    function edit(type, id) {
+        $.ajax({
+            type: 'GET',
+            url: '/' + type + 's/Edit',
+            data: { id: id },
+            success: function (result) {
+                $("#editTransactionModal").html(result);
+                $("#editTransactionModal").modal();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+    function exclude(id) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/Transactions/Delete/',
+            data: { id: id },
+            success: function (result) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+    function filter() {
+        $.ajax({
+            type: 'GET',
+            url: '/Transactions/Filter',
+            success: function (result) {
+                $("#filterTransactionsModal").html(result);
+                $("#filterTransactionsModal").modal();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+

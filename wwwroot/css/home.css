@@ -1,0 +1,107 @@
+﻿.dashboard {
+    display: flex !important;
+    /*background-color: red;*/
+    align-self: center;
+    width: 70%;
+    height: 90%;
+    flex-direction: column;
+}
+
+.valuesInfo {
+    display: flex;
+    height: 15%;
+    /*background-color: purple;*/
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoButtons {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 32% !important;
+    height: 80% !important;
+
+    background-color: #ffff !important;
+}
+
+.charts {
+    display: flex;
+    /*background-color: yellow;*/
+    justify-content: space-between
+}
+
+#expensesChartDiv {
+    display: flex !important;
+    flex-direction: column;
+    width: 49%;
+    /*background-color: bisque;*/
+}
+
+.chart {
+    display: flex !important;
+    height: 100%;
+    border-radius: 25px;
+    align-items: center;
+}
+
+#incomesChartDiv {
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+    /*background-color: white;*/
+}
+
+.accountsAndGoals {
+    display: flex !important;
+    height: 25%;
+    /*background-color: green;*/
+    justify-content: space-between;
+}
+
+#accountsDiv {
+    display: flex;
+    flex-direction: column;
+    /*background-color: red;*/
+    width: 49%;
+}
+
+#goalsDiv {
+    display: flex;
+    flex-direction: column;
+    /*background-color: blue;*/
+    width: 49%;
+}
+
+#accounts {
+    display: flex !important;
+    border-radius: 25px;
+    margin: 0;
+    padding: 2rem !important;
+    justify-content: space-evenly;
+}
+
+.account {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-bottom: 1.5rem;
+}
+
+.accountBalance {
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+#goals {
+    display: flex !important;
+    border-radius: 25px;
+    margin: 0;
+    padding: 2rem !important;
+    justify-content: space-evenly;
+}
+
+.goal {
+    margin-bottom: 2rem;
+}
