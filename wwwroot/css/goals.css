@@ -1,0 +1,51 @@
+﻿.goals {
+    display: flex !important;
+    /*background-color: red;*/
+    align-self: center;
+    width: 70%;
+    height: 90%;
+    flex-wrap: wrap;
+}
+
+#goalsListDiv {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8rem;
+    margin-left: 10rem;
+    /*background-color: yellow;*/
+    
+}
+
+#goalsList {
+    /*background-color: blue;*/
+    display: flex;
+    max-width: 100%;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#addGoal {
+    display: flex !important;
+    width: 350px;
+    height: 200px;
+    margin-top: 1rem;
+    border-radius: 25px;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    justify-content: space-evenly;
+}
+
+#addGoalText {
+    font-size: 13px;
+}
+
+.goal {
+    display: flex !important;
+    width: 350px;
+    height: 200px;
+    margin-top: 1rem;
+    border-radius: 25px;
+    padding: 1rem;
+
+}
