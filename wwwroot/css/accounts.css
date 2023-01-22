@@ -1,4 +1,4 @@
-﻿.goals {
+﻿.accounts {
     display: flex !important;
     /*background-color: red;*/
     align-self: center;
@@ -7,16 +7,15 @@
     flex-wrap: wrap;
 }
 
-#goalsListDiv {
+#accountsListDiv {
     display: flex;
     flex-direction: column;
     margin-top: 8rem;
     margin-left: 10rem;
     /*background-color: yellow;*/
-    
 }
 
-#goalsList {
+#accountsList {
     /*background-color: blue;*/
     display: flex;
     max-width: 100%;
@@ -24,7 +23,7 @@
     flex-wrap: wrap;
 }
 
-#addGoal {
+#addAccount {
     display: flex !important;
     width: 350px;
     height: 200px;
@@ -37,11 +36,11 @@
     padding: 1rem;
 }
 
-#addGoalText {
+#addAccountText {
     font-size: 13px;
 }
 
-.goal {
+.accountDiv {
     display: flex !important;
     width: 350px;
     height: 200px;
@@ -49,4 +48,14 @@
     border-radius: 25px;
     padding: 1rem;
 
+    justify-content: center;
+    align-items: center;
+}
+.account {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    align-self: flex-start;
+    width: 100%;
 }

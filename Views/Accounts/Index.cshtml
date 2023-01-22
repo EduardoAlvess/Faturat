@@ -2,15 +2,28 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_LayoutWithNav";
 }
 
-@foreach (var account in Model)
-{
-    <p>Id: @account.Id</p>
-    <p>UserId: @account.UserId</p>
-    <p>Name: @account.Name</p>
-    <p>Balance: @account.Balance</p>
-    <p>CreationDate: @account.CreationDate</p>
-    <p>------------------------------------------------</p>
+@section Accounts {
+    <link rel="stylesheet" href="~/css/accounts.css">
 }
 
+<div class="accounts">
+    <div id="accountsListDiv">
+        <h1>Accounts</h1>
+        <div id="accountsList">
+            <button class="card card-block" id="addAccount">
+                <span class="icon icon-add"></span>
+                <a class="text-center" id="addAccountText">New account</a>
+            </button>
+            <div class="card card-block accountDiv">
+                <h2>Teste</h2>
+                <div class="account">
+                    <h4>Balance</h4>
+                    <a class="text-success">R$ 1500.00</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
