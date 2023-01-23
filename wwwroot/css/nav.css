@@ -1,23 +1,18 @@
 ﻿nav {
     display: flex;
     height: 100%;
+    width: 250px;
     background-color: white;
     position: fixed;
 }
 
-@media only screen and (min-width: 1920px) {
-    nav {
-        width: 250px;
-    }
-}
-
-@media only screen and (max-width: 1690px) {
+@media only screen and (min-width: 1366px) and (max-width: 1920px) {
     nav {
         width: 200px;
     }
 }
 
-@media only screen and (max-width: 1440px) {
+@media only screen and (max-width: 1366px) {
     nav {
         width: 150px;
     }
