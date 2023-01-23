@@ -1,6 +1,41 @@
 ﻿nav {
     display: flex;
-    position: absolute;
-    background-color: blue;
-    height: 100vh;
+    height: 100%;
+    background-color: white;
+    position: fixed;
+}
+
+@media only screen and (min-width: 1920px) {
+    nav {
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 1690px) {
+    nav {
+        width: 200px;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    nav {
+        width: 150px;
+    }
+}
+
+.optionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 6rem;
+    width: 100%;
+    align-items: center;
+}
+
+#newBtn {
+    width: 100%;
+}
+
+.navItem {
+    font-size: 15px !important;
 }
