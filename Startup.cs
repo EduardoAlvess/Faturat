@@ -51,12 +51,15 @@ namespace TCC
             }).AddEntityFrameworkStores<DatabaseContext>();
 
             builder.Services.AddTransient<IUserProvider, UserProvider>();
+            builder.Services.AddTransient<IAccountProvider, AccountProvider>();
+            builder.Services.AddTransient<ICategoryProvider, CategoryProvider>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllers().AddNewtonsoftJson();
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddRazorPages();
+            builder.Services.AddMemoryCache();
         }
     }
 }

@@ -2,6 +2,11 @@
 
 namespace TCC.Providers
 {
+    public interface IUserProvider
+    {
+        int GetUserId();
+    }
+
     public class UserProvider : IUserProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -16,7 +21,8 @@ namespace TCC.Providers
         public int GetUserId()
         {
             var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
-            return _databaseContext.Users.First(x => x.UserName == userName).Id;
+            var id = _databaseContext.Users.First(x => x.UserName == userName).Id;
+            return id;
         }
     }
 }

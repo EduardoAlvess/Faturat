@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 Startup.CreateServices(builder);

@@ -1,8 +1,94 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "_LayoutWithNav";
 }
 
-<div class="text-center">
-    <h1 class="display-4">NIGGA</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section Home {
+    <link rel="stylesheet" href="~/css/home.css">
+}
+
+<div style="display: block"></div>
+
+<div class="dashboard">
+    <h1>Dashboard</h1>
+
+    <div class="valuesInfo">
+        <button type="button" class="btn btn-secondary btn-xl infoButtons" id="accountsBalance">
+            <h3>Current balance</h3>
+            <h3>R$ 0.00</h3>
+        </button>
+        <button type="button" class="btn btn-secondary btn-xl infoButtons" id="incomesBalance">
+            <h3>Incomes</h3>
+            <h3 class="text-success">R$ 0.00</h3>
+        </button>
+        <button type="button" class="btn btn-secondary btn-xl infoButtons" id="expensesBalance">
+            <h3>Expenses</h3>
+            <h3 class="text-danger">R$ 0.00</h3>
+        </button>
+    </div>
+    <div class="charts">
+        <div id="expensesChartDiv">
+            <h2>Expenses by category</h2>
+            <div class="card card-block text-center chart">
+                <img src="~/img/expenses-graph.svg" alt="" style="width: 350px; height: 350px">
+                <hr>
+                <h2 class="align-self-center">See more</h2>
+            </div>
+        </div>
+        <div id="incomesChartDiv">
+            <h2>Incomes by category</h2>
+            <div class="card card-block text-center chart">
+                <img src="~/img/incomes-graph.svg" alt="" style="width: 350px; height: 350px">
+                <hr>
+                <h2>See more</h2>
+            </div>
+        </div>
+    </div>
+    <div class="accountsAndGoals">
+        <div id="accountsDiv">
+            <h2>My accounts</h2>
+            <div class="card card-block" id="accounts">
+                <div class="account">
+                    <h4>Teste</h4>
+                    <div class="accountBalance">
+                        <a>Current balance</a>
+                        <a class="text-success">R$ 100.00</a>
+                    </div>
+                </div>
+                <div class="account">
+                    <h4>Teste</h4>
+                    <div class="accountBalance">
+                        <a>Current balance</a>
+                        <a class="text-success">R$ 100.00</a>
+                    </div>
+                </div>
+                <div class="account">
+                    <h4>Teste</h4>
+                    <div class="accountBalance">
+                        <a>Current balance</a>
+                        <a class="text-success">R$ 100.00</a>
+                    </div>
+                </div>
+                <hr>
+                <h2 class="text-center">See more</h2>
+            </div>
+        </div>
+        <div id="goalsDiv">
+            <h2>Goals</h2>
+            <div class="card card-block" id="goals">
+                <div class="goal">
+                    <h4>Teste</h4>
+                    <progress class="progress" value="50" max="100" aria-describedby="example-caption-1"></progress>
+                    <div id="example-caption-1">R$ 1.00 of R$ 200.00</div>
+                </div>
+                <div class="goal">
+                    <h3>Teste 2</h3>
+                    <progress class="progress" value="50" max="100" aria-describedby="example-caption-1"></progress>
+                    <div id="example-caption-1">R$ 1.00 of R$ 200.00</div>
+                </div>
+                <hr>
+                <h2 class="text-center">See more</h2>
+            </div>
+        </div>
+    </div>
 </div>

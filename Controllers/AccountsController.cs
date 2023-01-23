@@ -78,5 +78,17 @@ namespace TCC.Controllers
 
             return Json("Teste");
         }
+
+        public Account GetById(int id)
+        {
+            return _databaseContext.Accounts.First(x => x.Id == id && x.isDeleted == false && x.UserId == _userProvider.GetUserId());
+        }
+
+        public ActionResult<List<Account>> GetAccounts()
+        {
+            var accounts = _databaseContext.Accounts.Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false).ToList();
+
+            return Ok(accounts);
+        }
     }
 }

@@ -2,18 +2,34 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_LayoutWithNav";
 }
 
-@foreach (var goal in Model)
-{
-    <p>Id: @goal.Id</p>
-    <p>UserId: @goal.UserId</p>
-    <p>Name: @goal.Name</p>
-    <p>CurrentAmount: @goal.CurrentBalance</p>
-    <p>FinalAmount: @goal.FinalBalance</p>
-    <p>FinalDate: @goal.FinalDate</p>
-    <p>FinalDate: @goal.IsCompleted</p>
-    <p>CreationDate: @goal.CreationDate</p>
-    <p>------------------------------------------------</p>
+@section Goals {
+    <link rel="stylesheet" href="~/css/goals.css">
 }
+
+<div class="goals">
+    <div id="goalsListDiv">
+        <h1>Goals</h1>
+        <div id="goalsList">
+            <div class="card card-block" id="addGoal">
+                <span class="icon icon-add"></span>
+                <a class="text-center" id="addGoalText">New goal</a>
+            </div>
+            <div class="card card-block goal">
+                <h3>Teste</h3>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
+                    <div>
+                        <h6>Deadline</h6>
+                        <a>Jan 21, 2023</a>
+                    </div>
+                    <h2 style="margin-top: 1.4rem !important;">50%</h2>
+                </div>
+                <progress class="progress" value="50" max="100" aria-describedby="example-caption-1"></progress>
+                <div id="example-caption-1">R$ 100.00 of R$ 200.00</div>
+            </div>
+        </div>
+    </div>
+</div>
 

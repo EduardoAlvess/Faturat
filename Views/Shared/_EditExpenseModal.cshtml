@@ -1,0 +1,70 @@
+﻿@using TCC.Controllers
+@using TCC.Views.Shared.Components
+@model TCC.Models.EditExpense
+
+@{
+    SelectList categorySelectList = new SelectList(Model.Categories, "Id", "Name");
+    SelectList accountSelectList = new SelectList(Model.Accounts, "Id", "Name");
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content ">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span class="icon icon-close icon-2x"></span>
+                <span class="btn-close-label hidden-sm-down">esc</span>
+            </button>
+            <h4 class="modal-title " id="ExpenseModalLabel">Edit Expense</h4>
+        </div>
+        @using (Html.BeginForm("Edit", "Expenses", FormMethod.Post, new { id = "formId" }))
+        {
+            <div class="modal-body form-group">
+                @Html.HiddenFor(m => m.Id)
+                <div class="input-group">
+                    <span class="input-group-addon  " id="basic-addon1">$</span>
+                    @Html.EditorFor(m => m.Value, new { htmlAttributes = new { @class = "form-control  " } })
+                </div>
+                <br>
+                <div class="form-group row">
+                    <label for="example-date-input" class="col-xs-2 col-form-label ">Date:</label>
+                    <div class="col-xs-10">
+                        @Html.EditorFor(m => m.TransactionDate, new { htmlAttributes = new { @class = "form-control  ", @id = "expense-date" } })
+                    </div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon  " id="basic-addon1"><span class="icon icon-file-new"></span></span>
+                    @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control  ", @placeholder = "Description" } } )
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="" for="categorySelect">Category</label>
+                    @Html.DropDownListFor(m => m.CategoryId, categorySelectList as SelectList, new { @class = "form-control   categorySelect" })
+                </div>
+                <div class="form-group">
+                    <label class="">Account</label>
+                    @Html.DropDownListFor(m => m.AccountId, accountSelectList as SelectList, new { @class = "form-control   accountSelect" })
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success">
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#formId").submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Expenses/Edit",
+                data: formData,
+                success: function () {
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>

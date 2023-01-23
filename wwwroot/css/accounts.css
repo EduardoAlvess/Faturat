@@ -1,0 +1,61 @@
+﻿.accounts {
+    display: flex !important;
+    /*background-color: red;*/
+    align-self: center;
+    width: 70%;
+    height: 90%;
+    flex-wrap: wrap;
+}
+
+#accountsListDiv {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8rem;
+    margin-left: 10rem;
+    /*background-color: yellow;*/
+}
+
+#accountsList {
+    /*background-color: blue;*/
+    display: flex;
+    max-width: 100%;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#addAccount {
+    display: flex !important;
+    width: 350px;
+    height: 200px;
+    margin-top: 1rem;
+    border-radius: 25px;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+
+#addAccountText {
+    font-size: 13px;
+}
+
+.accountDiv {
+    display: flex !important;
+    width: 350px;
+    height: 200px;
+    margin-top: 1rem;
+    border-radius: 25px;
+    padding: 1rem;
+
+    justify-content: center;
+    align-items: center;
+}
+.account {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    align-self: flex-start;
+    width: 100%;
+}

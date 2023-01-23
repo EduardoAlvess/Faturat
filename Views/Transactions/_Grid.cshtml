@@ -1,0 +1,41 @@
+﻿@using TCC.Views.Shared.Components
+
+@model List<TCC.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_ListTransactionsLayout";
+}
+
+<table class="transactions-table table">
+    <thead>
+        <tr>
+            <th style="width: 17%;">Date</th>
+            <th style="width: 17%;">Description</th>
+            <th style="width: 17%;">Category</th>
+            <th style="width: 17%;">Account</th>
+            <th style="width: 17%;">Amount</th>
+            <th style="width: 17%;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td style="text-align: left">@transaction.TransactionDate.ToString("dd/MM/yyyy")</td>
+                <td style="text-align: left">@transaction.Description</td>
+                <td style="text-align: left">@transaction.CategoryId</td>
+                <td style="text-align: left">@await Component.InvokeAsync(nameof(AccountName), transaction.AccountId)</td>
+                <td style="text-align: left" class="@(transaction.GetType().Name.Equals("Income") ? "text-success" : "text-danger")">R$ @transaction.Value</td>
+                <td style="text-align: left">
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <button type="button" class="btn btn-secondary btn-edit-transaction" title="Editar" onclick="edit('@transaction.GetType().Name', @transaction.Id);">
+                            <span class="icon icon-pencil"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary delete-btn" title="Deletar" onclick="exclude(@transaction.Id);"><span class="icon icon-remove"></span></button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
