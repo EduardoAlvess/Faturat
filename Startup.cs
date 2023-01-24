@@ -51,8 +51,10 @@ namespace TCC
             }).AddEntityFrameworkStores<DatabaseContext>();
 
             builder.Services.AddTransient<IUserProvider, UserProvider>();
+            builder.Services.AddTransient<IGoalsProvider, GoalsProvider>();
             builder.Services.AddTransient<IAccountProvider, AccountProvider>();
             builder.Services.AddTransient<ICategoryProvider, CategoryProvider>();
+            builder.Services.AddTransient<ITransactionsProvider, TransactionsProvider>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllers().AddNewtonsoftJson();

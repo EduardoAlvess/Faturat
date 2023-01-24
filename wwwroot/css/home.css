@@ -105,3 +105,7 @@
 .goal {
     margin-bottom: 2rem;
 }
+
+.clickable:hover {
+    cursor: pointer;
+}

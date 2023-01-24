@@ -7,6 +7,7 @@ namespace TCC.Providers
     {
         string GetAccountName(int id);
         List<Account> GetAccountsByUserId(int id);
+        List<Account> GetAllAccounts();
     }
 
     public class AccountProvider : IAccountProvider
@@ -32,6 +33,11 @@ namespace TCC.Providers
         public List<Account> GetAccountsByUserId(int id)
         {
             return _databaseContext.Accounts.Where(x => x.UserId == id && x.isDeleted == false).ToList();
+        }
+
+        public List<Account> GetAllAccounts()
+        {
+            return _databaseContext.Accounts.Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false).ToList();
         }
     }
 }
