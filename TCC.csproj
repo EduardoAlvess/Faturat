@@ -48,6 +48,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Incomes\" />
+    <Folder Include="Views\Transactions\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

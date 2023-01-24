@@ -4,7 +4,11 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "_ListTransactionsLayout";
+
+    @if (ViewData["UseLayout"] == null || (bool)ViewData["UseLayout"])
+    {
+        Layout = "_ListTransactionsLayout";
+    }
 }
 
 <table class="transactions-table table">

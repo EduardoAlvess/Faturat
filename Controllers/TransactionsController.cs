@@ -46,8 +46,8 @@ namespace TCC.Controllers
             {
                 Categories = _databaseContext.Categories.ToList(),
                 Accounts = _databaseContext.Accounts.Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false).ToList(),
-                InitialDate = DateTime.Now,
-                FinalDate = DateTime.Now,
+                InitialDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
+                FinalDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1)
             };
 
             return PartialView("_FilterTransactionsModal", filterTransactions);
@@ -73,6 +73,8 @@ namespace TCC.Controllers
                                                                                                  && x.TransactionDate <= finalDate)
                                                .OrderByDescending(x => x.TransactionDate)
                                                .ToList();
+
+            ViewData["UseLayout"] = false;
 
             return PartialView("_Grid", transactions);
         }
