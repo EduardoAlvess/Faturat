@@ -1,11 +1,23 @@
-﻿@{
+﻿@model TCC.Models.Dashboard
+
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_LayoutWithNav";
 }
 
+@{
+    double currentBalance = 0;
+    Model.Accounts.ForEach(x => currentBalance += x.Balance);
+
+    double totalExpenses = 0;
+    Model.Expenses.ForEach(x => totalExpenses += x.Value);
+
+    double totalIncomes = 0;
+    Model.Incomes.ForEach(x => totalIncomes += x.Value);
+}
+
 @section Home {
     <link rel="stylesheet" href="~/css/home.css">
-    <link rel="stylesheet" href="~/css/charts.css">
     <script src="https://code.highcharts.com/highcharts.js"></script>
 }
 
@@ -15,17 +27,17 @@
     <h1>Dashboard</h1>
 
     <div class="valuesInfo">
-        <button type="button" class="btn btn-secondary btn-xl infoButtons" id="accountsBalance">
+        <button type="button" onclick="location.href = '/Accounts'" class="btn btn-secondary btn-xl infoButtons" id="accountsBalance">
             <h3>Current balance</h3>
-            <h3>R$ 0.00</h3>
+            <h3>R$ @currentBalance</h3>
         </button>
-        <button type="button" class="btn btn-secondary btn-xl infoButtons" id="incomesBalance">
+        <button type="button" onclick="location.href = '/Incomes'" class="btn btn-secondary btn-xl infoButtons" id="incomesBalance">
             <h3>Incomes</h3>
-            <h3 class="text-success">R$ 0.00</h3>
+            <h3 class="text-success">R$ @totalIncomes</h3>
         </button>
-        <button type="button" class="btn btn-secondary btn-xl infoButtons" id="expensesBalance">
+        <button type="button" onclick="location.href = '/Expenses'" class="btn btn-secondary btn-xl infoButtons" id="expensesBalance">
             <h3>Expenses</h3>
-            <h3 class="text-danger">R$ 0.00</h3>
+            <h3 class="text-danger">R$ @totalExpenses</h3>
         </button>
     </div>
     <div class="charts">
@@ -50,46 +62,33 @@
         <div id="accountsDiv">
             <h2>My accounts</h2>
             <div class="card card-block" id="accounts">
-                <div class="account">
-                    <h4>Teste</h4>
-                    <div class="accountBalance">
-                        <a>Current balance</a>
-                        <a class="text-success">R$ 100.00</a>
+                @foreach(var account in Model.Accounts)
+                {
+                    <div class="account">
+                        <h4>@account.Name</h4>
+                        <div class="accountBalance">
+                            <a>Current balance</a>
+                            <a class="text-success">R$ @account.Balance</a>
+                        </div>
                     </div>
-                </div>
-                <div class="account">
-                    <h4>Teste</h4>
-                    <div class="accountBalance">
-                        <a>Current balance</a>
-                        <a class="text-success">R$ 100.00</a>
-                    </div>
-                </div>
-                <div class="account">
-                    <h4>Teste</h4>
-                    <div class="accountBalance">
-                        <a>Current balance</a>
-                        <a class="text-success">R$ 100.00</a>
-                    </div>
-                </div>
+                }
                 <hr>
-                <h2 class="text-center">See more</h2>
+                <h2 onclick="location.href = '/Accounts'" class="text-center clickable">See more</h2>
             </div>
         </div>
         <div id="goalsDiv">
             <h2>Goals</h2>
             <div class="card card-block" id="goals">
-                <div class="goal">
-                    <h4>Teste</h4>
-                    <progress class="progress" value="50" max="100" aria-describedby="example-caption-1"></progress>
-                    <div id="example-caption-1">R$ 1.00 of R$ 200.00</div>
-                </div>
-                <div class="goal">
-                    <h3>Teste 2</h3>
-                    <progress class="progress" value="50" max="100" aria-describedby="example-caption-1"></progress>
-                    <div id="example-caption-1">R$ 1.00 of R$ 200.00</div>
-                </div>
+                @foreach(var goal in Model.Goals)
+                {
+                    <div class="goal">
+                        <h4>@goal.Name</h4>
+                        <progress class="progress" value="@(goal.CurrentBalance / goal.FinalBalance * 100)" max="100" aria-describedby="example-caption-1"></progress>
+                        <div id="example-caption-1">R$ @goal.CurrentBalance of R$ @goal.FinalBalance</div>
+                    </div>
+                }
                 <hr>
-                <h2 class="text-center">See more</h2>
+                <h2 onclick="location.href = '/Goals'" class="text-center clickable">See more</h2>
             </div>
         </div>
     </div>
@@ -145,9 +144,10 @@
             series: [{
                 name: 'Quantidade',
                 data: [
-                    { name: 'Gym', y: 20 },
-                    { name: 'Taxes', y: 100 },
-                    { name: 'Teste', y: 200 },
+                    @foreach(var category in Model.CategoryTotalTransactions.Where(x => x.CategoryType == CategoryType.Expense))
+                    {
+                        @:{ name: '@category.CategoryName', y: @category.TotalAmount },
+                    }
                 ]
             }]
         });
@@ -201,9 +201,10 @@
             series: [{
                 name: 'Quantidade',
                 data: [
-                    { name: 'Gym', y: 20 },
-                    { name: 'Taxes', y: 100 },
-                    { name: 'Teste', y: 200 },
+                    @foreach(var category in Model.CategoryTotalTransactions.Where(x => x.CategoryType == CategoryType.Income))
+                    {
+                        @:{ name: '@category.CategoryName', y: @category.TotalAmount },
+                    }
                 ]
             }]
         });
