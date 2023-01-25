@@ -97,5 +97,19 @@ namespace TCC.Controllers
         {
             return _databaseContext.Transactions.OfType<Income>().First(x => x.Id == id);
         }
+
+        [HttpGet]
+        public double SumIncomes()
+        {
+            var incomes = _databaseContext.Transactions
+                                          .OfType<Income>()
+                                          .Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false)
+                                          .ToList();
+
+            double totalIncomes = 0;
+            incomes.ForEach(x => totalIncomes += x.Value);
+
+            return totalIncomes;
+        }
     }
 }

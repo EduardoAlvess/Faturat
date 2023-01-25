@@ -80,4 +80,31 @@
         });
     }
 </script>
-
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Incomes/SumIncomes',
+                success: function (result) {
+                    $("#incomesValue").text('R$ ' + result);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Expenses/SumExpenses',
+                success: function (result) {
+                    $("#expensesValue").text('R$ ' + result);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+</script>
