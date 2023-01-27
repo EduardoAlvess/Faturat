@@ -1,6 +1,15 @@
 ﻿<nav class="nav nav-pills nav-stacked">
     <div class="optionsList">
-        <button type="button" class="btn btn-primary btn-lg" id="newBtn">Teste</button>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-lg dropdown-toggle" id="newBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                New transaction
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="add('Income')">Incomes</a>
+                <a class="dropdown-item" onclick="add('Expense')">Expenses</a>
+            </div>
+        </div>
+
         <a class="nav-link navItem" href="/Home">Dashboard</a>
         <a class="nav-link navItem" href="/Transactions">Transactions</a>
         <a class="nav-link navItem" href="/Accounts">Accounts</a>
@@ -8,3 +17,23 @@
         <a class="nav-link navItem" href="/Goals">Goals</a>
     </div>
 </nav>
+
+<!-- New transaction modal -->
+<div class="modal fade" id="addTransactionModal" aria-labelledby="addModalLabel" aria-hidden="true">
+</div>
+
+<script>
+    function add(type) {
+        $.ajax({
+            type: 'GET',
+            url: '/' + type + 's/Add',
+            success: function (result) {
+                $("#addTransactionModal").html(result);
+                $("#addTransactionModal").modal();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>

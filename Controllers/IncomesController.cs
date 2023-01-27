@@ -39,12 +39,38 @@ namespace TCC.Controllers
             return View("_Grid", transactions);
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] Income income)
+        [HttpGet]
+        public ActionResult Add()
         {
+            var incomeInfos = new AddIncome()
+            {
+                TransactionDate = DateTime.Now,
+                Categories = _categoriesProvider.GetIncomeCategories(),
+                Accounts = _accountProvider.GetAccountsByUserId(_userProvider.GetUserId())
+            };
+
+            return PartialView("_AddIncomeModal", incomeInfos);
+        }
+
+        [HttpPost]
+        public IActionResult Create(double value, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
+        {
+            Income income = new Income()
+            {
+                UserId = _userProvider.GetUserId(),
+                TransactionDate = transactionDate,
+                CreationDate = DateTime.Now,
+                Description = description,
+                CategoryId = categoryId,
+                AccountId = accountId,
+                isDeleted = false,
+                Value = value,
+            };
+
             _databaseContext.Transactions.Add(income);
             _databaseContext.SaveChanges(income, "Added");
-            return Json("Teste");
+
+            return Redirect("/Incomes");
         }
 
         [HttpGet]

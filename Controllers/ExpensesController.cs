@@ -40,12 +40,38 @@ namespace TCC.Controllers
             return View("_Grid", transactions);
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] Expense expense)
+        [HttpGet]
+        public ActionResult Add()
         {
+            var expenseInfos = new AddExpense()
+            {
+                TransactionDate = DateTime.Now,
+                Categories = _categoriesProvider.GetExpenseCategories(),
+                Accounts = _accountProvider.GetAccountsByUserId(_userProvider.GetUserId())
+            };
+
+            return PartialView("_AddExpenseModal", expenseInfos);
+        }
+
+        [HttpPost]
+        public IActionResult Create(double value, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
+        {
+            Expense expense = new Expense()
+            {
+                UserId = _userProvider.GetUserId(),
+                TransactionDate = transactionDate,
+                CreationDate = DateTime.Now,
+                Description = description,
+                CategoryId = categoryId,
+                AccountId = accountId,
+                isDeleted = false,
+                Value = value,
+            };
+
             _databaseContext.Transactions.Add(expense);
             _databaseContext.SaveChanges(expense, "Added");
-            return Json("Teste");
+
+            return Redirect("/Expenses");
         }
 
         [HttpGet]
