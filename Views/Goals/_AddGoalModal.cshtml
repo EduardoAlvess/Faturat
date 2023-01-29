@@ -39,20 +39,3 @@
         }
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $("#formId").submit(function (event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                type: "POST",
-                url: "/Goals/Create",
-                data: formData,
-                success: function () {
-                    location.reload();
-                }
-            });
-        });
-    });
-</script>
