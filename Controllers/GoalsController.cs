@@ -24,75 +24,76 @@ namespace TCC.Controllers
             return View(list);
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] Goal goal)
+        [HttpGet]
+        public ActionResult Add()
         {
-            _databaseContext.Goals.Add(goal);
-            _databaseContext.SaveChanges(goal, "Added");
-            return Json("Teste");
+            var goal = new Goal()
+            {
+                FinalDate = DateTime.Now
+            };
+
+            return PartialView("_AddGoalModal", goal);
         }
 
         [HttpPost]
-        public ActionResult Edit([FromBody] Goal goal)
+        public IActionResult Create(string name, double currentBalance, double finalBalance, DateTime finalDate)
         {
-            var goalToEdit = _databaseContext.Goals.FirstOrDefault(x => x.Id == goal.Id && x.UserId == _userProvider.GetUserId());
-
-            if (goal != null)
+            Goal goal = new Goal()
             {
-                goalToEdit.Name = goal.Name;
-                goalToEdit.CurrentBalance = goal.CurrentBalance;
-                goalToEdit.FinalBalance = goal.FinalBalance;
-                goalToEdit.FinalDate = goal.FinalDate;
-                goalToEdit.IsCompleted = goal.IsCompleted;
-                _databaseContext.SaveChanges(goalToEdit, "Modified");
-                return Json("Atualizado");
-            }
-            return Json("Erro");
+                UserId = _userProvider.GetUserId(),
+                CurrentBalance = currentBalance,
+                FinalBalance = finalBalance,
+                CreationDate = DateTime.Now,
+                FinalDate = finalDate,
+                IsCompleted = false,
+                IsDeleted = false,
+                Name = name
+            };
+
+            _databaseContext.Goals.Add(goal);
+            _databaseContext.SaveChanges(goal, "Added");
+
+            return Redirect("/Goals");
         }
 
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult Edit(int id)
+        {
+            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
+
+            return PartialView("_EditGoalModal", goal);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string name, double currentBalance, double finalBalance, DateTime finalDate)
+        {
+            var goalToEdit = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
+
+            goalToEdit.CurrentBalance = currentBalance;
+            goalToEdit.FinalBalance = finalBalance;
+            goalToEdit.FinalDate = finalDate;
+            goalToEdit.Name = name;
+
+            _databaseContext.SaveChanges(goalToEdit, "Modified");
+
+            return Redirect("/Goals");
+        }
+
+        [HttpDelete]
+        public void Delete(int id)
         {
             var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             goal.IsDeleted = true;
             _databaseContext.SaveChanges(goal, "Modified");
-            return Json("Teste");
         }
 
         [HttpPost]
-        public ActionResult AddBalance(int id, [FromBody] double value)
+        public void Complete(int id)
         {
             var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
-
-            goal.CurrentBalance += value;
-
-            CheckBalance(goal);
-
+            goal.IsCompleted = true;
+            goal.CurrentBalance = goal.FinalBalance;
             _databaseContext.SaveChanges(goal, "Modified");
-
-            return Json("Teste");
-        }
-
-        [HttpPost]
-        public ActionResult RemoveBalance(int id, [FromBody] double value)
-        {
-            var goal = _databaseContext.Goals.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
-
-            goal.CurrentBalance -= value;
-
-            CheckBalance(goal);
-
-            _databaseContext.SaveChanges(goal, "Modified");
-
-            return Json("Teste");
-        }
-
-        private void CheckBalance(Goal goal)
-        {
-            if(goal.CurrentBalance >= goal.FinalBalance)
-                goal.IsCompleted = true;
-            else
-                goal.IsCompleted = false;
         }
     }
 }
