@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TCC.Providers;
-using TCC.Db;
 using TCC.Models;
+using TCC.Db;
 
 namespace TCC.Controllers
 {
