@@ -33,7 +33,7 @@ namespace TCC.Db
 
             builder.Entity<IdentityUserClaim<string>>().HasKey(p => new { p.Id });
 
-            DbSeeder.SeedTables(builder);
+            //DbSeeder.SeedTables(builder);
         }
 
         public void SaveChanges(Object item, string state)

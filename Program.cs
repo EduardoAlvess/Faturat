@@ -11,12 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 Startup.CreateServices(builder);
 
-// Add services to the container.
-//builder.Services.AddControllersWithViews();
-//builder.Services.AddControllers().AddNewtonsoftJson();
-//builder.Services.AddRazorPages();
-//builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

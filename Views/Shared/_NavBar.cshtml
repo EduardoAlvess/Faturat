@@ -1,8 +1,8 @@
 ﻿<nav class="nav nav-pills nav-stacked">
     <div class="optionsList">
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary btn-lg dropdown-toggle" id="newBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                New transaction
+        <div class="btn-group" style="display: flex; max-width: 100%;">
+            <button type="button" style="padding: 10px;" class="btn btn-primary btn-lg dropdown-toggle" id="newBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="teste">New transaction</a>
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" onclick="add('Income')">Incomes</a>
@@ -13,8 +13,10 @@
         <a class="nav-link navItem" href="/Home">Dashboard</a>
         <a class="nav-link navItem" href="/Transactions">Transactions</a>
         <a class="nav-link navItem" href="/Accounts">Accounts</a>
-        @*<a class="nav-link navItem" href="#">Reports</a>*@
         <a class="nav-link navItem" href="/Goals">Goals</a>
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button id="logout" type="submit" class="nav-link navItem">Logout</button>
+        </form>
     </div>
 </nav>
 
