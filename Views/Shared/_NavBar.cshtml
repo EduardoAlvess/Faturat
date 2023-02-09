@@ -5,8 +5,8 @@
                 <a class="teste">New transaction</a>
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" onclick="add('Income')">Incomes</a>
-                <a class="dropdown-item" onclick="add('Expense')">Expenses</a>
+                <a class="dropdown-item" onclick="addTransaction('Income')">Incomes</a>
+                <a class="dropdown-item" onclick="addTransaction('Expense')">Expenses</a>
             </div>
         </div>
 
@@ -25,7 +25,7 @@
 </div>
 
 <script>
-    function add(type) {
+    function addTransaction(type) {
         $.ajax({
             type: 'GET',
             url: '/' + type + 's/Add',
