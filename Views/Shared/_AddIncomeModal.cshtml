@@ -50,19 +50,3 @@
         }
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $("#formId").submit(function (event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                type: "POST",
-                url: "/Incomes/Add",
-                data: formData,
-                success: function () {
-                }
-            });
-        });
-    });
-</script>
