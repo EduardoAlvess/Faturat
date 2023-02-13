@@ -95,7 +95,7 @@
                 type: 'GET',
                 url: '/Expenses/SumExpenses',
                 success: function (result) {
-                    $("#expensesValue").text('R$ ' + result);
+                    $("#expensesValue").text('R$ ' + result.toFixed(2));
                 },
                 error: function (xhr, status, error) {
                     console.log(error);

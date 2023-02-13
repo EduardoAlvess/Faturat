@@ -39,7 +39,7 @@
                         <h2 style="margin-top: 1.4rem !important;">@(goal.CurrentBalance / goal.FinalBalance * 100)%</h2>
                     </div>
                     <progress class="progress" value="@(goal.CurrentBalance / goal.FinalBalance * 100)" max="100" aria-describedby="example-caption-1"></progress>
-                    <div id="example-caption-1">R$ @goal.CurrentBalance of R$ @goal.FinalBalance</div>
+                    <div id="example-caption-1">R$ @goal.CurrentBalance.ToString("F") of R$ @goal.FinalBalance.ToString("F")</div>
                 </div>
             }
         </div>

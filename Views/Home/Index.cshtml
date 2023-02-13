@@ -29,15 +29,15 @@
     <div class="valuesInfo">
         <button type="button" onclick="location.href = '/Accounts'" class="btn btn-secondary btn-xl infoButtons" id="accountsBalance">
             <h3>Current balance</h3>
-            <h3>R$ @currentBalance</h3>
+            <h3>R$ @currentBalance.ToString("F")</h3>
         </button>
         <button type="button" onclick="location.href = '/Incomes'" class="btn btn-secondary btn-xl infoButtons" id="incomesBalance">
             <h3>Incomes</h3>
-            <h3 class="text-success">R$ @totalIncomes</h3>
+            <h3 class="text-success">R$ @totalIncomes.ToString("F")</h3>
         </button>
         <button type="button" onclick="location.href = '/Expenses'" class="btn btn-secondary btn-xl infoButtons" id="expensesBalance">
             <h3>Expenses</h3>
-            <h3 class="text-danger">R$ @totalExpenses</h3>
+            <h3 class="text-danger">R$ @totalExpenses.ToString("F")</h3>
         </button>
     </div>
     <div class="charts">
@@ -64,7 +64,7 @@
                         <h4>@account.Name</h4>
                         <div class="accountBalance">
                             <a>Current balance</a>
-                            <a class="text-success">R$ @account.Balance</a>
+                            <a class="text-success">R$ @account.Balance.ToString("F")</a>
                         </div>
                     </div>
                 }
