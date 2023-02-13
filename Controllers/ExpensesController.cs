@@ -131,9 +131,14 @@ namespace TCC.Controllers
         [HttpGet]
         public double SumExpenses()
         {
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.UserId == userId && x.isDeleted == false).Select(x => x.Id).ToList();
+
             var expenses = _databaseContext.Transactions
                                            .OfType<Expense>()
-                                           .Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false)
+                                           .Where(x => x.UserId == userId && x.isDeleted == false 
+                                                                          && accounts.Contains(x.AccountId))
                                            .ToList();
 
             double totalExpenses = 0;

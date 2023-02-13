@@ -41,11 +41,16 @@ namespace TCC.Providers
         {
             var model = new List<CategoryTotalTransactions>();
 
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.UserId == userId && x.isDeleted == false).Select(x => x.Id).ToList();
+
             foreach(Category category in GetAllCategories())
             {
                 var values = _databaseContext.Transactions
-                                        .Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false 
-                                                                                          && x.CategoryId == category.Id)
+                                        .Where(x => x.UserId == userId && x.isDeleted == false 
+                                                                       && x.CategoryId == category.Id
+                                                                       && accounts.Contains(x.AccountId))
                                         .Select(x => x.Value)
                                         .ToList();
 

@@ -81,7 +81,7 @@
                 type: 'GET',
                 url: '/Incomes/SumIncomes',
                 success: function (result) {
-                    $("#incomesValue").text('R$ ' + result);
+                    $("#incomesValue").text('R$ ' + result.toFixed(2));
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
