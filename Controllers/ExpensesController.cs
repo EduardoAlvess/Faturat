@@ -69,6 +69,9 @@ namespace TCC.Controllers
             };
 
             _databaseContext.Transactions.Add(expense);
+
+            RemoveFromAccount(expense.AccountId, expense.Value);
+
             _databaseContext.SaveChanges(expense, "Added");
 
             return Redirect("/Expenses");
@@ -137,6 +140,13 @@ namespace TCC.Controllers
             expenses.ForEach(x => totalExpenses += x.Value);
 
             return totalExpenses;
+        }
+
+        private void RemoveFromAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance -= value;
         }
     }
 }

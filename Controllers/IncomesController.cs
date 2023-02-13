@@ -68,6 +68,9 @@ namespace TCC.Controllers
             };
 
             _databaseContext.Transactions.Add(income);
+
+            AddToAccount(income.AccountId, income.Value);
+
             _databaseContext.SaveChanges(income, "Added");
 
             return Redirect("/Incomes");
@@ -114,6 +117,7 @@ namespace TCC.Controllers
         {
             var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             income.isDeleted = true;
+
             _databaseContext.SaveChanges(income, "Modified");
             return Json("Teste");
         }
@@ -136,6 +140,13 @@ namespace TCC.Controllers
             incomes.ForEach(x => totalIncomes += x.Value);
 
             return totalIncomes;
+        }
+
+        private void AddToAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance += value;
         }
     }
 }
