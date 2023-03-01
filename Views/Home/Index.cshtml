@@ -29,15 +29,15 @@
     <div class="valuesInfo">
         <button type="button" onclick="location.href = '/Accounts'" class="btn btn-secondary btn-xl infoButtons" id="accountsBalance">
             <h3>Current balance</h3>
-            <h3>R$ @currentBalance</h3>
+            <h3>R$ @currentBalance.ToString("F")</h3>
         </button>
         <button type="button" onclick="location.href = '/Incomes'" class="btn btn-secondary btn-xl infoButtons" id="incomesBalance">
             <h3>Incomes</h3>
-            <h3 class="text-success">R$ @totalIncomes</h3>
+            <h3 class="text-success">R$ @totalIncomes.ToString("F")</h3>
         </button>
         <button type="button" onclick="location.href = '/Expenses'" class="btn btn-secondary btn-xl infoButtons" id="expensesBalance">
             <h3>Expenses</h3>
-            <h3 class="text-danger">R$ @totalExpenses</h3>
+            <h3 class="text-danger">R$ @totalExpenses.ToString("F")</h3>
         </button>
     </div>
     <div class="charts">
@@ -45,16 +45,12 @@
             <h2>Expenses by category</h2>
             <div class="card card-block text-center chart">
                 <div id="chart1" style="width: 350px; height: 350px;"></div>
-                <hr>
-                <h2 class="align-self-center">See more</h2>
             </div>
         </div>
         <div id="incomesChartDiv">
             <h2>Incomes by category</h2>
             <div class="card card-block text-center chart">
                 <div id="chart2" style="width: 350px; height: 350px;"></div>
-                <hr>
-                <h2>See more</h2>
             </div>
         </div>
     </div>
@@ -68,7 +64,7 @@
                         <h4>@account.Name</h4>
                         <div class="accountBalance">
                             <a>Current balance</a>
-                            <a class="text-success">R$ @account.Balance</a>
+                            <a class="text-success">R$ @account.Balance.ToString("F")</a>
                         </div>
                     </div>
                 }
@@ -84,7 +80,7 @@
                     <div class="goal">
                         <h4>@goal.Name</h4>
                         <progress class="progress" value="@(goal.CurrentBalance / goal.FinalBalance * 100)" max="100" aria-describedby="example-caption-1"></progress>
-                        <div id="example-caption-1">R$ @goal.CurrentBalance of R$ @goal.FinalBalance</div>
+                        <div id="example-caption-1">R$ @goal.CurrentBalance.ToString("F") of R$ @goal.FinalBalance.ToString("F")</div>
                     </div>
                 }
                 <hr>

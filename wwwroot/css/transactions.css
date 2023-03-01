@@ -1,7 +1,8 @@
 ﻿#listTransactions {
     display: flex;
-    margin-bottom: 25vh;
+    /*margin-bottom: 25vh;*/
     flex-direction: column;
+    max-height: 100%;
     width: 62vw;
 }
 

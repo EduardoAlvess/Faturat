@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using TCC.Db;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Mvc;
 using TCC.Models;
+using TCC.Db;
 
 namespace TCC.Controllers
 {

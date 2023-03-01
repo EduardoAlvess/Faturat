@@ -4,7 +4,11 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "_ListTransactionsLayout";
+
+    @if (ViewData["UseLayout"] == null || (bool)ViewData["UseLayout"])
+    {
+        Layout = "_ListTransactionsLayout";
+    }
 }
 
 <table class="transactions-table table">
@@ -26,7 +30,7 @@
                 <td style="text-align: left">@transaction.Description</td>
                 <td style="text-align: left">@transaction.CategoryId</td>
                 <td style="text-align: left">@await Component.InvokeAsync(nameof(AccountName), transaction.AccountId)</td>
-                <td style="text-align: left" class="@(transaction.GetType().Name.Equals("Income") ? "text-success" : "text-danger")">R$ @transaction.Value</td>
+                <td style="text-align: left" class="@(transaction.GetType().Name.Equals("Income") ? "text-success" : "text-danger")">R$ @transaction.Value.ToString("F")</td>
                 <td style="text-align: left">
                     <div class="btn-group" role="group" aria-label="Actions">
                         <button type="button" class="btn btn-secondary btn-edit-transaction" title="Editar" onclick="edit('@transaction.GetType().Name', @transaction.Id);">

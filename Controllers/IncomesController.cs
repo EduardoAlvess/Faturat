@@ -6,7 +6,7 @@ using TCC.Db;
 
 namespace TCC.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class IncomesController : Controller
     {
         private readonly IDatabaseContext _databaseContext;
@@ -25,16 +25,55 @@ namespace TCC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.OfType<Income>().Where(x => x.isDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
-            return View("Index", list);
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.isDeleted == false && x.UserId == userId).ToList();
+
+            var transactions = _databaseContext.Transactions.OfType<Income>()
+                                                            .Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId))
+                                                            .OrderByDescending(x => x.TransactionDate)
+                                                            .ToList()
+                                                            .OfType<Transaction>()
+                                                            .ToList();
+
+            return View("_Grid", transactions);
+        }
+
+        [HttpGet]
+        public ActionResult Add()
+        {
+            var incomeInfos = new AddIncome()
+            {
+                TransactionDate = DateTime.Now,
+                Categories = _categoriesProvider.GetIncomeCategories(),
+                Accounts = _accountProvider.GetAccountsByUserId(_userProvider.GetUserId())
+            };
+
+            return PartialView("_AddIncomeModal", incomeInfos);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Income income)
+        public IActionResult Create(double value, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
         {
+            Income income = new Income()
+            {
+                UserId = _userProvider.GetUserId(),
+                TransactionDate = transactionDate,
+                CreationDate = DateTime.Now,
+                Description = description,
+                CategoryId = categoryId,
+                AccountId = accountId,
+                isDeleted = false,
+                Value = value,
+            };
+
             _databaseContext.Transactions.Add(income);
+
+            AddToAccount(income.AccountId, income.Value);
+
             _databaseContext.SaveChanges(income, "Added");
-            return Json("Teste");
+
+            return Redirect("/Incomes");
         }
 
         [HttpGet]
@@ -65,11 +104,23 @@ namespace TCC.Controllers
         {
             var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
+            if (value > incomeToEdit.Value)
+            {
+                var dif = value - incomeToEdit.Value;
+                AddToAccount(incomeToEdit.AccountId, dif);
+            }
+            else
+            {
+                var dif = incomeToEdit.Value - value;
+                RemoveFromAccount(incomeToEdit.AccountId, dif);
+            }
+
             incomeToEdit.TransactionDate = transactionDate;
             incomeToEdit.Description = description;
             incomeToEdit.CategoryId = categoryId;
             incomeToEdit.AccountId = accountId;
             incomeToEdit.Value = value;
+
             _databaseContext.SaveChanges(incomeToEdit, "Modified");
         }
 
@@ -78,6 +129,7 @@ namespace TCC.Controllers
         {
             var income = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             income.isDeleted = true;
+
             _databaseContext.SaveChanges(income, "Modified");
             return Json("Teste");
         }
@@ -86,6 +138,39 @@ namespace TCC.Controllers
         public Income GetById(int id)
         {
             return _databaseContext.Transactions.OfType<Income>().First(x => x.Id == id);
+        }
+
+        [HttpGet]
+        public double SumIncomes()
+        {
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.UserId == userId && x.isDeleted == false).Select(x => x.Id).ToList();
+
+            var incomes = _databaseContext.Transactions
+                                          .OfType<Income>()
+                                          .Where(x => x.UserId == userId && x.isDeleted == false 
+                                                                         && accounts.Contains(x.AccountId))
+                                          .ToList();
+
+            double totalIncomes = 0;
+            incomes.ForEach(x => totalIncomes += x.Value);
+
+            return totalIncomes;
+        }
+
+        private void AddToAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance += value;
+        }
+
+        private void RemoveFromAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance -= value;
         }
     }
 }

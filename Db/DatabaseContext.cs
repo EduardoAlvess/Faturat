@@ -1,9 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection.Emit;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using TCC.Areas.Identity.Data;
 using TCC.Models;
 
@@ -32,8 +28,6 @@ namespace TCC.Db
             builder.Entity<Expense>(entity => { entity.HasBaseType<Transaction>(); });
 
             builder.Entity<IdentityUserClaim<string>>().HasKey(p => new { p.Id });
-
-            DbSeeder.SeedTables(builder);
         }
 
         public void SaveChanges(Object item, string state)

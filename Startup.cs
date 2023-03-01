@@ -1,11 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using TCC.Db;
+﻿using Microsoft.EntityFrameworkCore;
 using TCC.Areas.Identity.Data;
 using TCC.Providers;
+using TCC.Db;
 
 namespace TCC
 {
@@ -33,7 +29,6 @@ namespace TCC
         private static void ConfigureServices(WebApplicationBuilder builder, bool isDevelopment)
         {
             builder.Services.AddSingleton(Configuration);
-            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             var connectionString = Configuration.GetConnectionString("Default");
 

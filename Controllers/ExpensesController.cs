@@ -26,16 +26,55 @@ namespace TCC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var list = _databaseContext.Transactions.OfType<Expense>().Where(x => x.isDeleted != true && x.UserId == _userProvider.GetUserId()).ToList();
-            return View("Index", list);
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.isDeleted == false && x.UserId == userId).ToList();
+
+            var transactions = _databaseContext.Transactions.OfType<Expense>()
+                                                            .Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId))
+                                                            .OrderByDescending(x => x.TransactionDate)
+                                                            .ToList()
+                                                            .OfType<Transaction>()
+                                                            .ToList();
+
+            return View("_Grid", transactions);
+        }
+
+        [HttpGet]
+        public ActionResult Add()
+        {
+            var expenseInfos = new AddExpense()
+            {
+                TransactionDate = DateTime.Now,
+                Categories = _categoriesProvider.GetExpenseCategories(),
+                Accounts = _accountProvider.GetAccountsByUserId(_userProvider.GetUserId())
+            };
+
+            return PartialView("_AddExpenseModal", expenseInfos);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Expense expense)
+        public IActionResult Create(double value, string description, CategoryId categoryId, int accountId, DateTime transactionDate)
         {
+            Expense expense = new Expense()
+            {
+                UserId = _userProvider.GetUserId(),
+                TransactionDate = transactionDate,
+                CreationDate = DateTime.Now,
+                Description = description,
+                CategoryId = categoryId,
+                AccountId = accountId,
+                isDeleted = false,
+                Value = value,
+            };
+
             _databaseContext.Transactions.Add(expense);
+
+            RemoveFromAccount(expense.AccountId, expense.Value);
+
             _databaseContext.SaveChanges(expense, "Added");
-            return Json("Teste");
+
+            return Redirect("/Expenses");
         }
 
         [HttpGet]
@@ -66,11 +105,23 @@ namespace TCC.Controllers
         {
             var expenseToEdit = _databaseContext.Transactions.OfType<Expense>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
+            if (value > expenseToEdit.Value)
+            {
+                var dif = value - expenseToEdit.Value;
+                RemoveFromAccount(expenseToEdit.AccountId, dif);
+            }
+            else
+            {
+                var dif = expenseToEdit.Value - value;
+                AddToAccount(expenseToEdit.AccountId, dif);
+            }
+
             expenseToEdit.TransactionDate = transactionDate;
             expenseToEdit.Description = description;
             expenseToEdit.CategoryId = categoryId;
             expenseToEdit.AccountId = accountId;
             expenseToEdit.Value = value;
+
             _databaseContext.SaveChanges(expenseToEdit, "Modified");
         }
 
@@ -87,6 +138,39 @@ namespace TCC.Controllers
         public Expense GetById(int id)
         {
             return _databaseContext.Transactions.OfType<Expense>().First(x => x.Id == id);
+        }
+
+        [HttpGet]
+        public double SumExpenses()
+        {
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.UserId == userId && x.isDeleted == false).Select(x => x.Id).ToList();
+
+            var expenses = _databaseContext.Transactions
+                                           .OfType<Expense>()
+                                           .Where(x => x.UserId == userId && x.isDeleted == false 
+                                                                          && accounts.Contains(x.AccountId))
+                                           .ToList();
+
+            double totalExpenses = 0;
+            expenses.ForEach(x => totalExpenses += x.Value);
+
+            return totalExpenses;
+        }
+
+        private void RemoveFromAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance -= value;
+        }
+
+        private void AddToAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance += value;
         }
     }
 }

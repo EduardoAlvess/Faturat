@@ -13,9 +13,6 @@
 <div id="listTransactions">
     @Html.Partial("_TransactionsTools")
 
-    <!-- New transaction modal -->
-    <div class="modal fade" id="addTransactionModal" aria-labelledby="addModalLabel" aria-hidden="true">
-    </div>
 
     <!-- Edit transaction modal -->
     <div class="modal fade" id="editTransactionModal" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -26,8 +23,6 @@
     </div>
 
     <div class="transactionsGrid card card-block" id="transactionsGrid">
-        @Html.Partial("_FilterTransactionsByMonthModal", "expense")
-
         <div class="table-responsive">
             @RenderBody()
         </div>
@@ -80,4 +75,31 @@
         });
     }
 </script>
-
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Incomes/SumIncomes',
+                success: function (result) {
+                    $("#incomesValue").text('R$ ' + result.toFixed(2));
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Expenses/SumExpenses',
+                success: function (result) {
+                    $("#expensesValue").text('R$ ' + result.toFixed(2));
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+</script>

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TCC.Providers;
-using TCC.Db;
 using TCC.Models;
+using TCC.Db;
 
 namespace TCC.Controllers
 {
@@ -36,6 +36,16 @@ namespace TCC.Controllers
         {
             var transaction = _databaseContext.Transactions.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
             transaction.isDeleted = true;
+
+            if(transaction.GetType() == typeof(Expense))
+            {
+                AddToAccount(transaction.AccountId, transaction.Value);
+            }
+            else
+            {
+                RemoveFromAccount(transaction.AccountId, transaction.Value);
+            }
+
             _databaseContext.SaveChanges(transaction, "Modified");
         }
 
@@ -46,8 +56,8 @@ namespace TCC.Controllers
             {
                 Categories = _databaseContext.Categories.ToList(),
                 Accounts = _databaseContext.Accounts.Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false).ToList(),
-                InitialDate = DateTime.Now,
-                FinalDate = DateTime.Now,
+                InitialDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
+                FinalDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1)
             };
 
             return PartialView("_FilterTransactionsModal", filterTransactions);
@@ -74,7 +84,24 @@ namespace TCC.Controllers
                                                .OrderByDescending(x => x.TransactionDate)
                                                .ToList();
 
+            ViewData["UseLayout"] = false;
+
             return PartialView("_Grid", transactions);
+        }
+
+
+        private void RemoveFromAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance -= value;
+        }
+
+        private void AddToAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance += value;
         }
     }
 }

@@ -1,0 +1,33 @@
+﻿@using TCC.Controllers
+@using TCC.Views.Shared.Components
+@model TCC.Models.Account
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content modal-sm">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span class="icon icon-close icon-2x"></span>
+                <span class="btn-close-label hidden-sm-down">esc</span>
+            </button>
+            <h4 class="modal-title " id="AccountModalLabel">Add Account</h4>
+        </div>
+        @using (Html.BeginForm("Create", "Accounts", FormMethod.Post))
+        {
+            <div class="modal-body form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="icon icon-file-new"></span></span>
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } } )
+                </div>
+                <br>
+                <div class="form-group">
+                    <label>Balance:</label>
+                    @Html.EditorFor(m => m.Balance, new { htmlAttributes = new { @class = "form-control" } } )
+                </div>
+                <hr>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success">
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,10 +1,41 @@
 ﻿<nav class="nav nav-pills nav-stacked">
     <div class="optionsList">
-        <button type="button" class="btn btn-primary btn-lg" id="newBtn">Teste</button>
+        <div class="btn-group" style="display: flex; max-width: 100%;">
+            <button type="button" style="padding: 10px;" class="btn btn-primary btn-lg dropdown-toggle" id="newBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="teste">New transaction</a>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="addTransaction('Income')">Incomes</a>
+                <a class="dropdown-item" onclick="addTransaction('Expense')">Expenses</a>
+            </div>
+        </div>
+
         <a class="nav-link navItem" href="/Home">Dashboard</a>
         <a class="nav-link navItem" href="/Transactions">Transactions</a>
         <a class="nav-link navItem" href="/Accounts">Accounts</a>
-        @*<a class="nav-link navItem" href="#">Reports</a>*@
         <a class="nav-link navItem" href="/Goals">Goals</a>
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button id="logout" type="submit" class="nav-link navItem">Logout</button>
+        </form>
     </div>
 </nav>
+
+<!-- New transaction modal -->
+<div class="modal fade" id="addTransactionModal" aria-labelledby="addModalLabel" aria-hidden="true">
+</div>
+
+<script>
+    function addTransaction(type) {
+        $.ajax({
+            type: 'GET',
+            url: '/' + type + 's/Add',
+            success: function (result) {
+                $("#addTransactionModal").html(result);
+                $("#addTransactionModal").modal();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
