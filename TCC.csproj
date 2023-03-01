@@ -7,21 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Css\**" />
     <Compile Remove="Views\NewFolder1\**" />
+    <Content Remove="Css\**" />
     <Content Remove="Views\NewFolder1\**" />
+    <EmbeddedResource Remove="Css\**" />
     <EmbeddedResource Remove="Views\NewFolder1\**" />
+    <None Remove="Css\**" />
     <None Remove="Views\NewFolder1\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Css\Incomes.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Css\Incomes.css">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
