@@ -104,11 +104,23 @@ namespace TCC.Controllers
         {
             var incomeToEdit = _databaseContext.Transactions.OfType<Income>().FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
 
+            if (value > incomeToEdit.Value)
+            {
+                var dif = value - incomeToEdit.Value;
+                AddToAccount(incomeToEdit.AccountId, dif);
+            }
+            else
+            {
+                var dif = incomeToEdit.Value - value;
+                RemoveFromAccount(incomeToEdit.AccountId, dif);
+            }
+
             incomeToEdit.TransactionDate = transactionDate;
             incomeToEdit.Description = description;
             incomeToEdit.CategoryId = categoryId;
             incomeToEdit.AccountId = accountId;
             incomeToEdit.Value = value;
+
             _databaseContext.SaveChanges(incomeToEdit, "Modified");
         }
 
@@ -152,6 +164,13 @@ namespace TCC.Controllers
             var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
 
             account.Balance += value;
+        }
+
+        private void RemoveFromAccount(int accountId, double value)
+        {
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance -= value;
         }
     }
 }
