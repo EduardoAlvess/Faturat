@@ -1,0 +1,105 @@
+﻿@using TCC.Views.Shared.Components
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutWithNav";
+}
+
+@section Transactions{
+    <link rel="stylesheet" href="~/css/transactions.css">
+    @RenderSection("Transactions", false)
+}
+
+<div id="listTransactions">
+    @Html.Partial("_TransactionsTools")
+
+
+    <!-- Edit transaction modal -->
+    <div class="modal fade" id="editTransactionModal" aria-labelledby="editModalLabel" aria-hidden="true">
+    </div>
+
+    <!-- Filter modal -->
+    <div class="modal fade" id="filterTransactionsModal" aria-labelledby="filterTransactionsModalLabel" aria-hidden="true">
+    </div>
+
+    <div class="transactionsGrid card card-block" id="transactionsGrid">
+        <div class="table-responsive">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+<script>
+    function edit(type, id) {
+        $.ajax({
+            type: 'GET',
+            url: '/' + type + 's/Edit',
+            data: { id: id },
+            success: function (result) {
+                $("#editTransactionModal").html(result);
+                $("#editTransactionModal").modal();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+    function exclude(id) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/Transactions/Delete/',
+            data: { id: id },
+            success: function (result) {
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+    function filter() {
+        $.ajax({
+            type: 'GET',
+            url: '/Transactions/Filter',
+            success: function (result) {
+                $("#filterTransactionsModal").html(result);
+                $("#filterTransactionsModal").modal();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Incomes/SumIncomes',
+                success: function (result) {
+                    $("#incomesValue").text('R$ ' + result.toFixed(2));
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Expenses/SumExpenses',
+                success: function (result) {
+                    $("#expensesValue").text('R$ ' + result.toFixed(2));
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+</script>

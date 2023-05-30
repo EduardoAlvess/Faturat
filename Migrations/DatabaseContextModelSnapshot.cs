@@ -16,8 +16,153 @@ namespace TCC.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityUserClaim");
+                });
+
+            modelBuilder.Entity("TCC.Areas.Identity.Data.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d84c137c-e451-4f83-bccf-bd6fe76ce68b",
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 27, 935, DateTimeKind.Local).AddTicks(7883),
+                            Email = "eduardo@eduardo.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "$2a$11$RVK0ye4/eirJZpt04TH02Of4qUVWoMfl03d4lXPJFKjIV7cu1dT36",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8fa4ab32-5804-4059-baed-5888b8f57f90",
+                            TwoFactorEnabled = false,
+                            UserName = "eduardo@eduardo.com",
+                            isDeleted = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "03f9c1e8-1e72-4afa-abfb-7fcdd641084f",
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 89, DateTimeKind.Local).AddTicks(8403),
+                            Email = "paulo@paulo.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "$2a$11$Mkpb3IdTMvXBoxYU2bkyoulQCx7e3Z0HUwDXDqF0YELdZRbfJ4QGO",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "4ee23cb7-74e0-4181-9147-b9741ce59314",
+                            TwoFactorEnabled = false,
+                            UserName = "paulo@paulo.com",
+                            isDeleted = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "eff551b8-85c4-474c-af1a-0097586972a3",
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 247, DateTimeKind.Local).AddTicks(9558),
+                            Email = "marcos@marcos.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "$2a$11$tFxXlD3ln1/DzegR.zYNCu0UlB8iGOsKkA5zh5tmu1.caOrwi1bgW",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "b94051bd-0071-49cb-82f9-d50e6d08f04f",
+                            TwoFactorEnabled = false,
+                            UserName = "marcos@marcos.com",
+                            isDeleted = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "50136b66-6951-4902-9b71-9c31a9efed83",
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3141),
+                            Email = "ronaldo@ronaldo.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "$2a$11$255neBm3bSXKx6Os39to.OipTfl3hsVIbqNDb241CWPJ1yFopV/sq",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1aa50d75-e9e6-4130-b36d-757387d7a7cb",
+                            TwoFactorEnabled = false,
+                            UserName = "ronaldo@ronaldo.com",
+                            isDeleted = true
+                        });
+                });
 
             modelBuilder.Entity("TCC.Models.Account", b =>
                 {
@@ -31,15 +176,15 @@ namespace TCC.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("IconId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
@@ -49,48 +194,205 @@ namespace TCC.Migrations
                         new
                         {
                             Id = 1,
-                            Balance = 2000.0,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2582),
-                            IconId = 1,
+                            Balance = 200.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3657),
                             Name = "Conta corrente",
-                            UserId = 1
+                            UserId = 1,
+                            isDeleted = false
                         },
                         new
                         {
                             Id = 2,
-                            Balance = 233.33000000000001,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2583),
-                            IconId = 2,
+                            Balance = 2000.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3659),
                             Name = "Conta PJ",
-                            UserId = 2
+                            UserId = 1,
+                            isDeleted = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Balance = 2000.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3660),
+                            Name = "Conta deletada",
+                            UserId = 1,
+                            isDeleted = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Balance = 200.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3662),
+                            Name = "Conta corrente user 2",
+                            UserId = 2,
+                            isDeleted = false
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Balance = 2000.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3662),
+                            Name = "Conta PJ user 2",
+                            UserId = 2,
+                            isDeleted = false
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Balance = 2000.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3663),
+                            Name = "Conta deletada user 2",
+                            UserId = 2,
+                            isDeleted = true
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Balance = 200.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(3664),
+                            Name = "Conta corrente user 3",
+                            UserId = 3,
+                            isDeleted = true
                         });
                 });
 
             modelBuilder.Entity("TCC.Models.Category", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("IconId")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
 
-                    b.HasDiscriminator<string>("Type").HasValue("Category");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Gym",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Clothing",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Education",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Pet",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Electronics",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Health",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Home",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Leisure",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Others",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Restaurant",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Services",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Supermarket",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Transportation",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "Travel",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "Alimentation",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Name = "Bills",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Name = "Awards",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Name = "Gift",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Name = "Investments",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Name = "Salary",
+                            Type = 0
+                        });
                 });
 
             modelBuilder.Entity("TCC.Models.Goal", b =>
@@ -102,17 +404,20 @@ namespace TCC.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime");
 
-                    b.Property<double>("CurrentAmount")
+                    b.Property<double>("CurrentBalance")
                         .HasColumnType("double");
 
-                    b.Property<double>("FinalAmount")
+                    b.Property<double>("FinalBalance")
                         .HasColumnType("double");
 
                     b.Property<DateTime>("FinalDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("IconId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -129,51 +434,26 @@ namespace TCC.Migrations
                         new
                         {
                             Id = 1,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2650),
-                            CurrentAmount = 400.0,
-                            FinalAmount = 2000.0,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4170),
+                            CurrentBalance = 400.0,
+                            FinalBalance = 2000.0,
                             FinalDate = new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IconId = 1,
+                            IsCompleted = false,
+                            IsDeleted = false,
                             Name = "Viagem",
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2652),
-                            CurrentAmount = 12000.32,
-                            FinalAmount = 35000.720000000001,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4171),
+                            CurrentBalance = 12000.32,
+                            FinalBalance = 35000.720000000001,
                             FinalDate = new DateTime(2023, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IconId = 2,
+                            IsCompleted = false,
+                            IsDeleted = false,
                             Name = "Carro",
                             UserId = 2
-                        });
-                });
-
-            modelBuilder.Entity("TCC.Models.Icon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Icons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ImageName = "img1.jpg"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ImageName = "img2.jpg"
                         });
                 });
 
@@ -196,6 +476,9 @@ namespace TCC.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -216,55 +499,9 @@ namespace TCC.Migrations
                     b.HasDiscriminator<string>("Type").HasValue("Transaction");
                 });
 
-            modelBuilder.Entity("TCC.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2445),
-                            Name = "Eduardo",
-                            Password = "12345",
-                            isDeleted = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2458),
-                            Name = "Paulo",
-                            Password = "54321",
-                            isDeleted = false
-                        });
-                });
-
             modelBuilder.Entity("TCC.Models.Expense", b =>
                 {
                     b.HasBaseType("TCC.Models.Transaction");
-
-                    b.Property<bool>("isPaid")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasDiscriminator().HasValue("Expense");
 
@@ -274,47 +511,48 @@ namespace TCC.Migrations
                             Id = 1,
                             AccountId = 1,
                             CategoryId = 1,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2622),
-                            Description = "Mercado",
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4131),
+                            Description = "Academia",
+                            TransactionDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4131),
                             UserId = 1,
-                            Value = 250.0,
-                            isDeleted = false,
-                            isPaid = true
+                            Value = 90.0,
+                            isDeleted = false
                         },
                         new
                         {
                             Id = 2,
                             AccountId = 2,
-                            CategoryId = 2,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2624),
-                            Description = "Alaminuta",
-                            UserId = 2,
-                            Value = 172.34999999999999,
-                            isDeleted = false,
-                            isPaid = false
-                        });
-                });
-
-            modelBuilder.Entity("TCC.Models.ExpenseCategory", b =>
-                {
-                    b.HasBaseType("TCC.Models.Category");
-
-                    b.HasDiscriminator().HasValue("ExpenseCategory");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2596),
-                            Description = "Supermarket",
-                            IconId = 1
+                            CategoryId = 8,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4133),
+                            Description = "Imposto",
+                            TransactionDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4133),
+                            UserId = 1,
+                            Value = 100.0,
+                            isDeleted = false
                         },
                         new
                         {
-                            Id = 2,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2597),
-                            Description = "Restaurant",
-                            IconId = 2
+                            Id = 3,
+                            AccountId = 4,
+                            CategoryId = 11,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4134),
+                            Description = "Hamburguer",
+                            TransactionDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4135),
+                            UserId = 2,
+                            Value = 20.0,
+                            isDeleted = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccountId = 5,
+                            CategoryId = 8,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4135),
+                            Description = "Imposto",
+                            TransactionDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4136),
+                            UserId = 2,
+                            Value = 100.0,
+                            isDeleted = false
                         });
                 });
 
@@ -322,58 +560,32 @@ namespace TCC.Migrations
                 {
                     b.HasBaseType("TCC.Models.Transaction");
 
-                    b.Property<bool>("isReceived")
-                        .HasColumnType("tinyint(1)");
-
                     b.HasDiscriminator().HasValue("Income");
 
                     b.HasData(
                         new
                         {
-                            Id = 3,
+                            Id = 5,
                             AccountId = 1,
-                            CategoryId = 3,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2634),
-                            Description = "Salário",
-                            UserId = 1,
-                            Value = 2000.0,
-                            isDeleted = false,
-                            isReceived = true
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AccountId = 2,
-                            CategoryId = 4,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2636),
+                            CategoryId = 18,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4148),
                             Description = "Premio",
-                            UserId = 2,
-                            Value = 13.75,
-                            isDeleted = false,
-                            isReceived = false
-                        });
-                });
-
-            modelBuilder.Entity("TCC.Models.IncomeCategory", b =>
-                {
-                    b.HasBaseType("TCC.Models.Category");
-
-                    b.HasDiscriminator().HasValue("IncomeCategory");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 3,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2606),
-                            Description = "Salary",
-                            IconId = 1
+                            TransactionDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4149),
+                            UserId = 1,
+                            Value = 200.0,
+                            isDeleted = false
                         },
                         new
                         {
-                            Id = 4,
-                            CreationDate = new DateTime(2022, 10, 7, 14, 34, 53, 19, DateTimeKind.Local).AddTicks(2607),
-                            Description = "Award",
-                            IconId = 2
+                            Id = 6,
+                            AccountId = 4,
+                            CategoryId = 19,
+                            CreationDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4150),
+                            Description = "Presente",
+                            TransactionDate = new DateTime(2023, 1, 13, 17, 51, 28, 399, DateTimeKind.Local).AddTicks(4150),
+                            UserId = 2,
+                            Value = 10.0,
+                            isDeleted = false
                         });
                 });
 #pragma warning restore 612, 618

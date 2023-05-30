@@ -1,0 +1,16 @@
+﻿<div id="divButtonsGroup">
+    <div class="btn-group">
+        <button class="btn btn-fab btn-outline-secondary btn-lg dropdown-toggle " id="dropdow-change-transactions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"></button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/Incomes">Incomes</a>
+            <a class="dropdown-item" href="/Expenses">Expenses</a>
+        </div>
+    </div>
+    <div>
+        <span class="transactionsValueInfo tag tag-simple border-danger text-danger" id="expensesValue"><a></a></span>
+        <span class="transactionsValueInfo tag tag-simple border-success text-success" id="incomesValue"><a></a></span>
+    </div>
+    <button class="btn btn-fab btn-outline-secondary btn-lg" data-toggle="modal" data-target="#filterTransactionsModal" id="btn-filter" type="button" onclick="filter()">
+        <span class="icon icon-content-filter"></span>
+    </button>
+</div>

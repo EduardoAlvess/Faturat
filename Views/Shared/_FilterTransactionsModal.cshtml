@@ -1,0 +1,85 @@
+﻿@using TCC.Controllers
+@model FilterTransactions
+
+@{
+    SelectList categorySelectList = new SelectList(Model.Categories, "Id", "Name");
+    SelectList accountSelectList = new SelectList(Model.Accounts, "Id", "Name");
+}
+
+<div class="modal-dialog " role="document">
+    <div class="modal-content  ">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span class="icon icon-close icon-2x"></span>
+                <span class="btn-close-label hidden-sm-down">esc</span>
+            </button>
+            <h4 class="modal-title " id="filterModalLabel">Transactions filter</h4>
+        </div>
+        <div class="modal-body">
+            @using (Html.BeginForm("Filter", "Transactions", FormMethod.Post, new { id = "filterForm" }))
+            {
+                <div class="form-group">
+                    <label>Category</label>
+                    <br>
+                    @Html.DropDownListFor(m => m.CategoriesIds, categorySelectList as SelectList, new { @class = "form-control filterSelect", @multiple = "multiple" })
+                </div>
+                <div class="form-group">
+                    <label>Account</label>
+                    <br>
+                    @Html.DropDownListFor(m => m.AccountsIds, accountSelectList as SelectList, new { @class = "form-control filterSelect", @multiple = "multiple" })
+                </div>
+                <div class="form-group">
+                    <label for="example-date-input" class="col-xs-2 col-form-label ">From:</label>
+                    @Html.EditorFor(m => m.InitialDate, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label for="example-date-input2" style="margin-top: 10px;" class="col-xs-2 col-form-label ">Until:</label>
+                    @Html.EditorFor(m => m.FinalDate, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Apply</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.filterSelect').multiselect({
+            display: 'static',
+            maxHeight: 200,
+            includeSelectAllOption: true,
+            enableHTML: false,
+            templates: {
+                ul: '<ul class="multiselect-container dropdown-menu "></ul>',
+                div: '<div class="btn-group" style="width: 100%"></div>'
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#filterForm").submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Transactions/Filter",
+                data: formData,
+                success: function (result) {
+                    $("#transactionsGrid").html(result);
+                }
+            });
+        });
+    });
+</script>
+<style>
+    .multiselect-container li input[type=checkbox] {
+        display: none;
+    }
+
+    .multiselect-container a label.checkbox {
+        ;
+    }
+
+</style>

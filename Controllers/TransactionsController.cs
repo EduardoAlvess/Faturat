@@ -1,83 +1,107 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TCC.Providers;
+using TCC.Models;
+using TCC.Db;
 
 namespace TCC.Controllers
 {
+    [Authorize]
     public class TransactionsController : Controller
     {
-        // GET: TransactionsController
-        public ActionResult Index()
+        private readonly IDatabaseContext _databaseContext;
+        private readonly IUserProvider _userProvider;
+
+        public TransactionsController(IDatabaseContext databaseContext, IUserProvider userProvider)
         {
-            return View();
+            _databaseContext = databaseContext;
+            _userProvider = userProvider;
         }
 
-        // GET: TransactionsController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Index()
         {
-            return View();
+            var userId = _userProvider.GetUserId();
+
+            var accounts = _databaseContext.Accounts.Where(x => x.isDeleted == false && x.UserId == userId ).ToList();
+
+            var transactions = _databaseContext.Transactions.Where(x => x.isDeleted != true && accounts.Select(y => y.Id).Contains(x.AccountId))
+                                                            .OrderByDescending(x => x.TransactionDate)
+                                                            .ToList();
+
+            return View("_Grid", transactions);
         }
 
-        // GET: TransactionsController/Create
-        public ActionResult Create()
+        [HttpDelete]
+        public void Delete(int id)
         {
-            return View();
+            var transaction = _databaseContext.Transactions.FirstOrDefault(x => x.Id == id && x.UserId == _userProvider.GetUserId());
+            transaction.isDeleted = true;
+
+            if(transaction.GetType() == typeof(Expense))
+            {
+                AddToAccount(transaction.AccountId, transaction.Value);
+            }
+            else
+            {
+                RemoveFromAccount(transaction.AccountId, transaction.Value);
+            }
+
+            _databaseContext.SaveChanges(transaction, "Modified");
         }
 
-        // POST: TransactionsController/Create
+        [HttpGet]
+        public ActionResult Filter()
+        {
+            var filterTransactions = new FilterTransactions
+            {
+                Categories = _databaseContext.Categories.ToList(),
+                Accounts = _databaseContext.Accounts.Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false).ToList(),
+                InitialDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
+                FinalDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1)
+            };
+
+            return PartialView("_FilterTransactionsModal", filterTransactions);
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Filter(List<CategoryId> categoriesIds, List<int> accountsIds, DateTime initialDate, DateTime finalDate)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if(categoriesIds.Count() == 0)
+                categoriesIds.AddRange(_databaseContext.Categories.Select(x => x.Id).ToList());
+
+            if(accountsIds.Count() == 0)
+                accountsIds.AddRange(_databaseContext.Accounts
+                                                     .Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false)
+                                                     .Select(x => x.Id)
+                                                     .ToList());
+
+            var transactions = _databaseContext.Transactions
+                                               .Where(x => x.UserId == _userProvider.GetUserId() && x.isDeleted == false
+                                                                                                 && categoriesIds.Contains(x.CategoryId) 
+                                                                                                 && accountsIds.Contains(x.AccountId)
+                                                                                                 && x.TransactionDate >= initialDate
+                                                                                                 && x.TransactionDate <= finalDate)
+                                               .OrderByDescending(x => x.TransactionDate)
+                                               .ToList();
+
+            ViewData["UseLayout"] = false;
+
+            return PartialView("_Grid", transactions);
         }
 
-        // GET: TransactionsController/Edit/5
-        public ActionResult Edit(int id)
+
+        private void RemoveFromAccount(int accountId, double value)
         {
-            return View();
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
+
+            account.Balance -= value;
         }
 
-        // POST: TransactionsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        private void AddToAccount(int accountId, double value)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var account = _databaseContext.Accounts.Where(x => x.Id == accountId && x.UserId == _userProvider.GetUserId() && x.isDeleted == false).First();
 
-        // GET: TransactionsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TransactionsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            account.Balance += value;
         }
     }
 }
